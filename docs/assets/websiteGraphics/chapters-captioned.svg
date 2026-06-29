@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920" role="img" aria-label="Captioned LibriVox Mobile graphic showing the player chapters panel.">
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="0" y2="1920" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#E9FFFD"/>
+      <stop offset="1" stop-color="#FFF4E4"/>
+    </linearGradient>
+    <linearGradient id="phoneFrame" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#006D78"/>
+      <stop offset="1" stop-color="#004F59"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="22" stdDeviation="22" flood-color="#004F59" flood-opacity="0.22"/>
+    </filter>
+    <clipPath id="screenClip">
+      <rect x="213" y="364" width="654" height="1468" rx="44" ry="44"/>
+    </clipPath>
+  </defs>
+  <rect width="1080" height="1920" fill="url(#background)"/>
+  <path d="M0 0h1080v346H0z" fill="#D7F5F2"/>
+  <path d="M0 316c230 76 438 82 630 20s342-70 450-24v180H0z" fill="#F8E8CE" opacity="0.58"/>
+  <text x="540" y="118" text-anchor="middle" font-family="Inter, Arial, Helvetica, sans-serif" font-size="66" font-weight="760" fill="#004F59">Jump between</text>
+<text x="540" y="192" text-anchor="middle" font-family="Inter, Arial, Helvetica, sans-serif" font-size="66" font-weight="760" fill="#004F59">chapters</text>
+  <text x="540" y="286" text-anchor="middle" font-family="Inter, Arial, Helvetica, sans-serif" font-size="28" font-weight="520" fill="#315F65">Move through long audiobooks without losing the player.</text>
+  <rect x="194" y="345" width="692" height="1506" rx="64" fill="url(#phoneFrame)" filter="url(#softShadow)"/>
+  <rect x="208" y="359" width="664" height="1478" rx="50" fill="#111111"/>
+  <image x="213" y="364" width="654" height="1468" href="../../image-resources/ui-captures/13-player-chapters-panel.png" preserveAspectRatio="xMidYMid meet" clip-path="url(#screenClip)"/>
+  <rect x="213" y="364" width="654" height="1468" rx="44" fill="none" stroke="#E9FFFD" stroke-opacity="0.22" stroke-width="2"/>
+</svg>

@@ -1,0 +1,15 @@
+{
+  "name": "librivox-mobile",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Android app and static website for LibriVox Mobile.",
+  "scripts": {
+    "serve": "node scripts/serve-site.mjs",
+    "preview": "npm run serve",
+    "check:site": "node scripts/check-site.mjs",
+    "build": "npm run check:site"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

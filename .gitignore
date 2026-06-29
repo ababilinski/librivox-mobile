@@ -1,0 +1,20 @@
+.gradle/
+.kotlin/
+build/
+**/build/
+local.properties
+.idea/
+*.iml
+.DS_Store
+captures/
+*.hprof
+keystore.properties
+*.jks
+*.keystore
+
+# Apple / Swift builds
+.build/
+.swiftpm/
+DerivedData/
+*.xcuserstate
+xcuserdata/

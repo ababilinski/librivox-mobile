@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">LibriVox Mobile</string>
+    <string name="main_title">LibriVox Mobile</string>
+    <string name="launch_glasses_button">Open Glasses Player</string>
+    <string name="notification_permission_denied">Notifications are disabled. Playback still works, but media controls may not appear.</string>
+    <string name="notification_permission_missing">Enable notifications to show media controls.</string>
+    <string name="playback_notification_channel_name">Playback</string>
+
+    <string name="glasses_activity_title">LibriVox Mobile</string>
+    <string name="display_category_xr_projected">xr_projected</string>
+
+    <string name="glasses_connected">AI glasses connection: Connected</string>
+    <string name="glasses_disconnected">AI glasses connection: Not connected</string>
+    <string name="glasses_status_unavailable">AI glasses connection status unavailable</string>
+    <string name="glasses_not_connected">AI glasses are not connected.</string>
+    <string name="glasses_launch_failed">Unable to open the glasses player.</string>
+
+    <string name="cast_route_menu_title">Cast</string>
+    <string name="cast_expanded_controller_title">Now casting</string>
+    <string name="cast_intro_overlay_title">Cast audiobooks</string>
+    <string name="cast_intro_overlay_subtitle">Send the current chapter to a Chromecast or smart speaker.</string>
+</resources>

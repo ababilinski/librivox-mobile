@@ -1,0 +1,31 @@
+<resources>
+    <style name="Theme.AudioPlayerPrototype" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/expressive_primary</item>
+        <item name="colorOnPrimary">@color/expressive_on_primary</item>
+        <item name="colorSecondary">@color/expressive_secondary</item>
+        <item name="colorSurface">@color/expressive_surface</item>
+        <item name="colorOnSurface">@color/expressive_on_surface</item>
+        <item name="colorSurfaceVariant">@color/expressive_surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/expressive_on_surface_variant</item>
+        <item name="android:statusBarColor">@color/expressive_surface</item>
+        <item name="android:navigationBarColor">@color/expressive_surface</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+
+    <style name="Theme.Glimmer.Dark" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/expressive_primary</item>
+        <item name="colorOnPrimary">@color/expressive_on_primary</item>
+        <item name="colorSurface">@color/expressive_surface</item>
+        <item name="colorOnSurface">@color/expressive_on_surface</item>
+    </style>
+
+    <!-- Cast SDK's ExpandedControllerActivity needs an AppCompat-derived theme with
+         an action bar so it can host the MediaRouteButton in its toolbar. -->
+    <style name="Theme.AudioPlayerPrototype.CastExpanded" parent="Theme.MaterialComponents.DayNight">
+        <item name="colorPrimary">@color/expressive_primary</item>
+        <item name="colorOnPrimary">@color/expressive_on_primary</item>
+        <item name="colorSurface">@color/expressive_surface</item>
+        <item name="colorOnSurface">@color/expressive_on_surface</item>
+    </style>
+</resources>

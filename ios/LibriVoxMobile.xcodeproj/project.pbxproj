@@ -1,0 +1,414 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		03AC58369387FAE661B53FBF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444EA91E9AB5F66AF0ED9E3A /* SettingsView.swift */; };
+		06E7957A149F013B6F16AA14 /* PlaybackViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92D44B6F96C974EA40634E3 /* PlaybackViews.swift */; };
+		0DC7750D92D0270EBA9F9CF7 /* LibriVoxMobileApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952CE61749E8271C6428D519 /* LibriVoxMobileApp.swift */; };
+		33334E4F10F51CD3F2AAAEA6 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34BE23AA7791E39B70AB07B /* AppModel.swift */; };
+		487C599ED0C0A5697118861E /* BookDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90A43FEE05AA02A88AB9628 /* BookDetailView.swift */; };
+		494FDC44C33A416C0DB98FB4 /* LiquidGlass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F265F9EA88FA70F90A37B6 /* LiquidGlass.swift */; };
+		6036FEA2C2F6998A9747FB22 /* LibriVoxCore in Frameworks */ = {isa = PBXBuildFile; productRef = 83ACAA5ECBF517C8A4524261 /* LibriVoxCore */; };
+		8C4BD72C3A0C919BBE37A77D /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8388275322951FB39B8B6F1E /* RootView.swift */; };
+		96B174A763FFA51F44B91CEA /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7082B41FC73BA8DAAE74A6 /* HomeView.swift */; };
+		AAE8828B69A70B2B705D2B7B /* DiscoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0C3322DA6F9A434666EC3A /* DiscoverView.swift */; };
+		C90FC2C7E8C6722A98CE8D2A /* ReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D1B612C319B5775C8D9E0 /* ReaderView.swift */; };
+		E823DE40AAC107F9E6CAAEC9 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB82F56ED7DFAA2ACE131A78 /* OnboardingView.swift */; };
+		E8761D3FD6244C7B68216C97 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E4FA69DBCD099436AD0F33 /* LibraryView.swift */; };
+		E8AD2ECD7D811BD9CA62A164 /* AirPlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0599C81F295D766F825DB2B9 /* AirPlayButton.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		01F265F9EA88FA70F90A37B6 /* LiquidGlass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiquidGlass.swift; sourceTree = "<group>"; };
+		0599C81F295D766F825DB2B9 /* AirPlayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirPlayButton.swift; sourceTree = "<group>"; };
+		2DCB77C9E5FBD1B44E8C9F7B /* LibriVoxMobile.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = LibriVoxMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		444EA91E9AB5F66AF0ED9E3A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		5E0C3322DA6F9A434666EC3A /* DiscoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverView.swift; sourceTree = "<group>"; };
+		685D1B612C319B5775C8D9E0 /* ReaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderView.swift; sourceTree = "<group>"; };
+		8388275322951FB39B8B6F1E /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		952CE61749E8271C6428D519 /* LibriVoxMobileApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibriVoxMobileApp.swift; sourceTree = "<group>"; };
+		A1E4FA69DBCD099436AD0F33 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
+		A34BE23AA7791E39B70AB07B /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		AB82F56ED7DFAA2ACE131A78 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		D90A43FEE05AA02A88AB9628 /* BookDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailView.swift; sourceTree = "<group>"; };
+		D92D44B6F96C974EA40634E3 /* PlaybackViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackViews.swift; sourceTree = "<group>"; };
+		D9649F4A4823517C6F4E5ED3 /* LibriVoxCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = LibriVoxCore; path = LibriVoxCore; sourceTree = SOURCE_ROOT; };
+		E646C7AB9DE193AD062137F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		FB7082B41FC73BA8DAAE74A6 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A6899C544D323F98F7A9EAFD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6036FEA2C2F6998A9747FB22 /* LibriVoxCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		207C99A340756CE8595648E2 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				D9649F4A4823517C6F4E5ED3 /* LibriVoxCore */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		21B7E6A6681E6F8C3DEB1615 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2DCB77C9E5FBD1B44E8C9F7B /* LibriVoxMobile.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		271E52814FF2B0CB3E51A012 = {
+			isa = PBXGroup;
+			children = (
+				71AFE67C070CAC1AA9EF4C09 /* LibriVoxMobile */,
+				207C99A340756CE8595648E2 /* Packages */,
+				21B7E6A6681E6F8C3DEB1615 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5AFDF76BFA719DFC52B6B2D8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D90A43FEE05AA02A88AB9628 /* BookDetailView.swift */,
+				5E0C3322DA6F9A434666EC3A /* DiscoverView.swift */,
+				FB7082B41FC73BA8DAAE74A6 /* HomeView.swift */,
+				A1E4FA69DBCD099436AD0F33 /* LibraryView.swift */,
+				AB82F56ED7DFAA2ACE131A78 /* OnboardingView.swift */,
+				D92D44B6F96C974EA40634E3 /* PlaybackViews.swift */,
+				685D1B612C319B5775C8D9E0 /* ReaderView.swift */,
+				8388275322951FB39B8B6F1E /* RootView.swift */,
+				444EA91E9AB5F66AF0ED9E3A /* SettingsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		71AFE67C070CAC1AA9EF4C09 /* LibriVoxMobile */ = {
+			isa = PBXGroup;
+			children = (
+				DED788173E1177CB029A3230 /* App */,
+				97662E05E2B585867C6F8B31 /* Resources */,
+				885E1BFBCEA0F3CEF5F8D9A8 /* Support */,
+				5AFDF76BFA719DFC52B6B2D8 /* Views */,
+			);
+			path = LibriVoxMobile;
+			sourceTree = "<group>";
+		};
+		885E1BFBCEA0F3CEF5F8D9A8 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				0599C81F295D766F825DB2B9 /* AirPlayButton.swift */,
+				01F265F9EA88FA70F90A37B6 /* LiquidGlass.swift */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		97662E05E2B585867C6F8B31 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E646C7AB9DE193AD062137F4 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		DED788173E1177CB029A3230 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				A34BE23AA7791E39B70AB07B /* AppModel.swift */,
+				952CE61749E8271C6428D519 /* LibriVoxMobileApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		38B4D0ECB87BD3407FDA18C3 /* LibriVoxMobile */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 444B85D17F1429310E38A9F7 /* Build configuration list for PBXNativeTarget "LibriVoxMobile" */;
+			buildPhases = (
+				8B57DA9A6C1A55FBB8BF01BF /* Sources */,
+				A6899C544D323F98F7A9EAFD /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LibriVoxMobile;
+			packageProductDependencies = (
+				83ACAA5ECBF517C8A4524261 /* LibriVoxCore */,
+			);
+			productName = LibriVoxMobile;
+			productReference = 2DCB77C9E5FBD1B44E8C9F7B /* LibriVoxMobile.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5205DE19DCB8B65EC09056D3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					38B4D0ECB87BD3407FDA18C3 = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = D0C2A0251CD2AEFF82272F5D /* Build configuration list for PBXProject "LibriVoxMobile" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 271E52814FF2B0CB3E51A012;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				C6BD261DF9C4E3725D41FF0F /* XCLocalSwiftPackageReference "LibriVoxCore" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 21B7E6A6681E6F8C3DEB1615 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				38B4D0ECB87BD3407FDA18C3 /* LibriVoxMobile */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8B57DA9A6C1A55FBB8BF01BF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E8AD2ECD7D811BD9CA62A164 /* AirPlayButton.swift in Sources */,
+				33334E4F10F51CD3F2AAAEA6 /* AppModel.swift in Sources */,
+				487C599ED0C0A5697118861E /* BookDetailView.swift in Sources */,
+				AAE8828B69A70B2B705D2B7B /* DiscoverView.swift in Sources */,
+				96B174A763FFA51F44B91CEA /* HomeView.swift in Sources */,
+				E8761D3FD6244C7B68216C97 /* LibraryView.swift in Sources */,
+				0DC7750D92D0270EBA9F9CF7 /* LibriVoxMobileApp.swift in Sources */,
+				494FDC44C33A416C0DB98FB4 /* LiquidGlass.swift in Sources */,
+				E823DE40AAC107F9E6CAAEC9 /* OnboardingView.swift in Sources */,
+				06E7957A149F013B6F16AA14 /* PlaybackViews.swift in Sources */,
+				C90FC2C7E8C6722A98CE8D2A /* ReaderView.swift in Sources */,
+				8C4BD72C3A0C919BBE37A77D /* RootView.swift in Sources */,
+				03AC58369387FAE661B53FBF /* SettingsView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		3E8AAA2A07D78A40726D8775 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = LibriVoxMobile/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ababilinski.librivoxmobile;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		CD980798A899ACC7A9606CA8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		CDE0DD76952212E1C085BCCB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = LibriVoxMobile/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ababilinski.librivoxmobile;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E66F79FBECBDE2ECAA95DB07 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		444B85D17F1429310E38A9F7 /* Build configuration list for PBXNativeTarget "LibriVoxMobile" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CDE0DD76952212E1C085BCCB /* Debug */,
+				3E8AAA2A07D78A40726D8775 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		D0C2A0251CD2AEFF82272F5D /* Build configuration list for PBXProject "LibriVoxMobile" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E66F79FBECBDE2ECAA95DB07 /* Debug */,
+				CD980798A899ACC7A9606CA8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		C6BD261DF9C4E3725D41FF0F /* XCLocalSwiftPackageReference "LibriVoxCore" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = LibriVoxCore;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		83ACAA5ECBF517C8A4524261 /* LibriVoxCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LibriVoxCore;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 5205DE19DCB8B65EC09056D3 /* Project object */;
+}

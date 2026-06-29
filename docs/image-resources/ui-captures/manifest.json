@@ -1,0 +1,162 @@
+[
+  {
+    "file": "01-onboarding-welcome-moby-dick.png",
+    "title": "Onboarding welcome",
+    "description": "LibriVox Mobile welcome screen with the setup title, a carousel of classic audiobook covers, feature summary rows, and the Get started action.",
+    "best_use": "Intro, onboarding, first-run experience, and free LibriVox audiobook messaging.",
+    "alt_text": "LibriVox Mobile welcome screen with audiobook cover carousel and Get started button.",
+    "topics": ["onboarding", "setup", "browse"]
+  },
+  {
+    "file": "02-onboarding-welcome-alice.png",
+    "title": "Onboarding welcome carousel",
+    "description": "Welcome screen after the cover carousel moves, with Alice and Sherlock Holmes covers centered in the onboarding artwork row.",
+    "best_use": "Alternate onboarding crop when the artwork composition needs brighter covers.",
+    "alt_text": "LibriVox Mobile onboarding welcome screen with Alice and Sherlock Holmes covers.",
+    "topics": ["onboarding", "setup", "browse"]
+  },
+  {
+    "file": "03-onboarding-permissions.png",
+    "title": "Permissions setup",
+    "description": "Permission setup screen explaining required app access plus optional notifications and nearby-device access for casting.",
+    "best_use": "Trust, privacy, setup clarity, and explaining optional permissions.",
+    "alt_text": "LibriVox Mobile permissions setup screen with optional notifications and nearby-device access.",
+    "topics": ["onboarding", "permissions", "setup", "privacy"]
+  },
+  {
+    "file": "04-onboarding-languages.png",
+    "title": "Language setup",
+    "description": "Language setup screen where users choose audiobook browsing languages during onboarding.",
+    "best_use": "Personalization, setup, and catalog language preference messaging.",
+    "alt_text": "LibriVox Mobile language setup screen with audiobook language choices.",
+    "topics": ["onboarding", "languages", "setup", "personalization"]
+  },
+  {
+    "file": "05-home-featured.png",
+    "title": "Home featured",
+    "description": "Home screen with the LibriVox title, featured audiobook rows, cover cards, share controls, and bottom navigation.",
+    "best_use": "Browse and discovery hero images, home screen preview, and catalog browsing sections.",
+    "alt_text": "LibriVox Mobile home screen showing featured audiobook covers and bottom navigation.",
+    "topics": ["home", "browse", "catalog", "featured"]
+  },
+  {
+    "file": "06-home-continue-listening.png",
+    "title": "Home continue listening",
+    "description": "Home screen scrolled to Continue listening, with The Jungle and other recent books visible.",
+    "best_use": "Returning-listener story, progress and resume listening, and library continuity.",
+    "alt_text": "LibriVox Mobile home screen focused on Continue listening with The Jungle visible.",
+    "topics": ["home", "continue-listening", "library", "progress"]
+  },
+  {
+    "file": "07-home-alternate.png",
+    "title": "Home alternate",
+    "description": "Alternate home screen capture with a different set of visible books and browsing rows.",
+    "best_use": "Backup home composition for website cards, collages, or alternate store artwork.",
+    "alt_text": "Alternate LibriVox Mobile home screen with audiobook rows.",
+    "topics": ["home", "browse", "catalog"]
+  },
+  {
+    "file": "08-author-search.png",
+    "title": "Author search",
+    "description": "Search and discover screen showing author-oriented results and catalog browsing controls.",
+    "best_use": "Search by author, discoverability, and finding public-domain audiobooks.",
+    "alt_text": "LibriVox Mobile search screen showing author-based audiobook results.",
+    "topics": ["search", "authors", "discover", "catalog"]
+  },
+  {
+    "file": "09-book-detail.png",
+    "title": "Book detail",
+    "description": "Book detail page with cover art, book metadata, listening actions, and chapter-related content.",
+    "best_use": "Book preview, deciding what to listen to, and details before playback.",
+    "alt_text": "LibriVox Mobile book detail page with cover art, book information, and listening actions.",
+    "topics": ["book-detail", "chapters", "save", "preview"]
+  },
+  {
+    "file": "10-book-chapter-view.png",
+    "title": "Book chapter view",
+    "description": "Book detail page focused on the chapter list and per-chapter actions.",
+    "best_use": "Chapter navigation, long audiobook structure, and jump-to-section messaging.",
+    "alt_text": "LibriVox Mobile book detail screen showing audiobook chapters.",
+    "topics": ["book-detail", "chapters", "navigation"]
+  },
+  {
+    "file": "11-book-chapter-view-alt.png",
+    "title": "Book chapter view alternate",
+    "description": "Alternate book detail and chapter-list capture with a different visible position.",
+    "best_use": "Backup chapter composition for screenshots or generated store art.",
+    "alt_text": "Alternate LibriVox Mobile chapter list screen.",
+    "topics": ["book-detail", "chapters", "navigation"]
+  },
+  {
+    "file": "12-now-playing.png",
+    "title": "Now playing",
+    "description": "Full now-playing screen with large cover art, title and chapter context, playback progress, and transport controls.",
+    "best_use": "Core listening experience, player controls, and Listen anywhere messaging.",
+    "alt_text": "LibriVox Mobile now-playing screen with audiobook cover art and playback controls.",
+    "topics": ["player", "now-playing", "playback", "controls"]
+  },
+  {
+    "file": "13-player-chapters-panel.png",
+    "title": "Player chapters panel",
+    "description": "Now-playing screen with the chapters panel open above the player.",
+    "best_use": "Switching chapters while listening and in-player navigation.",
+    "alt_text": "LibriVox Mobile player with chapters panel open.",
+    "topics": ["player", "chapters", "playback", "navigation"]
+  },
+  {
+    "file": "14-player-bookmark-notes.png",
+    "title": "Bookmark notes",
+    "description": "Bookmark notes panel where the listener can save a note tied to the current playback position.",
+    "best_use": "Bookmarks, notes, and remembering important moments in an audiobook.",
+    "alt_text": "LibriVox Mobile bookmark notes panel in the audiobook player.",
+    "topics": ["player", "bookmarks", "notes"]
+  },
+  {
+    "file": "15-playback-speed.png",
+    "title": "Playback speed",
+    "description": "Playback speed control sheet opened from the player controls.",
+    "best_use": "Speed control and personalized listening pace.",
+    "alt_text": "LibriVox Mobile playback speed control sheet.",
+    "topics": ["player", "speed", "controls"]
+  },
+  {
+    "file": "16-sleep-timer.png",
+    "title": "Sleep timer",
+    "description": "Sleep timer sheet with timed listening options.",
+    "best_use": "Bedtime listening, auto-stop, and quiet listening features.",
+    "alt_text": "LibriVox Mobile sleep timer control sheet.",
+    "topics": ["player", "sleep-timer", "controls"]
+  },
+  {
+    "file": "17-casting-sheet.png",
+    "title": "Cast sheet",
+    "description": "Cast route sheet opened from the player, showing current playback and route controls.",
+    "best_use": "Casting feature, nearby speaker or TV listening, and route selection.",
+    "alt_text": "LibriVox Mobile Cast route sheet opened from the player.",
+    "topics": ["cast", "player", "devices"]
+  },
+  {
+    "file": "18-casting-searching.png",
+    "title": "Cast searching",
+    "description": "Cast route sheet while searching for nearby devices, with this device selected as the current output.",
+    "best_use": "Cast availability, searching for devices, and local playback fallback.",
+    "alt_text": "LibriVox Mobile Cast sheet searching for nearby devices.",
+    "topics": ["cast", "devices", "searching"]
+  },
+  {
+    "file": "19-casting-device-list.png",
+    "title": "Cast device list",
+    "description": "Cast route sheet with nearby devices listed, including display, speaker, and TV targets.",
+    "best_use": "Cast device selection and listening on speakers or TVs.",
+    "alt_text": "LibriVox Mobile Cast sheet listing nearby display, speaker, and TV devices.",
+    "topics": ["cast", "devices", "route-selection"]
+  },
+  {
+    "file": "20-casting-feature-alt.png",
+    "title": "Cast alternate",
+    "description": "Alternate Cast-focused capture for future website or publishing compositions.",
+    "best_use": "Backup Cast source image for website sections, store screenshots, or feature collages.",
+    "alt_text": "Alternate LibriVox Mobile Cast feature screen.",
+    "topics": ["cast", "player", "devices"]
+  }
+]

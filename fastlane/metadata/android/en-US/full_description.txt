@@ -1,0 +1,7 @@
+LibriVox Mobile helps you find and listen to public-domain audiobooks recorded by LibriVox volunteers.
+
+Search by title, author, chapter, or reader. Stream a book, cast it, or download it for later. Your library keeps your place, bookmarks, liked books, and recent listens.
+
+Completely free. No ads, subscriptions, or paywalls. Open source.
+
+LibriVox Mobile is unofficial and is not affiliated with or endorsed by LibriVox.

@@ -1,0 +1,12 @@
+<resources>
+    <color name="expressive_primary">#6750A4</color>
+    <color name="expressive_on_primary">#FFFFFF</color>
+    <color name="expressive_secondary">#625B71</color>
+    <color name="expressive_surface">#FFFBFE</color>
+    <color name="expressive_on_surface">#1D1B20</color>
+    <color name="expressive_surface_variant">#E7E0EC</color>
+    <color name="expressive_on_surface_variant">#49454F</color>
+
+    <color name="notification_accent">@color/expressive_primary</color>
+    <color name="notification_action_icon">@color/expressive_on_surface</color>
+</resources>

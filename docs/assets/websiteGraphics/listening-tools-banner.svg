@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2000" height="760" viewBox="0 0 2000 760" role="img" aria-label="LibriVox Mobile banner showing chapters, bookmark notes, and sleep timer screens.">
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="2000" y2="760" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#E9FFFD"/>
+      <stop offset="1" stop-color="#FFF4E4"/>
+    </linearGradient>
+    <filter id="phoneShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#004F59" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+  <rect width="2000" height="760" fill="url(#background)"/>
+  <path d="M0 0h960v760H0z" fill="#D7F5F2"/>
+  <path d="M0 580c270-86 470-88 680-20s368 60 560-58v258H0z" fill="#F8E8CE" opacity="0.72"/>
+  <text x="86" y="164" font-family="Inter, Arial, Helvetica, sans-serif" font-size="34" font-weight="800" letter-spacing="3" fill="#007986">LISTENING TOOLS</text>
+  <text x="86" y="272" font-family="Inter, Arial, Helvetica, sans-serif" font-size="76" font-weight="820" fill="#004F59">Chapters, notes,</text>
+  <text x="86" y="352" font-family="Inter, Arial, Helvetica, sans-serif" font-size="76" font-weight="820" fill="#004F59">and a sleep timer</text>
+  <text x="90" y="424" font-family="Inter, Arial, Helvetica, sans-serif" font-size="30" font-weight="520" fill="#315F65">Move around long books, save moments,</text>
+  <text x="90" y="466" font-family="Inter, Arial, Helvetica, sans-serif" font-size="30" font-weight="520" fill="#315F65">and stop playback when you are done.</text>
+  <rect x="90" y="518" width="342" height="58" rx="29" fill="#007986"/>
+  <text x="261" y="556" text-anchor="middle" font-family="Inter, Arial, Helvetica, sans-serif" font-size="25" font-weight="760" fill="#FFFFFF">Listen anywhere</text>
+  
+    <clipPath id="phoneClip0">
+      <rect x="1036" y="58" width="284" height="638" rx="32" ry="32"/>
+    </clipPath>
+    <g filter="url(#phoneShadow)">
+      <rect x="1030" y="52" width="296" height="650" rx="40" fill="#004F59"/>
+      <rect x="1036" y="58" width="284" height="638" rx="32" fill="#101010"/>
+      <image x="1036" y="58" width="284" height="638" href="../../image-resources/ui-captures/13-player-chapters-panel.png" preserveAspectRatio="xMidYMid meet" clip-path="url(#phoneClip0)"/>
+    </g>
+    <text x="1178" y="738" text-anchor="middle" font-family="Inter, Arial, Helvetica, sans-serif" font-size="25" font-weight="760" fill="#004F59">Chapters</text>
+
+    <clipPath id="phoneClip1">
+      <rect x="1322" y="80" width="284" height="638" rx="32" ry="32"/>
+    </clipPath>
+    <g filter="url(#phoneShadow)">
+      <rect x="1316" y="74" width="296" height="650" rx="40" fill="#004F59"/>
+      <rect x="1322" y="80" width="284" height="638" rx="32" fill="#101010"/>
+      <image x="1322" y="80" width="284" height="638" href="../../image-resources/ui-captures/14-player-bookmark-notes.png" preserveAspectRatio="xMidYMid meet" clip-path="url(#phoneClip1)"/>
+    </g>
+    <text x="1464" y="760" text-anchor="middle" font-family="Inter, Arial, Helvetica, sans-serif" font-size="25" font-weight="760" fill="#004F59">Notes</text>
+
+    <clipPath id="phoneClip2">
+      <rect x="1608" y="58" width="284" height="638" rx="32" ry="32"/>
+    </clipPath>
+    <g filter="url(#phoneShadow)">
+      <rect x="1602" y="52" width="296" height="650" rx="40" fill="#004F59"/>
+      <rect x="1608" y="58" width="284" height="638" rx="32" fill="#101010"/>
+      <image x="1608" y="58" width="284" height="638" href="../../image-resources/ui-captures/16-sleep-timer.png" preserveAspectRatio="xMidYMid meet" clip-path="url(#phoneClip2)"/>
+    </g>
+    <text x="1750" y="738" text-anchor="middle" font-family="Inter, Arial, Helvetica, sans-serif" font-size="25" font-weight="760" fill="#004F59">Timer</text>
+</svg>

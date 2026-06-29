@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="LibriVox Mobile">
+  <defs>
+    <linearGradient id="bg" x1="96" y1="72" x2="416" y2="440" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0b7f88"/>
+      <stop offset="1" stop-color="#005965"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#bg)"/>
+  <path d="M158 145h196c28 0 50 22 50 50v122c0 28-22 50-50 50H158c-28 0-50-22-50-50V195c0-28 22-50 50-50Z" fill="#f8efd6"/>
+  <path d="M177 145h36v222h-36Z" fill="#0b7f88"/>
+  <path d="M259 211v90l78-45Z" fill="#0b7f88"/>
+  <path d="M158 145h196c28 0 50 22 50 50v122c0 28-22 50-50 50H158c-28 0-50-22-50-50V195c0-28 22-50 50-50Z" fill="none" stroke="#fffdf8" stroke-opacity="0.42" stroke-width="12"/>
+</svg>

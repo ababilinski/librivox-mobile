@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1780" height="1220" viewBox="0 0 1780 1220" role="img" aria-label="LibriVox Mobile collection graphic with chapters, bookmark notes, and sleep timer screens.">
+  <rect width="1780" height="1220" fill="#F8F4EA"/>
+  <path d="M0 0h1780v420H0z" fill="#E9FFFD"/>
+  <text x="890" y="84" text-anchor="middle" font-family="Inter, Arial, Helvetica, sans-serif" font-size="40" font-weight="800" letter-spacing="3" fill="#007986">LIBRIVOX MOBILE</text>
+  
+    <clipPath id="triptychClip0">
+      <rect x="168" y="236" width="340" height="762" rx="34" ry="34"/>
+    </clipPath>
+    <g>
+      <rect x="96" y="124" width="484" height="1012" rx="46" fill="#FFFDF8" stroke="#DCCFC0"/>
+      <text x="338" y="196" text-anchor="middle" font-family="Inter, Arial, Helvetica, sans-serif" font-size="42" font-weight="800" fill="#004F59">Chapters</text>
+      <rect x="154" y="222" width="368" height="790" rx="46" fill="#004F59" opacity="0.96"/>
+      <image x="168" y="236" width="340" height="762" href="../../image-resources/ui-captures/13-player-chapters-panel.png" preserveAspectRatio="xMidYMid meet" clip-path="url(#triptychClip0)"/>
+      <text x="338" y="1070" text-anchor="middle" font-family="Inter, Arial, Helvetica, sans-serif" font-size="25" font-weight="560" fill="#315F65">Jump to the right part.</text>
+    </g>
+
+    <clipPath id="triptychClip1">
+      <rect x="716" y="236" width="340" height="762" rx="34" ry="34"/>
+    </clipPath>
+    <g>
+      <rect x="644" y="124" width="484" height="1012" rx="46" fill="#FFFDF8" stroke="#DCCFC0"/>
+      <text x="886" y="196" text-anchor="middle" font-family="Inter, Arial, Helvetica, sans-serif" font-size="42" font-weight="800" fill="#004F59">Bookmark notes</text>
+      <rect x="702" y="222" width="368" height="790" rx="46" fill="#004F59" opacity="0.96"/>
+      <image x="716" y="236" width="340" height="762" href="../../image-resources/ui-captures/14-player-bookmark-notes.png" preserveAspectRatio="xMidYMid meet" clip-path="url(#triptychClip1)"/>
+      <text x="886" y="1070" text-anchor="middle" font-family="Inter, Arial, Helvetica, sans-serif" font-size="25" font-weight="560" fill="#315F65">Save moments with context.</text>
+    </g>
+
+    <clipPath id="triptychClip2">
+      <rect x="1264" y="236" width="340" height="762" rx="34" ry="34"/>
+    </clipPath>
+    <g>
+      <rect x="1192" y="124" width="484" height="1012" rx="46" fill="#FFFDF8" stroke="#DCCFC0"/>
+      <text x="1434" y="196" text-anchor="middle" font-family="Inter, Arial, Helvetica, sans-serif" font-size="42" font-weight="800" fill="#004F59">Sleep timer</text>
+      <rect x="1250" y="222" width="368" height="790" rx="46" fill="#004F59" opacity="0.96"/>
+      <image x="1264" y="236" width="340" height="762" href="../../image-resources/ui-captures/16-sleep-timer.png" preserveAspectRatio="xMidYMid meet" clip-path="url(#triptychClip2)"/>
+      <text x="1434" y="1070" text-anchor="middle" font-family="Inter, Arial, Helvetica, sans-serif" font-size="25" font-weight="560" fill="#315F65">Stop playback automatically.</text>
+    </g>
+</svg>

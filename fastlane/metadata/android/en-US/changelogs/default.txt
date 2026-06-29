@@ -1,0 +1,1 @@
+Fix catalog source selection so LibriVox, Lit2Go, Project Gutenberg, and Wolne Lektury can all be selected from onboarding and Settings.
