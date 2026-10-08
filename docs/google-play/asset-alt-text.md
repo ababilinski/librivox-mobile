@@ -1,21 +1,10 @@
-# Google Play Asset Alt Text
+# Play screenshot descriptions
 
-Feature graphic: LibriVox Mobile promotional graphic with browse, book detail, and player screens.
-
-Play icon: Teal audiobook tile with a warm book panel, spine, and play cutout.
-
-01 Browse LibriVox audiobooks: Discover screen showing LibriVox audiobook covers in a grid.
-
-02 Preview books and chapters: Book detail screen for The Jungle with cover art, summary, and chapters.
-
-03 Audiobook controls that stay handy: Full player screen for The Jungle with audiobook controls.
-
-04 Keep chapters in view: Book detail screen with mini player and chapter list.
-
-05 Track your listening library: Library screen with saved audiobook progress.
-
-06 Save books for offline listening: Download and cache setup screen.
-
-07 Tune playback and downloads: Settings screen with appearance, catalog, downloads, and playback options.
-
-08 LibriVox Mobile setup: Onboarding screen introducing LibriVox Mobile.
+- 01-browse-audiobooks.png: Find your next audiobook. Authentic Android capture.
+- 02-cast-to-speakers-and-tvs.png: Cast to speakers and TVs. Authentic Android capture.
+- 03-player-controls.png: Listen at your own pace. Authentic Android capture.
+- 04-offline-listening.png: Download for offline listening. Authentic Android capture.
+- 05-library-progress.png: Pick up where you left off. Authentic Android capture.
+- 06-chapter-list.png: Jump to any chapter. Authentic Android capture.
+- 07-bookmarks-and-notes.png: Save bookmarks and notes. Authentic Android capture.
+- 08-sleep-timer.png: Set a sleep timer. Authentic Android capture.

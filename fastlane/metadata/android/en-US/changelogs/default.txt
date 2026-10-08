@@ -1,1 +1,2 @@
-Fix catalog source selection so LibriVox, Lit2Go, Project Gutenberg, and Wolne Lektury can all be selected from onboarding and Settings.
+First Google Play release of LibriVox Mobile.
+Search audiobook catalogs, stream or download chapters, and cast to compatible speakers and TVs. Includes a personal library, bookmarks, playback speed, a sleep timer, and background media controls.

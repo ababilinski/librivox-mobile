@@ -1,82 +1,36 @@
-# Google Play Store Listing
+# Google Play release listing
 
-Source docs:
-- App descriptions: https://support.google.com/googleplay/android-developer/answer/13393723
-- Preview assets: https://support.google.com/googleplay/android-developer/answer/9866151
-- Data safety: https://support.google.com/googleplay/android-developer/answer/10787469
-- User Data policy: https://support.google.com/googleplay/android-developer/answer/10144311
+Default language: English (United States), en-US
+App: LibriVox Mobile
+Package: com.librivox.mobile
+Developer: BabilinApps
+Category: Music & Audio
+Pricing: Free, with no in-app purchases or ads
+Target audience: 13-15, 16-17, and 18+
+Availability: All eligible countries
+Endpoint: Ready for review. Do not select Send for review.
 
-## Text
+## Listing content
 
-Title: LibriVox Mobile
+The maintained title, short description, full description, and release notes are in `fastlane/metadata/android/en-US/`. The full description includes the source-code link, independent-app disclosure, enabled catalog explanation, casting requirements, and country-dependent rights notice.
 
-Short description: Stream and cast LibriVox audiobooks on your phone. Completely free.
+Support: adrian@babilinapps.com
+Website: https://ababilinski.github.io/librivox-mobile/
+Privacy: https://ababilinski.github.io/librivox-mobile/privacy-policy/
+Source code: https://github.com/ababilinski/librivox-mobile
 
-Full description: `fastlane/metadata/android/en-US/full_description.txt`
+## Graphics
 
-Release notes: `fastlane/metadata/android/en-US/changelogs/default.txt`
+Run `python3 scripts/generate-play-store-assets.py` after capturing the release UI. Eight phone images in `fastlane/metadata/android/en-US/images/phoneScreenshots/` are ordered browse, casting, player, offline downloads, library progress, chapters, bookmarks/notes, and sleep timer. Each is 1080x1920 RGB PNG with the complete authentic Android capture fitted proportionally inside the composition.
 
-Asset generator: `scripts/generate-play-store-assets.py`
+The 1024x500 feature graphic includes the real casting sheet and player. The 512x512 Play icon comes from the current launcher icon asset. `asset-manifest.json` records source and output hashes. `phone-screenshot-contact-sheet.png` is a local review preview, not a store upload.
 
-Asset generator dependency: `scripts/requirements-play-assets.txt`
+## Review declarations
 
-Play icon: `fastlane/metadata/android/en-US/images/icon.png`
+Complete all required App content sections using the release code and SDK audit. See `data-safety-draft.md` for the collection review. The maintained policy is `docs/privacy-policy/index.html`; do not reuse the earlier no-collection draft.
 
-Feature graphic SVG source: `docs/google-play/feature-graphic.svg`
+Media playback uses a user-started foreground service. Provide a video that shows starting audio, background playback, and notification controls. Record the accepted bundle, actual saved declarations, and remaining blockers in `artifacts/google-play-preparation/completion.md`.
 
-Feature graphic PNG: `docs/google-play/feature-graphic.png`
+## Release verification
 
-Play icon SVG source: `docs/google-play/play-store-icon.svg`
-
-Play icon PNG: `docs/google-play/play-store-icon.png`
-
-Screenshot SVG sources: `docs/google-play/screenshots/`
-
-Original uncaptioned screen grabs: `docs/google-play/source-screenshots/`
-
-Reusable UI capture library: `docs/image-resources/ui-captures/`
-
-Reusable UI capture manifest: `docs/image-resources/ui-captures/manifest.json`
-
-Asset alt text: `docs/google-play/asset-alt-text.md`
-
-Screenshot contact sheet: `docs/google-play/phone-screenshot-contact-sheet.png`
-
-## Suggested Console Fields
-
-App category: Music & Audio
-
-Tags: Audiobooks, Books & Reference, Music & Audio
-
-Contact website: project repository or app landing page
-
-Privacy policy: required before production release
-
-Draft privacy policy: `docs/google-play/privacy-policy-draft.md`
-
-Draft Data safety notes: `docs/google-play/data-safety-draft.md`
-
-## Website Pages
-
-GitHub Pages root: `docs/index.html`
-
-Features: `/features/`
-
-Privacy policy: `/privacy-policy/`
-
-Support: `/support/`
-
-Terms of service: `/terms-of-service/`
-
-FAQ: `/faq/`
-
-Resources: `/resources/`
-
-Publishing link helper: `/publishing/`
-
-## Review Notes
-
-- This is an unofficial LibriVox client.
-- Do not imply endorsement by LibriVox.
-- Keep public-domain/source attribution visible in the listing.
-- Confirm final package name, signing, screenshots, and Data safety answers before release.
+Existing signing configuration is local and must stay out of Git. Build a new AAB. Preserve unrelated checkout changes and do not publish the local commit backlog during website publication. Publish only the scoped policy, review video, and listing assets on top of the current public branch.

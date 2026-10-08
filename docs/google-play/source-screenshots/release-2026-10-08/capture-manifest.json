@@ -1,0 +1,17 @@
+{
+  "capture_date": "2026-10-08",
+  "package": "com.librivox.mobile",
+  "version_name": "1.0.0",
+  "version_code": 1,
+  "captures": {
+    "01-browse.png": "Release APK on dedicated API 36 emulator; live catalog browse, scrolled grid",
+    "02-casting.png": "Current debug APK on connected Pixel 9; actual Kitchen speaker Cast connection",
+    "03-player.png": "Release APK on emulator; streaming Bleak House, chapter 1",
+    "04-downloads.png": "Release APK on emulator; 12.1 MB downloaded chapter",
+    "05-library.png": "Release APK on emulator; saved book and current listening progress",
+    "06-chapters.png": "Release APK on emulator; actual Bleak House chapter list",
+    "07-bookmarks.png": "Release APK on emulator; bookmark and note created through UI",
+    "08-sleep-timer.png": "Release APK on emulator; actual sleep timer options"
+  },
+  "ui_modifications": "None. Store compositor fits authentic captures proportionally and adds captions outside them."
+}
