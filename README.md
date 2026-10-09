@@ -4,15 +4,37 @@
 
 # LibriVox Mobile
 
-Android audiobook app for free public-domain LibriVox recordings.
+LibriVox Mobile brings audiobooks from LibriVox, Lit2Go, Project Gutenberg, and Wolne Lektury together in one app. Listen to classic novels, short stories, poetry, and nonfiction online or save chapters for offline listening.
 
-## Features
+**100% free. No ads, subscriptions, in-app purchases, or paid upgrades.** Every app feature is available without payment, and no account is required.
 
-- Browse and search LibriVox by title, author, chapter, or reader.
-- Stream chapters or download books for offline listening.
-- Keep a personal library with progress, likes, and bookmarks.
-- Listen with speed, sleep timer, chapter skip, Cast, and background media controls.
-- Open the original LibriVox page or donation link from each book.
+This is an open-source project under the [MIT license](LICENSE), built to make these public audiobook libraries easier to use. Anyone can read the code, [report a problem](https://github.com/ababilinski/librivox-mobile/issues), or contribute improvements.
+
+[Project website](https://ababilinski.github.io/librivox-mobile/) · [Privacy policy](https://ababilinski.github.io/librivox-mobile/privacy-policy/) · [Support](https://ababilinski.github.io/librivox-mobile/support/)
+
+## Audiobook sources
+
+The books and recordings come from the projects below. Source information, reader credits, and original project links remain available in book details.
+
+| Source | What it provides |
+| --- | --- |
+| [LibriVox](https://librivox.org/) | Public-domain books recorded by volunteers around the world. |
+| [Lit2Go](https://etc.usf.edu/lit2go/) | Stories and poems from the University of South Florida's educational collection. |
+| [Project Gutenberg](https://www.gutenberg.org/) | Audiobook editions from its digital library, accessed through [Gutendex](https://gutendex.com/). |
+| [Wolne Lektury](https://wolnelektury.pl/) | Polish literature and audiobooks from the Wolne Lektury digital library. |
+
+LibriVox is enabled when you start. Enable the other catalogs in Settings and choose the languages you want to browse.
+
+LibriVox Mobile does not charge for access to these recordings. It is independent and is not affiliated with or endorsed by any of the source projects. Recordings, artwork, and catalog information retain their source licenses; the app's MIT license does not replace them. Public-domain status varies by country, so check a work's rights where you live before downloading or using it.
+
+## Listening
+
+- Stream chapters or download them for offline listening.
+- Save books to your library and keep your listening progress, likes, and bookmarks with notes.
+- Adjust playback speed, set a sleep timer, and move between chapters.
+- Keep listening while using other apps, with background playback and media controls.
+- Cast to compatible Google Cast speakers, TVs, and receivers on the same local network.
+- Open the original source pages and available donation links to support the projects that provide the books.
 
 ## Screenshots
 
@@ -53,13 +75,13 @@ npm run build
 The iOS Liquid Glass port checklist lives in [docs/ios-liquid-glass-checklist.md](docs/ios-liquid-glass-checklist.md).
 The stricter builder-checklist review lives in [docs/ios-builder-checklist-review.md](docs/ios-builder-checklist-review.md).
 
-## Before Release
+## Release checks
 
-- Replace the sample `applicationId`.
-- Add release signing.
-- Publish a privacy policy.
-- Verify all artwork, metadata, and audio attribution.
-- Keep the app clear that it is unofficial and not affiliated with LibriVox.
+- Keep signing keys and credentials out of Git.
+- Run the release build, unit tests, lint, and website validation.
+- Check playback, downloads, offline listening, and Cast on Android.
+- Keep the privacy policy and store declarations consistent with the release.
+- Verify source licenses, reader credits, artwork attribution, and the independent-app disclosure.
 
 ## License
 

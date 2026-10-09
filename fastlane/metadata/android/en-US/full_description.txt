@@ -1,19 +1,30 @@
-Listen to classic audiobooks on your phone, or cast them to a compatible speaker or TV. Download books before you head out and keep listening offline.
+LibriVox Mobile brings audiobooks from LibriVox, Lit2Go, Project Gutenberg, and Wolne Lektury together in one app. It is 100% free, with no ads, subscriptions, in-app purchases, or paid upgrades. No account is required.
 
-Start with LibriVox recordings, read by volunteers. You can also enable Lit2Go, Project Gutenberg through Gutendex, and Wolne Lektury in Settings. Wolne Lektury includes Polish audiobooks.
+Listen to classic novels, short stories, poetry, and nonfiction. Stream a chapter at home or download it before heading out. Saved chapters keep playing without an internet connection.
 
-Find books by title or author. LibriVox search also supports chapters and readers. Save books to your library, keep your listening progress, and add bookmarks with notes.
+The libraries behind the books
 
-Adjust playback speed, set a sleep timer, and move between chapters. Background playback and Android media controls let you keep listening while using other apps.
+• LibriVox: public-domain books recorded by volunteers around the world.
+• Lit2Go: stories and poems from the University of South Florida's educational collection.
+• Project Gutenberg: audiobook editions from its digital library, accessed through the Gutendex catalog.
+• Wolne Lektury: Polish literature and audiobooks from the Wolne Lektury digital library.
 
-Casting works with compatible Google Cast speakers, TVs, and receivers on the same local network as your phone. You can choose an output from the player.
+LibriVox is enabled when you start. Turn on the additional catalogs in Settings and choose the languages you want to browse. Book details keep source information and reader credits available, with links to the original project pages.
 
-No account is required. The app has no ads, subscriptions, or in-app purchases. Your library, progress, bookmarks, settings, and downloads are stored on your device.
+Keep your listening together
 
-LibriVox Mobile is open source under the MIT license. Read the code or report a problem:
+Save books to your library and pick up where you left off. Bookmark a passage, add a note, change playback speed, or set a sleep timer for bedtime. Move between chapters and control playback while using other apps or from Android media controls.
+
+You can also cast to compatible Google Cast speakers, TVs, and receivers on the same local network as your phone. Choose the listening device from the player.
+
+Open source for everyone
+
+The app's source code is available under the MIT license. Anyone can read it, report a problem, or contribute improvements:
 https://github.com/ababilinski/librivox-mobile
 
-This is an independent app. It is not affiliated with or endorsed by LibriVox, Lit2Go, Project Gutenberg, or Wolne Lektury. Recordings, artwork, and catalog information remain subject to their source licenses. Public-domain status varies by country; check the rights for a work where you live before downloading or using it.
+The recordings come from the volunteers and organizations that make these libraries available. LibriVox Mobile does not charge for access to them. Your library, progress, bookmarks, settings, and downloads are stored on your device.
+
+LibriVox Mobile is an independent app, not affiliated with or endorsed by LibriVox, Lit2Go, Project Gutenberg, or Wolne Lektury. Recordings, artwork, and catalog information retain their source licenses. Public-domain status varies by country; check a work's rights where you live before downloading or using it.
 
 Support: adrian@babilinapps.com
 Privacy policy: https://ababilinski.github.io/librivox-mobile/privacy-policy/

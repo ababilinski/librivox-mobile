@@ -12,7 +12,9 @@ Endpoint: Ready for review. Do not select Send for review.
 
 ## Listing content
 
-The maintained title, short description, full description, and release notes are in `fastlane/metadata/android/en-US/`. The full description includes the source-code link, independent-app disclosure, enabled catalog explanation, casting requirements, and country-dependent rights notice.
+The maintained title, short description, full description, and release notes are in `fastlane/metadata/android/en-US/`. The short description names LibriVox, Lit2Go, Project Gutenberg, and Wolne Lektury without mentioning casting. Pricing claims stay in the full description, following Google's short-description guidance.
+
+The full description leads with all four audiobook sources and the app's 100% free access, no ads, no subscriptions, and no in-app purchases. It explains how to enable additional catalogs, credits the projects that provide the recordings, and includes the source-code link, independent-app disclosure, casting requirements, and country-dependent rights notice.
 
 Support: adrian@babilinapps.com
 Website: https://ababilinski.github.io/librivox-mobile/
