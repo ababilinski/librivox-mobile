@@ -3,56 +3,64 @@
     "source": "docs/google-play/source-screenshots/release-2026-10-08/01-browse.png",
     "output": "fastlane/metadata/android/en-US/images/phoneScreenshots/01-browse-audiobooks.png",
     "caption": "Find your next audiobook",
-    "source_sha256": "b06cd48c2d839120d94656fa98efd4361809c87fb720cb85d0d1080c798263ad",
-    "output_sha256": "f01fdd215e16229d25b9d2fd535ea30d63158bd335ae9059f097653944064ef4"
+    "source_sha256": "05143d53d6a775c9673576740990a894bc32d2ce47659b99eefacec9f3f7b1ae",
+    "output_sha256": "07d29982401f26dc7de3cc8fbf38e7732b4246f6c1d6b64b76d71f2f95468cf1",
+    "usage_scene": null
   },
   {
     "source": "docs/google-play/source-screenshots/release-2026-10-08/02-casting.png",
     "output": "fastlane/metadata/android/en-US/images/phoneScreenshots/02-cast-to-speakers-and-tvs.png",
     "caption": "Cast to speakers and TVs",
-    "source_sha256": "89673b64e08a0d506b5a29f0d709a28c6ffb6ae1d9c8c5b538e86799b8f12747",
-    "output_sha256": "a9720c7aede253dd3071c42ff6bc9ec4e30d3c9afbddd143f17012316a452ead"
+    "source_sha256": "2aa8ecd49341dbf61cd0f71a6afc50db6ca934c76154dc75516b17f99b419c0a",
+    "output_sha256": "f5cc6dbdd4d470a7a540b4f64f45a708d7ba4dd1388a7eec6d654348e697f88d",
+    "usage_scene": "casting.png"
   },
   {
     "source": "docs/google-play/source-screenshots/release-2026-10-08/03-player.png",
     "output": "fastlane/metadata/android/en-US/images/phoneScreenshots/03-player-controls.png",
     "caption": "Listen at your own pace",
-    "source_sha256": "573ccd952ba4db9593c345292f613b4ff643676a520bc213b8c93a2d237552ec",
-    "output_sha256": "ee3187de1e757a88a3a884f3583b45c59ddc00f1a8aaeaed235f61e98cdddd00"
+    "source_sha256": "8a829e5b8e9a1ba98f7e53ff25edd901935e43ec0d411a5df41f5e71c770add9",
+    "output_sha256": "1a656889c9ffa3d9a969db3889a75262eb3de5578e110caeb00ef7cf4f7f9aa1",
+    "usage_scene": null
   },
   {
     "source": "docs/google-play/source-screenshots/release-2026-10-08/04-downloads.png",
     "output": "fastlane/metadata/android/en-US/images/phoneScreenshots/04-offline-listening.png",
     "caption": "Download for offline listening",
-    "source_sha256": "5742a3758c5a787c99f9a696a5b1c4f271294cccd97afac6ea5fa6e5d25e261f",
-    "output_sha256": "5f434239e32fd32e209822fb184dec6fac740b4684c3513dfb8c7ead049bbfe6"
+    "source_sha256": "524b3b436fe96a818153342c351f1f09de6f7b6fca720ce6fd9e9a75fd880dd7",
+    "output_sha256": "db8aae548cac22982b21de172505be640048d3a5a7c7763170fb41836cd85ea2",
+    "usage_scene": "offline.png"
   },
   {
     "source": "docs/google-play/source-screenshots/release-2026-10-08/05-library.png",
     "output": "fastlane/metadata/android/en-US/images/phoneScreenshots/05-library-progress.png",
     "caption": "Pick up where you left off",
-    "source_sha256": "bbcaf02319b04570ecc16b623394b26d03338cfbd4c4d24c73c86fd086f39958",
-    "output_sha256": "b23c1f05df220d00a56121eb20fcfbe7b47602ea6cfc2c704169c57438752ecc"
+    "source_sha256": "e6437319baef1e2a2b704817d223539a13b8f1c8af5202cd4ae2010f21aa3abf",
+    "output_sha256": "d525c1963df3113ea59b99a1994e02b560ad26c7b6e3ec3437fdda549f1ac6a2",
+    "usage_scene": null
   },
   {
     "source": "docs/google-play/source-screenshots/release-2026-10-08/06-chapters.png",
     "output": "fastlane/metadata/android/en-US/images/phoneScreenshots/06-chapter-list.png",
     "caption": "Jump to any chapter",
-    "source_sha256": "b424cc6433207435a3656755f0439d40c161208df4c7345ae064a680d8f442c0",
-    "output_sha256": "e775e656ef2b596e57fa6208f0b3b8edb517b348c6467bfa5f440b56e3cab967"
+    "source_sha256": "e0b639c3e00fe6d146e2d9c182ee3582011c0943aaffea8bc12083c13fcae99f",
+    "output_sha256": "8554938a243983f83fe28d717b8b88b79d2eca61765238d2642831209327769c",
+    "usage_scene": null
   },
   {
     "source": "docs/google-play/source-screenshots/release-2026-10-08/07-bookmarks.png",
     "output": "fastlane/metadata/android/en-US/images/phoneScreenshots/07-bookmarks-and-notes.png",
     "caption": "Save bookmarks and notes",
-    "source_sha256": "a4dec0439a39b2a15726d7336719b145f87ece989dafd6d1b582262c43b566ea",
-    "output_sha256": "96c174419153114a83d30ca5a8a64ff50cd823ea5119e3c44a7acaa7ba58af82"
+    "source_sha256": "2a6c0e4acb206e267a885af237c63e106b29ff47ae37c87b52af5e4b116fa1a6",
+    "output_sha256": "835005672370828d08d594a1a586bb067d5d8116e3fdb4188367da0386cc8e47",
+    "usage_scene": null
   },
   {
     "source": "docs/google-play/source-screenshots/release-2026-10-08/08-sleep-timer.png",
     "output": "fastlane/metadata/android/en-US/images/phoneScreenshots/08-sleep-timer.png",
     "caption": "Set a sleep timer",
-    "source_sha256": "bfee813b37f87d9c039c60a93a284724aa024069baabf2369c35ce1a46645de6",
-    "output_sha256": "60ae8e1121f9e297dedfd79906b7bd90873e81c075415f64052832c887b06c50"
+    "source_sha256": "2dc98fdddc9545320aaf31ce75f7b8f6bec577606075fa0914c4eff6ef21331f",
+    "output_sha256": "50d0b8e6591f341a88e1f4872186ce4d1a659cce11d7c4a4da9032af01e698ff",
+    "usage_scene": "sleep.png"
   }
 ]

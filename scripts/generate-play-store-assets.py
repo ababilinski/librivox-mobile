@@ -7,7 +7,7 @@ import json
 import shutil
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageFilter, ImageFont
+from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
 
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / 'docs/google-play'
@@ -28,6 +28,11 @@ ASSETS = [
     ('08-sleep-timer.png', '08-sleep-timer.png', ('Set a', 'sleep timer')),
 ]
 FONT_DIR = Path('/System/Library/Fonts/Supplemental')
+USAGE_SCENES = {
+    '02-casting.png': ('casting.png', (54, 414, 766, 1857)),
+    '04-downloads.png': ('offline.png', (54, 414, 766, 1857)),
+    '08-sleep-timer.png': ('sleep.png', (314, 414, 1026, 1857)),
+}
 
 
 def font(size: int, bold: bool = False) -> ImageFont.FreeTypeFont:
@@ -52,13 +57,20 @@ def image_insert(canvas: Image.Image, source: Path, bounds: tuple[int, int, int,
 
 def screenshot(source: Path, output: Path, caption: tuple[str, ...]) -> None:
     canvas = Image.new('RGB', (1080, 1920), BACKGROUND)
+    scene = USAGE_SCENES.get(source.name)
+    if scene:
+        with Image.open(DOCS / 'usage-scenes' / scene[0]) as photo:
+            canvas.paste(ImageOps.fit(photo.convert('RGB'), canvas.size, method=Image.Resampling.LANCZOS))
     draw = ImageDraw.Draw(canvas)
+    if scene:
+        draw.rectangle((0, 0, 1080, 355), fill=BACKGROUND)
     draw.ellipse((-340, -410, 620, 390), fill=CREAM)
-    draw.ellipse((810, 1380, 1520, 2130), fill='#DFEFEB')
+    if not scene:
+        draw.ellipse((810, 1380, 1520, 2130), fill='#DFEFEB')
     for index, line in enumerate(caption):
         draw.text((540, 103 + 85 * index), line, anchor='mt', font=font(76, True), fill=TEAL)
     draw.text((540, 294), 'LibriVox Mobile', anchor='mt', font=font(25), fill=TEAL)
-    image_insert(canvas, source, (104, 369, 976, 1857))
+    image_insert(canvas, source, scene[1] if scene else (104, 369, 976, 1857))
     canvas.save(output, optimize=True)
 
 
@@ -90,7 +102,7 @@ def main() -> None:
     manifest = []
     for source, output, caption in ASSETS:
         screenshot(SOURCES / source, PHONE / output, caption)
-        manifest.append({'source': str((SOURCES / source).relative_to(ROOT)), 'output': str((PHONE / output).relative_to(ROOT)), 'caption': ' '.join(caption), 'source_sha256': hashlib.sha256((SOURCES / source).read_bytes()).hexdigest(), 'output_sha256': hashlib.sha256((PHONE / output).read_bytes()).hexdigest()})
+        manifest.append({'source': str((SOURCES / source).relative_to(ROOT)), 'output': str((PHONE / output).relative_to(ROOT)), 'caption': ' '.join(caption), 'source_sha256': hashlib.sha256((SOURCES / source).read_bytes()).hexdigest(), 'output_sha256': hashlib.sha256((PHONE / output).read_bytes()).hexdigest(), 'usage_scene': USAGE_SCENES.get(source, (None,))[0]})
     feature_graphic()
     shutil.copy2(ROOT / 'app/src/main/assets/app-icons/play_store_icon_512.png', IMAGES / 'icon.png')
     shutil.copy2(IMAGES / 'icon.png', DOCS / 'play-store-icon.png')

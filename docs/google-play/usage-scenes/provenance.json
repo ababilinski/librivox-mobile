@@ -1,0 +1,21 @@
+{
+  "generator": "Built-in image_gen",
+  "purpose": "Illustrative lifestyle backgrounds; app UI is captured from Android and composed separately",
+  "scenes": {
+    "casting": {
+      "file": "casting.png",
+      "sha256": "37471d08976d52d0d78b87a14bbfca3b6593c7aa82fd40d3cf9eb323399b917d",
+      "source_file": "exec-dc02810b-d806-4f91-8078-0b0fe027edf1.png"
+    },
+    "offline": {
+      "file": "offline.png",
+      "sha256": "2d9bc934c7ebd4f8369d1398655c0c0c105143b2b6641de23d47449442b0964f",
+      "source_file": "exec-1e2145fd-6b32-49d2-8d44-96fcc9c1e892.png"
+    },
+    "sleep": {
+      "file": "sleep.png",
+      "sha256": "ae279df5394f834084db7d53319a97bde82e473a91b56ee8e8ccefe5a3b47e07",
+      "source_file": "exec-adb3a1d9-e493-4935-add4-ca032bbe172c.png"
+    }
+  }
+}
