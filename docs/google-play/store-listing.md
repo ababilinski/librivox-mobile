@@ -25,6 +25,8 @@ Source code: https://github.com/ababilinski/librivox-mobile
 
 Run `python3 scripts/generate-play-store-assets.py` after capturing the release UI. Eight phone images in `fastlane/metadata/android/en-US/images/phoneScreenshots/` are ordered browse, casting, player, offline downloads, library progress, chapters, bookmarks/notes, and sleep timer. Each is 1080x1920 RGB PNG with the complete authentic Android capture fitted proportionally inside the composition.
 
+Casting, offline listening, and the sleep timer use phone scenes that fit the feature: a desk beside a Google Home speaker, a phone held at a cafe table, and a bedside nightstand. Create the scene first, then insert a different authentic app capture into the phone display. The SVG screen layers keep the captured UI intact, fit it proportionally, and preserve the physical camera cutout. Captions remain outside the phone. Generated scenes are labeled as AI assets in Console; these images illustrate usage rather than document the photographed setting of the device test.
+
 The 1024x500 feature graphic includes the real casting sheet and player. The 512x512 Play icon comes from the current launcher icon asset. `asset-manifest.json` records source and output hashes. `phone-screenshot-contact-sheet.png` is a local review preview, not a store upload.
 
 ## Review declarations

@@ -39,10 +39,18 @@ LibriVox Mobile does not charge for access to these recordings. It is independen
 ## Screenshots
 
 <p>
-  <img src="docs/screenshots/04-discover.png" alt="Discover LibriVox audiobooks" width="24%" />
-  <img src="docs/screenshots/05-book-detail.png" alt="LibriVox book details" width="24%" />
-  <img src="docs/screenshots/06-playing-detail.png" alt="Mini player" width="24%" />
-  <img src="docs/screenshots/07-player.png" alt="Full player" width="24%" />
+  <img src="docs/google-play/source-screenshots/release-2026-10-08/01-browse.png" alt="Browse audiobooks in dark mode" width="24%" />
+  <img src="docs/google-play/source-screenshots/release-2026-10-08/03-player.png" alt="Audiobook player and playback controls" width="24%" />
+  <img src="docs/google-play/source-screenshots/release-2026-10-08/05-library.png" alt="Saved books and listening progress" width="24%" />
+  <img src="docs/google-play/source-screenshots/release-2026-10-08/07-bookmarks.png" alt="Bookmarks and notes in the audiobook player" width="24%" />
+</p>
+
+Cast to a compatible speaker, listen to a downloaded chapter while out, or set a timer before bed. These illustrative phone scenes use different authentic app captures from the screenshots above.
+
+<p>
+  <img src="docs/google-play/usage-scenes/casting.png" alt="Phone on a desk beside a Google Home speaker, with native Cast volume controls on its screen" width="32%" />
+  <img src="docs/google-play/usage-scenes/offline.png" alt="A phone held at a cafe table, playing a downloaded audiobook chapter" width="32%" />
+  <img src="docs/google-play/usage-scenes/sleep.png" alt="Phone on a bedside nightstand with a 15-minute sleep timer selected" width="32%" />
 </p>
 
 ## Build

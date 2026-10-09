@@ -5,15 +5,17 @@
     "caption": "Find your next audiobook",
     "source_sha256": "05143d53d6a775c9673576740990a894bc32d2ce47659b99eefacec9f3f7b1ae",
     "output_sha256": "07d29982401f26dc7de3cc8fbf38e7732b4246f6c1d6b64b76d71f2f95468cf1",
-    "usage_scene": null
+    "usage_scene": null,
+    "screen_composition": "Complete capture fitted proportionally"
   },
   {
-    "source": "docs/google-play/source-screenshots/release-2026-10-08/02-casting.png",
+    "source": "docs/google-play/source-screenshots/usage-2026-10-08/casting-volume.png",
     "output": "fastlane/metadata/android/en-US/images/phoneScreenshots/02-cast-to-speakers-and-tvs.png",
     "caption": "Cast to speakers and TVs",
-    "source_sha256": "2aa8ecd49341dbf61cd0f71a6afc50db6ca934c76154dc75516b17f99b419c0a",
-    "output_sha256": "f5cc6dbdd4d470a7a540b4f64f45a708d7ba4dd1388a7eec6d654348e697f88d",
-    "usage_scene": "casting.png"
+    "source_sha256": "f83d831d5ceed1cc00391cfc7313a6f60a408219ba7e6c51a884ff9003793a47",
+    "output_sha256": "879ffb87f7ecbc80d3672bc649e7c920db402dfd6ef9733c9ca0bed141f8f27a",
+    "usage_scene": "casting.png",
+    "screen_composition": "Unmodified Android capture as a proportional SVG image layer inside the phone display"
   },
   {
     "source": "docs/google-play/source-screenshots/release-2026-10-08/03-player.png",
@@ -21,15 +23,17 @@
     "caption": "Listen at your own pace",
     "source_sha256": "8a829e5b8e9a1ba98f7e53ff25edd901935e43ec0d411a5df41f5e71c770add9",
     "output_sha256": "1a656889c9ffa3d9a969db3889a75262eb3de5578e110caeb00ef7cf4f7f9aa1",
-    "usage_scene": null
+    "usage_scene": null,
+    "screen_composition": "Complete capture fitted proportionally"
   },
   {
-    "source": "docs/google-play/source-screenshots/release-2026-10-08/04-downloads.png",
+    "source": "docs/google-play/source-screenshots/usage-2026-10-08/offline-book-playing.png",
     "output": "fastlane/metadata/android/en-US/images/phoneScreenshots/04-offline-listening.png",
     "caption": "Download for offline listening",
-    "source_sha256": "524b3b436fe96a818153342c351f1f09de6f7b6fca720ce6fd9e9a75fd880dd7",
-    "output_sha256": "db8aae548cac22982b21de172505be640048d3a5a7c7763170fb41836cd85ea2",
-    "usage_scene": "offline.png"
+    "source_sha256": "3eafbe2feb3df49fdad21791bd56ff7de9077692cbf449a0f60463094c9f1be7",
+    "output_sha256": "3d87e989d79487c12c2f819285a612a61c923e992f258f1e8b76db956ad7d109",
+    "usage_scene": "offline.png",
+    "screen_composition": "Unmodified Android capture as a proportional SVG image layer inside the phone display"
   },
   {
     "source": "docs/google-play/source-screenshots/release-2026-10-08/05-library.png",
@@ -37,7 +41,8 @@
     "caption": "Pick up where you left off",
     "source_sha256": "e6437319baef1e2a2b704817d223539a13b8f1c8af5202cd4ae2010f21aa3abf",
     "output_sha256": "d525c1963df3113ea59b99a1994e02b560ad26c7b6e3ec3437fdda549f1ac6a2",
-    "usage_scene": null
+    "usage_scene": null,
+    "screen_composition": "Complete capture fitted proportionally"
   },
   {
     "source": "docs/google-play/source-screenshots/release-2026-10-08/06-chapters.png",
@@ -45,7 +50,8 @@
     "caption": "Jump to any chapter",
     "source_sha256": "e0b639c3e00fe6d146e2d9c182ee3582011c0943aaffea8bc12083c13fcae99f",
     "output_sha256": "8554938a243983f83fe28d717b8b88b79d2eca61765238d2642831209327769c",
-    "usage_scene": null
+    "usage_scene": null,
+    "screen_composition": "Complete capture fitted proportionally"
   },
   {
     "source": "docs/google-play/source-screenshots/release-2026-10-08/07-bookmarks.png",
@@ -53,14 +59,16 @@
     "caption": "Save bookmarks and notes",
     "source_sha256": "2a6c0e4acb206e267a885af237c63e106b29ff47ae37c87b52af5e4b116fa1a6",
     "output_sha256": "835005672370828d08d594a1a586bb067d5d8116e3fdb4188367da0386cc8e47",
-    "usage_scene": null
+    "usage_scene": null,
+    "screen_composition": "Complete capture fitted proportionally"
   },
   {
-    "source": "docs/google-play/source-screenshots/release-2026-10-08/08-sleep-timer.png",
+    "source": "docs/google-play/source-screenshots/usage-2026-10-08/sleep-timer-15-min.png",
     "output": "fastlane/metadata/android/en-US/images/phoneScreenshots/08-sleep-timer.png",
     "caption": "Set a sleep timer",
-    "source_sha256": "2dc98fdddc9545320aaf31ce75f7b8f6bec577606075fa0914c4eff6ef21331f",
-    "output_sha256": "50d0b8e6591f341a88e1f4872186ce4d1a659cce11d7c4a4da9032af01e698ff",
-    "usage_scene": "sleep.png"
+    "source_sha256": "6f2433bfdb03916844be1c3ecbc944fa222b283ff562d26f4f28592776f1fda9",
+    "output_sha256": "f42453cddce3e5a42d1226596d2de5ea78c2bfab9a09cc680992c9e6116da0b5",
+    "usage_scene": "sleep.png",
+    "screen_composition": "Unmodified Android capture as a proportional SVG image layer inside the phone display"
   }
 ]

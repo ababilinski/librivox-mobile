@@ -1,21 +1,42 @@
 {
   "generator": "Built-in image_gen",
-  "purpose": "Illustrative lifestyle backgrounds; app UI is captured from Android and composed separately",
+  "purpose": "Illustrative usage photographs with authentic captures inserted as separate native SVG image layers",
+  "method": [
+    "Generate a realistic blank-screen phone scene",
+    "Fit a different unmodified Android capture into its display using the saved SVG composition",
+    "Add store captions outside the photograph and phone"
+  ],
+  "ai_insertion_previews": "The built-in image tool also produced insertion previews. Final exports use fixed original screenshot layers so text and icons are not regenerated.",
   "scenes": {
     "casting": {
       "file": "casting.png",
-      "sha256": "37471d08976d52d0d78b87a14bbfca3b6593c7aa82fd40d3cf9eb323399b917d",
-      "source_file": "exec-dc02810b-d806-4f91-8078-0b0fe027edf1.png"
+      "base": "casting-phone-base.png",
+      "svg": "casting-screen.svg",
+      "capture": "docs/google-play/source-screenshots/usage-2026-10-08/casting-volume.png",
+      "capture_description": "Actual Kitchen speaker Cast session and native Android volume controls, Pixel 9, version 2 debug build from the release checkout, recorded during earlier verification.",
+      "sha256": "a51fd3840b235bda93f7afadfafa6901e10cd3d32d49610dbf83eb4e3ba60b7a",
+      "base_sha256": "183f47773513bb61c18b0f1aab87edb3a0ce24880d2a431e6a293ec75927c8d7",
+      "capture_sha256": "f83d831d5ceed1cc00391cfc7313a6f60a408219ba7e6c51a884ff9003793a47"
     },
     "offline": {
       "file": "offline.png",
-      "sha256": "2d9bc934c7ebd4f8369d1398655c0c0c105143b2b6641de23d47449442b0964f",
-      "source_file": "exec-1e2145fd-6b32-49d2-8d44-96fcc9c1e892.png"
+      "base": "offline-phone-base.png",
+      "svg": "offline-screen.svg",
+      "capture": "docs/google-play/source-screenshots/usage-2026-10-08/offline-book-playing.png",
+      "capture_description": "Signed version 2 release APK; downloaded chapter playback with networking disabled, retained from earlier successful offline verification.",
+      "sha256": "7ad3d61f230233fb33821026d0008d78ada49bacebe63ec23c4643dd3ef95019",
+      "base_sha256": "29df25bb6e80769f96f5f001157b430548df5c61a6964fe199cdb2c205c4e929",
+      "capture_sha256": "3eafbe2feb3df49fdad21791bd56ff7de9077692cbf449a0f60463094c9f1be7"
     },
     "sleep": {
       "file": "sleep.png",
-      "sha256": "ae279df5394f834084db7d53319a97bde82e473a91b56ee8e8ccefe5a3b47e07",
-      "source_file": "exec-adb3a1d9-e493-4935-add4-ca032bbe172c.png"
+      "base": "sleep-phone-base.png",
+      "svg": "sleep-screen.svg",
+      "capture": "docs/google-play/source-screenshots/usage-2026-10-08/sleep-timer-15-min.png",
+      "capture_description": "Signed version 2 release APK on the dedicated API 36 review emulator; fresh native UI selection of a 15-minute timer.",
+      "sha256": "e92e64b9a5156dbf8e59e6744df29d87556cda98e8cda8b38aa2f78a9bc1984a",
+      "base_sha256": "4e4c96e0f1a4b2df9f60d2ccfb4108e3cb6f5ad8e7b1d6eef63d6eac5f717033",
+      "capture_sha256": "6f2433bfdb03916844be1c3ecbc944fa222b283ff562d26f4f28592776f1fda9"
     }
   }
 }

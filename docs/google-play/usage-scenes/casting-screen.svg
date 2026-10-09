@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1042" height="1510" viewBox="0 0 1042 1510">
+  <defs>
+    <mask id="display" maskUnits="userSpaceOnUse" x="0" y="0" width="1042" height="1510">
+      <rect x="465" y="253" width="394" height="829" rx="36" fill="white"/>
+      <circle cx="659" cy="275" r="11" fill="black"/>
+    </mask>
+  </defs>
+  <image xlink:href="casting-phone-base.png" width="1042" height="1510"/>
+  <g mask="url(#display)">
+    <rect x="465" y="253" width="394" height="829" fill="#1b2124"/>
+    <image xlink:href="../source-screenshots/usage-2026-10-08/casting-volume.png" x="465" y="253" width="394" height="829" preserveAspectRatio="xMidYMid meet"/>
+  </g>
+</svg>

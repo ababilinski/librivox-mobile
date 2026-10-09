@@ -7,12 +7,14 @@ import json
 import shutil
 from pathlib import Path
 
+import resvg_py
 from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
 
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / 'docs/google-play'
 IMAGES = ROOT / 'fastlane/metadata/android/en-US/images'
 SOURCES = DOCS / 'source-screenshots/release-2026-10-08'
+USAGE_SOURCES = DOCS / 'source-screenshots/usage-2026-10-08'
 PHONE = IMAGES / 'phoneScreenshots'
 CREAM = '#F4E7C1'
 TEAL = '#006973'
@@ -29,10 +31,39 @@ ASSETS = [
 ]
 FONT_DIR = Path('/System/Library/Fonts/Supplemental')
 USAGE_SCENES = {
-    '02-casting.png': ('casting.png', (54, 414, 766, 1857)),
-    '04-downloads.png': ('offline.png', (54, 414, 766, 1857)),
-    '08-sleep-timer.png': ('sleep.png', (314, 414, 1026, 1857)),
+    '02-casting.png': ('casting', 'casting-volume.png', (465, 253, 859, 1082), (659, 275, 11)),
+    '04-downloads.png': ('offline', 'offline-book-playing.png', (246, 115, 758, 1204), (496, 144, 12)),
+    '08-sleep-timer.png': ('sleep', 'sleep-timer-15-min.png', (323, 292, 695, 1075), (509, 313, 10)),
 }
+
+
+def render_usage_scenes() -> None:
+    """Render source captures as fixed SVG layers inside generated phone scenes."""
+    for name, capture, bounds, camera in USAGE_SCENES.values():
+        base = DOCS / 'usage-scenes' / f'{name}-phone-base.png'
+        with Image.open(base) as photo:
+            width, height = photo.size
+        with Image.open(USAGE_SOURCES / capture) as screen:
+            background = '#%02x%02x%02x' % screen.convert('RGB').getpixel((0, 0))
+        x, y, right, bottom = bounds
+        camera_x, camera_y, camera_radius = camera
+        svg = f'''<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="{width}" height="{height}" viewBox="0 0 {width} {height}">
+  <defs>
+    <mask id="display" maskUnits="userSpaceOnUse" x="0" y="0" width="{width}" height="{height}">
+      <rect x="{x}" y="{y}" width="{right-x}" height="{bottom-y}" rx="36" fill="white"/>
+      <circle cx="{camera_x}" cy="{camera_y}" r="{camera_radius}" fill="black"/>
+    </mask>
+  </defs>
+  <image xlink:href="{name}-phone-base.png" width="{width}" height="{height}"/>
+  <g mask="url(#display)">
+    <rect x="{x}" y="{y}" width="{right-x}" height="{bottom-y}" fill="{background}"/>
+    <image xlink:href="../source-screenshots/usage-2026-10-08/{capture}" x="{x}" y="{y}" width="{right-x}" height="{bottom-y}" preserveAspectRatio="xMidYMid meet"/>
+  </g>
+</svg>
+'''
+        vector = DOCS / 'usage-scenes' / f'{name}-screen.svg'
+        vector.write_text(svg)
+        (DOCS / 'usage-scenes' / f'{name}.png').write_bytes(resvg_py.svg_to_bytes(svg_path=str(vector), resources_dir=str(vector.parent)))
 
 
 def font(size: int, bold: bool = False) -> ImageFont.FreeTypeFont:
@@ -59,8 +90,8 @@ def screenshot(source: Path, output: Path, caption: tuple[str, ...]) -> None:
     canvas = Image.new('RGB', (1080, 1920), BACKGROUND)
     scene = USAGE_SCENES.get(source.name)
     if scene:
-        with Image.open(DOCS / 'usage-scenes' / scene[0]) as photo:
-            canvas.paste(ImageOps.fit(photo.convert('RGB'), canvas.size, method=Image.Resampling.LANCZOS))
+        with Image.open(DOCS / 'usage-scenes' / f'{scene[0]}.png') as photo:
+            canvas.paste(ImageOps.fit(photo.convert('RGB'), (1080, 1565), method=Image.Resampling.LANCZOS), (0, 355))
     draw = ImageDraw.Draw(canvas)
     if scene:
         draw.rectangle((0, 0, 1080, 355), fill=BACKGROUND)
@@ -70,7 +101,8 @@ def screenshot(source: Path, output: Path, caption: tuple[str, ...]) -> None:
     for index, line in enumerate(caption):
         draw.text((540, 103 + 85 * index), line, anchor='mt', font=font(76, True), fill=TEAL)
     draw.text((540, 294), 'LibriVox Mobile', anchor='mt', font=font(25), fill=TEAL)
-    image_insert(canvas, source, scene[1] if scene else (104, 369, 976, 1857))
+    if not scene:
+        image_insert(canvas, source, (104, 369, 976, 1857))
     canvas.save(output, optimize=True)
 
 
@@ -94,6 +126,7 @@ def main() -> None:
     if missing:
         raise SystemExit('Missing authentic release captures: ' + ', '.join(missing))
     PHONE.mkdir(parents=True, exist_ok=True)
+    render_usage_scenes()
     expected = {output for _, output, _ in ASSETS}
     # This directory contains only the generated Play screenshot set.
     for old in PHONE.glob('*.png'):
@@ -102,7 +135,9 @@ def main() -> None:
     manifest = []
     for source, output, caption in ASSETS:
         screenshot(SOURCES / source, PHONE / output, caption)
-        manifest.append({'source': str((SOURCES / source).relative_to(ROOT)), 'output': str((PHONE / output).relative_to(ROOT)), 'caption': ' '.join(caption), 'source_sha256': hashlib.sha256((SOURCES / source).read_bytes()).hexdigest(), 'output_sha256': hashlib.sha256((PHONE / output).read_bytes()).hexdigest(), 'usage_scene': USAGE_SCENES.get(source, (None,))[0]})
+        scene = USAGE_SCENES.get(source)
+        actual_source = USAGE_SOURCES / scene[1] if scene else SOURCES / source
+        manifest.append({'source': str(actual_source.relative_to(ROOT)), 'output': str((PHONE / output).relative_to(ROOT)), 'caption': ' '.join(caption), 'source_sha256': hashlib.sha256(actual_source.read_bytes()).hexdigest(), 'output_sha256': hashlib.sha256((PHONE / output).read_bytes()).hexdigest(), 'usage_scene': f'{scene[0]}.png' if scene else None, 'screen_composition': 'Unmodified Android capture as a proportional SVG image layer inside the phone display' if scene else 'Complete capture fitted proportionally'})
     feature_graphic()
     shutil.copy2(ROOT / 'app/src/main/assets/app-icons/play_store_icon_512.png', IMAGES / 'icon.png')
     shutil.copy2(IMAGES / 'icon.png', DOCS / 'play-store-icon.png')
@@ -114,7 +149,7 @@ def main() -> None:
         sheet.paste(thumb, (10 + (index % 4) * 280, 10 + (index // 4) * 500))
     sheet.save(DOCS / 'phone-screenshot-contact-sheet.png', optimize=True)
     (DOCS / 'asset-manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
-    (DOCS / 'asset-alt-text.md').write_text('# Play screenshot descriptions\n\n' + '\n'.join('- ' + a['output'].split('/')[-1] + ': ' + a['caption'] + '. Authentic Android capture.' for a in manifest) + '\n')
+    (DOCS / 'asset-alt-text.md').write_text('# Play screenshot descriptions\n\n' + '\n'.join('- ' + a['output'].split('/')[-1] + ': ' + a['caption'] + ('. Generated phone scene with an authentic Android capture inside its display.' if a['usage_scene'] else '. Authentic Android capture.') for a in manifest) + '\n')
     print('Generated eight 1080x1920 screenshots, a 1024x500 feature graphic, and the current 512x512 app icon.')
 
 
