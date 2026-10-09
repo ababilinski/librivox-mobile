@@ -4,6 +4,10 @@
 
 # LibriVox Mobile
 
+<p>
+  <img src="docs/google-play/play-store-icon.png" alt="LibriVox Mobile open-book and audio icon" width="112" />
+</p>
+
 LibriVox Mobile brings audiobooks from LibriVox, Lit2Go, Project Gutenberg, and Wolne Lektury together in one app. Listen to classic novels, short stories, poetry, and nonfiction online or save chapters for offline listening.
 
 **100% free. No ads, subscriptions, in-app purchases, or paid upgrades.** Every app feature is available without payment, and no account is required.

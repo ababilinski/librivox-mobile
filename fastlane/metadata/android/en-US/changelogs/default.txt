@@ -1,2 +1,5 @@
 First Google Play release of LibriVox Mobile.
-Search audiobook catalogs, stream or download chapters, and cast to compatible speakers and TVs. Includes a personal library, bookmarks, playback speed, a sleep timer, and background media controls.
+
+Listen to free audiobooks, save chapters offline, and cast to compatible speakers and TVs. Keep your progress and bookmarks, change playback speed, and set a sleep timer.
+
+Includes the new open-book icon and fixes for catalog search, bottom navigation colors, and Cast volume controls.

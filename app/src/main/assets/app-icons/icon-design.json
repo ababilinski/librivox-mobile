@@ -1,0 +1,34 @@
+{
+  "metaphor": "Open book with sound bars",
+  "background": "#E7DFFD",
+  "foreground": [
+    "#7761AB",
+    "#493675"
+  ],
+  "adaptive_viewport": [
+    108,
+    108
+  ],
+  "safe_zone": [
+    21,
+    21,
+    87,
+    87
+  ],
+  "mark_bounds": [
+    27,
+    31,
+    81,
+    79
+  ],
+  "play_export": {
+    "size": [
+      512,
+      512
+    ],
+    "mode": "RGBA",
+    "color_profile": "sRGB",
+    "background_opaque": true
+  },
+  "generator": "scripts/generate-app-icons.py"
+}
