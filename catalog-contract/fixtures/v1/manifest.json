@@ -1,0 +1,223 @@
+{
+  "$schema": "../../schemas/v1/fixture-manifest.schema.json",
+  "contractVersion": 1,
+  "fixtureVersion": 1,
+  "recordedAt": "2026-07-10T21:30:00Z",
+  "entries": [
+    {
+      "id": "librivox-feed-title-alice",
+      "path": "fixtures/v1/librivox/feed-title-alice.json",
+      "source": "librivox",
+      "mediaType": "application/json",
+      "captureMode": "structural_excerpt",
+      "request": {
+        "method": "GET",
+        "url": "https://librivox.org/api/feed/audiobooks/?format=json&title=%5Ealice&extended=1&limit=2"
+      },
+      "status": 200,
+      "sha256": "af1e82c4db6e2f3f05b8d7ec20bf2076f7065469b5e2c12939737ffb86cc81b5",
+      "notes": "Recorded anchored-title results include durable LibriVox ID 200 and extended section/reader metadata."
+    },
+    {
+      "id": "librivox-advanced-author-alice",
+      "path": "fixtures/v1/librivox/advanced-author-alice.json",
+      "source": "librivox",
+      "mediaType": "application/json",
+      "captureMode": "structural_excerpt",
+      "request": {
+        "method": "GET",
+        "url": "https://librivox.org/advanced_search?author=Alice&status=all&project_type=either&sort_order=alpha&search_page=1&search_form=advanced",
+        "headers": { "X-Requested-With": "XMLHttpRequest" }
+      },
+      "status": 200,
+      "sha256": "c5f743ce3afc5aca3cd1cf00674745e6d5e83c59806c02c90a677a1f4ae77f3b",
+      "notes": "HTML-in-JSON excerpt preserves the author Alice Gerstenberg result."
+    },
+    {
+      "id": "librivox-advanced-reader-alice",
+      "path": "fixtures/v1/librivox/advanced-reader-alice.json",
+      "source": "librivox",
+      "mediaType": "application/json",
+      "captureMode": "structural_excerpt",
+      "request": {
+        "method": "GET",
+        "url": "https://librivox.org/advanced_search?reader=Alice&status=all&project_type=either&sort_order=alpha&search_page=1&search_form=advanced",
+        "headers": { "X-Requested-With": "XMLHttpRequest" }
+      },
+      "status": 200,
+      "sha256": "bc8ba34363106e0b1aee7cfbc0ecfc3f3184073171752e784055b65b3a16d543"
+    },
+    {
+      "id": "librivox-advanced-chapter-advice",
+      "path": "fixtures/v1/librivox/advanced-chapter-advice.json",
+      "source": "librivox",
+      "mediaType": "application/json",
+      "captureMode": "structural_excerpt",
+      "request": {
+        "method": "GET",
+        "url": "https://librivox.org/advanced_search?title=Advice%20from%20a%20Caterpillar&status=all&project_type=either&sort_order=alpha&search_page=1&search_form=advanced",
+        "headers": { "X-Requested-With": "XMLHttpRequest" }
+      },
+      "status": 200,
+      "sha256": "315302227a2dfc8000b6790e0ef6feac8a47464dbbceb7e9cd4d1ed45c277b37",
+      "notes": "Recorded advanced-search result is a section inside a collection, exercising chapter provenance."
+    },
+    {
+      "id": "librivox-feed-empty",
+      "path": "fixtures/v1/librivox/feed-empty.json",
+      "source": "librivox",
+      "mediaType": "application/json",
+      "captureMode": "structural_excerpt",
+      "request": {
+        "method": "GET",
+        "url": "https://librivox.org/api/feed/audiobooks/?format=json&title=%5Ezzzz-no-such-catalog-item"
+      },
+      "status": 200,
+      "sha256": "6c8e90cd25b6af265dc8e3fc1f0e34721b2f59aa369c936a4a70e72782cd5e02"
+    },
+    {
+      "id": "lit2go-index-a",
+      "path": "fixtures/v1/lit2go/index-a.html",
+      "source": "lit2go",
+      "mediaType": "text/html; charset=utf-8",
+      "captureMode": "structural_excerpt",
+      "request": {
+        "method": "GET",
+        "url": "https://etc.usf.edu/lit2go/books/index/a/"
+      },
+      "status": 200,
+      "sha256": "986ca2d53f89e6ef0f78f9361fcc36fad349c7a7a5b9bfb248acc37a107d6ebb"
+    },
+    {
+      "id": "lit2go-detail-alice",
+      "path": "fixtures/v1/lit2go/detail-alice.html",
+      "source": "lit2go",
+      "mediaType": "text/html; charset=utf-8",
+      "captureMode": "structural_excerpt",
+      "request": {
+        "method": "GET",
+        "url": "https://etc.usf.edu/lit2go/1/alices-adventures-in-wonderland/"
+      },
+      "status": 200,
+      "sha256": "b88391567cba079964e4379acb19374a5c3a2ca36feee67a5c3c39ad523dd33d"
+    },
+    {
+      "id": "gutendex-search-alice",
+      "path": "fixtures/v1/gutendex/search-alice.json",
+      "source": "gutendex",
+      "mediaType": "application/json",
+      "captureMode": "structural_excerpt",
+      "request": {
+        "method": "GET",
+        "url": "https://gutendex.com/books/?mime_type=audio&search=alice"
+      },
+      "status": 200,
+      "sha256": "c1114d27af77b9cf7a2a6320ddb65319b1a0c4f0b88b5afb45eb109dce741c43"
+    },
+    {
+      "id": "gutendex-search-empty",
+      "path": "fixtures/v1/gutendex/search-empty.json",
+      "source": "gutendex",
+      "mediaType": "application/json",
+      "captureMode": "structural_excerpt",
+      "request": {
+        "method": "GET",
+        "url": "https://gutendex.com/books/?search=zzzz-no-such-catalog-item"
+      },
+      "status": 200,
+      "sha256": "88f72a357508afe3e5956842a16aba367a95e6fff6acca9a4c4712aa8ec1eca1"
+    },
+    {
+      "id": "wolne-index-antek",
+      "path": "fixtures/v1/wolne/index-antek.json",
+      "source": "wolne_lektury",
+      "mediaType": "application/json",
+      "captureMode": "structural_excerpt",
+      "request": {
+        "method": "GET",
+        "url": "https://wolnelektury.pl/api/books/"
+      },
+      "status": 200,
+      "sha256": "2d2547767545e3470678cf8ed72baceb16ab32a309333b7d458ed02155a75a80"
+    },
+    {
+      "id": "wolne-detail-antek",
+      "path": "fixtures/v1/wolne/detail-antek.json",
+      "source": "wolne_lektury",
+      "mediaType": "application/json",
+      "captureMode": "structural_excerpt",
+      "request": {
+        "method": "GET",
+        "url": "https://wolnelektury.pl/api/books/antek/"
+      },
+      "status": 200,
+      "sha256": "84db0fd79f95a00e2d106233b09f31cd7130871ea542ef31e39dd4d336809f00"
+    },
+    {
+      "id": "failure-http-404",
+      "path": "fixtures/v1/failures/http-404.html",
+      "source": "synthetic_failure",
+      "mediaType": "text/html; charset=utf-8",
+      "captureMode": "synthetic_failure",
+      "request": {
+        "method": "GET",
+        "url": "https://fixture.invalid/not-found"
+      },
+      "status": 404,
+      "sha256": "e203c614a3ee5c9f5dbfb47b3ebbb045ff41914402f56bf803c15101faaac7f2"
+    },
+    {
+      "id": "failure-http-500",
+      "path": "fixtures/v1/failures/http-500.html",
+      "source": "synthetic_failure",
+      "mediaType": "text/html; charset=utf-8",
+      "captureMode": "synthetic_failure",
+      "request": {
+        "method": "GET",
+        "url": "https://fixture.invalid/server-error"
+      },
+      "status": 500,
+      "sha256": "26afc2d1138af51c1263d82a74498aab54061a7a12a1f2995eeff907b4c33558"
+    },
+    {
+      "id": "failure-malformed-json",
+      "path": "fixtures/v1/failures/malformed-json.txt",
+      "source": "synthetic_failure",
+      "mediaType": "application/json",
+      "captureMode": "synthetic_failure",
+      "request": {
+        "method": "GET",
+        "url": "https://fixture.invalid/malformed"
+      },
+      "status": 200,
+      "sha256": "a0543fa83f5213c890bd708998134521eaf44566d0cc8e218139a86fd97f2b58"
+    },
+    {
+      "id": "failure-blank-html",
+      "path": "fixtures/v1/failures/blank.html",
+      "source": "synthetic_failure",
+      "mediaType": "text/html; charset=utf-8",
+      "captureMode": "synthetic_failure",
+      "request": {
+        "method": "GET",
+        "url": "https://fixture.invalid/blank"
+      },
+      "status": 200,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "id": "failure-http-200-error-page",
+      "path": "fixtures/v1/failures/http-200-error-page.html",
+      "source": "synthetic_failure",
+      "mediaType": "text/html; charset=utf-8",
+      "captureMode": "synthetic_failure",
+      "request": {
+        "method": "GET",
+        "url": "https://fixture.invalid/service-unavailable"
+      },
+      "status": 200,
+      "sha256": "64fb3e5fc635cb9cb6f8393855ec7a0163deb501d271f576ccfce6419a792e13",
+      "notes": "Nonblank outage HTML must not be accepted as a catalog detail page."
+    }
+  ]
+}

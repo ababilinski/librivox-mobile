@@ -1,0 +1,14 @@
+{
+  "package": "com.librivox.mobile",
+  "version_code": 2,
+  "theme": "Dark",
+  "navigation": "Gesture",
+  "status_bar": "Native demo mode, 09:41",
+  "captures": {
+    "casting-volume.png": "Actual Kitchen speaker Cast session and native Android volume controls, Pixel 9, version 2 debug build from the release checkout, recorded during earlier verification.",
+    "offline-book-playing.png": "Signed version 2 release APK; downloaded chapter playback with networking disabled, retained from earlier successful offline verification.",
+    "sleep-timer-15-min.png": "Signed version 2 release APK on the dedicated API 36 review emulator; fresh native UI selection of a 15-minute timer."
+  },
+  "ui_changes": "None. Original screenshot files are embedded as proportional SVG image layers.",
+  "scene_photography": "Generated illustration, distinct from actual test environment."
+}

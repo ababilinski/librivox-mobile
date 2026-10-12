@@ -1,0 +1,46 @@
+.gradle/
+.kotlin/
+build/
+**/build/
+local.properties
+.idea/
+*.iml
+.DS_Store
+captures/
+*.hprof
+__pycache__/
+
+# Local secrets and signing material
+.env
+.env.*
+!.env.example
+keystore.properties
+*.jks
+*.keystore
+*.p12
+*.p8
+*.pfx
+*.key
+*.mobileprovision
+
+# Generated packages and release artifacts
+artifacts/
+/design/icon-previews/
+.claude/
+.codex/
+.agents/
+*.apk
+*.aab
+*.ipa
+*.dSYM/
+*.xcarchive
+
+# Apple / Swift builds
+.build/
+.swiftpm/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+*.xcuserdatad/
+*.xcscmblueprint
+ios/Pods/

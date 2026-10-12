@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://librivox-mobile.example/catalog-contract/v1/catalog-search-scenarios.schema.json",
+  "title": "Catalog Search Shared Scenarios v1",
+  "type": "object",
+  "required": ["contractVersion", "fixtureVersion", "scenarios"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "contractVersion": { "const": 1 },
+    "fixtureVersion": { "const": 1 },
+    "scenarios": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/scenario" }
+    }
+  },
+  "$defs": {
+    "request": {
+      "type": "object",
+      "required": ["query", "sources", "fields", "languages", "sourcePriority"],
+      "properties": {
+        "query": { "type": "string" },
+        "sources": { "type": "array", "items": { "enum": ["librivox", "lit2go", "gutendex", "wolne_lektury"] }, "uniqueItems": true },
+        "fields": { "type": "array", "items": { "enum": ["title", "author", "reader", "chapter", "genre"] }, "uniqueItems": true },
+        "languages": { "type": "array", "items": { "enum": ["any", "english", "polish"] }, "uniqueItems": true },
+        "sourcePriority": { "type": "array", "items": { "enum": ["librivox", "lit2go", "gutendex", "wolne_lektury"] }, "uniqueItems": true }
+      },
+      "additionalProperties": false
+    },
+    "transportStep": {
+      "type": "object",
+      "required": ["operationKey", "result"],
+      "properties": {
+        "operationKey": { "type": "string", "pattern": "^(librivox|lit2go|gutendex|wolne_lektury):(title|author|reader|chapter|genre):(any|english|polish)$" },
+        "result": { "enum": ["response", "timeout", "transport_error", "cancelled"] },
+        "status": { "type": "integer", "minimum": 100, "maximum": 599 },
+        "fixture": { "type": "string" },
+        "delayMilliseconds": { "type": "integer", "minimum": 0 },
+        "errorCode": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "expected": {
+      "type": "object",
+      "required": ["normalizedQuery"],
+      "properties": {
+        "normalizedQuery": { "type": "string" },
+        "plannedOperationKeys": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "outcomes": { "type": "object", "additionalProperties": { "enum": ["pending", "success", "authoritative_empty", "skipped", "failed"] } },
+        "skipReasons": { "type": "object", "additionalProperties": { "type": "string" } },
+        "requiredVariantIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "excludedVariantIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "requiredMatchedFields": { "type": "object", "additionalProperties": { "type": "array", "items": { "type": "string" }, "uniqueItems": true } },
+        "facetStates": { "type": "object", "additionalProperties": { "enum": ["pending", "ready", "skipped", "unavailable"] } },
+        "sourceFacetMinimums": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } },
+        "displayWorkCount": { "type": "integer", "minimum": 0 },
+        "completeness": { "enum": ["complete", "partial", "empty"] },
+        "networkRequestCount": { "type": "integer", "minimum": 0 },
+        "automaticRetryCount": { "type": "integer", "minimum": 0 },
+        "cacheDisposition": { "enum": ["miss", "fresh_positive", "fresh_empty", "stale_displayed", "partial_not_fresh", "corrupt_discarded"] },
+        "cacheWrite": { "type": "boolean" },
+        "firstDisplaySource": { "type": "string" },
+        "emissionOperationKeys": { "type": "array", "items": { "type": "string" } },
+        "retainedOperationKeys": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "cancelledPlanId": { "type": "string" },
+        "executedPlanId": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "scenario": {
+      "type": "object",
+      "required": ["id", "kind", "tags", "request", "expected"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+        "kind": { "enum": ["normalization", "planning", "retrieval", "ranking", "cache", "connectivity"] },
+        "tags": { "type": "array", "minItems": 1, "items": { "type": "string" }, "uniqueItems": true },
+        "request": { "$ref": "#/$defs/request" },
+        "transport": { "type": "array", "items": { "$ref": "#/$defs/transportStep" } },
+        "initialState": { "type": "object" },
+        "events": { "type": "array", "items": { "type": "object" } },
+        "expected": { "$ref": "#/$defs/expected" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

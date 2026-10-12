@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://librivox-mobile.example/catalog-contract/v1/catalog-search-contract.schema.json",
+  "title": "Catalog Search Behavioral Contract v1",
+  "type": "object",
+  "required": [
+    "contractId",
+    "contractVersion",
+    "fixtureVersion",
+    "normalization",
+    "enums",
+    "sourceCapabilities",
+    "planning",
+    "outcomeSemantics",
+    "snapshotSemantics",
+    "hitSemantics",
+    "facetSemantics",
+    "cachePolicy",
+    "connectivityPolicy",
+    "paginationPolicy",
+    "liveCanaryPolicy"
+  ],
+  "properties": {
+    "$schema": { "type": "string" },
+    "contractId": { "const": "org.librivox-mobile.catalog-search" },
+    "contractVersion": { "const": 1 },
+    "fixtureVersion": { "const": 1 },
+    "operationKeyFormat": { "const": "{source}:{field}:{language}" },
+    "normalization": {
+      "type": "object",
+      "required": ["steps", "compatibilityMap", "applyBefore", "emptyQueryProducesNoOperations", "examples"],
+      "properties": {
+        "steps": { "type": "array", "minItems": 5, "items": { "type": "string" }, "uniqueItems": true },
+        "compatibilityMap": { "type": "object", "minProperties": 1, "additionalProperties": { "type": "string" } },
+        "applyBefore": { "type": "array", "minItems": 1, "items": { "type": "string" }, "uniqueItems": true },
+        "emptyQueryProducesNoOperations": { "const": true },
+        "examples": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "object",
+            "required": ["input", "output"],
+            "properties": {
+              "input": { "type": "string" },
+              "output": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "enums": {
+      "type": "object",
+      "required": ["sources", "fields", "languages", "outcomes", "skipReasons", "failureKinds", "facetStates", "provenanceKinds"],
+      "additionalProperties": {
+        "type": "array",
+        "minItems": 1,
+        "items": { "type": "string" },
+        "uniqueItems": true
+      }
+    },
+    "sourceCapabilities": {
+      "type": "object",
+      "required": ["librivox", "lit2go", "gutendex", "wolne_lektury"],
+      "additionalProperties": {
+        "type": "object",
+        "required": ["fields", "languages", "adapters"],
+        "properties": {
+          "fields": { "type": "array", "minItems": 1, "items": { "type": "string" }, "uniqueItems": true },
+          "languages": { "type": "array", "minItems": 1, "items": { "type": "string" }, "uniqueItems": true },
+          "adapters": { "type": "object", "additionalProperties": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    },
+    "planning": { "type": "object" },
+    "outcomeSemantics": { "type": "object" },
+    "snapshotSemantics": { "type": "object" },
+    "hitSemantics": { "type": "object" },
+    "facetSemantics": { "type": "object" },
+    "cachePolicy": {
+      "type": "object",
+      "required": ["cacheKeyParts", "positiveFreshSeconds", "authoritativeEmptyFreshSeconds", "staleDisplaySeconds", "maximumSnapshots", "eviction", "partialIsFresh", "failedOverwritesComplete", "priorityInCacheKey", "legacyNamespacesToInvalidate"],
+      "properties": {
+        "positiveFreshSeconds": { "const": 1800 },
+        "authoritativeEmptyFreshSeconds": { "const": 300 },
+        "staleDisplaySeconds": { "const": 604800 },
+        "maximumSnapshots": { "const": 100 },
+        "eviction": { "const": "deterministic_lru" },
+        "partialIsFresh": { "const": false },
+        "failedOverwritesComplete": { "const": false },
+        "priorityInCacheKey": { "const": false },
+        "cacheKeyParts": { "type": "array", "minItems": 5, "items": { "type": "string" }, "uniqueItems": true },
+        "corruptionBehavior": { "type": "string" },
+        "legacyNamespacesToInvalidate": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+      },
+      "additionalProperties": false
+    },
+    "connectivityPolicy": { "type": "object" },
+    "paginationPolicy": { "type": "object" },
+    "liveCanaryPolicy": { "type": "object" }
+  },
+  "additionalProperties": false
+}

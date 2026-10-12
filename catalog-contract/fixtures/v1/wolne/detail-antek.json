@@ -1,0 +1,60 @@
+{
+  "title": "Antek",
+  "authors": [
+    {
+      "url": "https://wolnelektury.pl/katalog/autor/boleslaw-prus/",
+      "href": "https://wolnelektury.pl/api/authors/boleslaw-prus/",
+      "name": "Bolesław Prus",
+      "slug": "boleslaw-prus"
+    }
+  ],
+  "language": "pol",
+  "epochs": [
+    {
+      "url": "https://wolnelektury.pl/katalog/epoka/pozytywizm/",
+      "href": "https://wolnelektury.pl/api/epochs/pozytywizm/",
+      "name": "Pozytywizm",
+      "slug": "pozytywizm"
+    }
+  ],
+  "genres": [
+    {
+      "url": "https://wolnelektury.pl/katalog/gatunek/nowela/",
+      "href": "https://wolnelektury.pl/api/genres/nowela/",
+      "name": "Nowela",
+      "slug": "nowela"
+    }
+  ],
+  "kinds": [
+    {
+      "url": "https://wolnelektury.pl/katalog/rodzaj/epika/",
+      "href": "https://wolnelektury.pl/api/kinds/epika/",
+      "name": "Epika",
+      "slug": "epika"
+    }
+  ],
+  "children": [],
+  "parent": null,
+  "media": [
+    {
+      "url": "https://wolnelektury.pl/media/book/daisy.zip/boleslaw-prus-antek.daisy.zip",
+      "director": "",
+      "type": "daisy",
+      "name": "Bolesław Prus, Antek",
+      "artist": ""
+    },
+    {
+      "url": "https://wolnelektury.pl/media/book/mp3/boleslaw-prus-antek.mp3",
+      "director": "Marcin Cisło",
+      "type": "mp3",
+      "name": "Bolesław Prus, Antek",
+      "artist": "Jan Peszek"
+    }
+  ],
+  "audio_length": "1:02:07",
+  "cover": "https://wolnelektury.pl/media/book/cover/antek.jpg",
+  "simple_thumb": "https://wolnelektury.pl/media/book/cover_api_thumb/antek_2MbAJ1y.jpg",
+  "txt": "https://wolnelektury.pl/media/book/txt/antek.txt",
+  "html": "https://wolnelektury.pl/media/book/html/antek.html",
+  "url": "https://wolnelektury.pl/katalog/lektura/antek/"
+}

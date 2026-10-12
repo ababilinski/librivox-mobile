@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://librivox-mobile.example/catalog-contract/v1/fixture-manifest.schema.json",
+  "title": "Catalog Source Fixture Manifest v1",
+  "type": "object",
+  "required": ["contractVersion", "fixtureVersion", "recordedAt", "entries"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "contractVersion": { "const": 1 },
+    "fixtureVersion": { "const": 1 },
+    "recordedAt": { "type": "string", "format": "date-time" },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "path", "source", "mediaType", "captureMode", "request", "status", "sha256"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+          "path": { "type": "string" },
+          "source": { "enum": ["librivox", "lit2go", "gutendex", "wolne_lektury", "synthetic_failure"] },
+          "mediaType": { "type": "string" },
+          "captureMode": { "enum": ["structural_excerpt", "synthetic_failure"] },
+          "request": {
+            "type": "object",
+            "required": ["method", "url"],
+            "properties": {
+              "method": { "enum": ["GET", "POST"] },
+              "url": { "type": "string" },
+              "headers": { "type": "object", "additionalProperties": { "type": "string" } },
+              "body": { "type": "string" }
+            },
+            "additionalProperties": false
+          },
+          "status": { "type": "integer", "minimum": 100, "maximum": 599 },
+          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+          "notes": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

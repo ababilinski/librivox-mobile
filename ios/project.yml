@@ -1,0 +1,58 @@
+name: LibriVoxMobile
+options:
+  bundleIdPrefix: com.ababilinski
+  deploymentTarget:
+    iOS: "26.0"
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MARKETING_VERSION: "1.0.2"
+    CURRENT_PROJECT_VERSION: "7"
+targets:
+  LibriVoxMobile:
+    type: application
+    platform: iOS
+    deploymentTarget: "26.0"
+    sources:
+      - path: LibriVoxMobile
+    dependencies:
+      - package: LibriVoxCore
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.ababilinski.librivoxmobile
+        INFOPLIST_FILE: LibriVoxMobile/Resources/Info.plist
+        CODE_SIGN_ENTITLEMENTS: LibriVoxMobile/Resources/LibriVoxMobile.entitlements
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: 2XPCVTQ4HN
+  LibriVoxMobileTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "26.0"
+    sources:
+      - path: LibriVoxMobileTests
+    dependencies:
+      - target: LibriVoxMobile
+      - package: LibriVoxCore
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.ababilinski.librivoxmobile.tests
+        GENERATE_INFOPLIST_FILE: YES
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: 2XPCVTQ4HN
+  LibriVoxMobileUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    deploymentTarget: "26.0"
+    sources:
+      - path: LibriVoxMobileUITests
+    dependencies:
+      - target: LibriVoxMobile
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.ababilinski.librivoxmobile.uitests
+        GENERATE_INFOPLIST_FILE: YES
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: 2XPCVTQ4HN
+packages:
+  LibriVoxCore:
+    path: LibriVoxCore

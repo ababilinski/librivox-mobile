@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Antek",
+    "author": "Bolesław Prus",
+    "slug": "antek",
+    "has_audio": true,
+    "href": "https://wolnelektury.pl/api/books/antek/",
+    "cover": "book/cover/antek.jpg",
+    "simple_thumb": "https://wolnelektury.pl/media/book/cover_api_thumb/antek_2MbAJ1y.jpg"
+  },
+  {
+    "title": "Katarynka",
+    "author": "Bolesław Prus",
+    "slug": "katarynka",
+    "has_audio": true,
+    "href": "https://wolnelektury.pl/api/books/katarynka/",
+    "cover": "book/cover/katarynka.jpg",
+    "simple_thumb": "https://wolnelektury.pl/media/book/cover_api_thumb/katarynka_VGXbgcs.jpg"
+  }
+]

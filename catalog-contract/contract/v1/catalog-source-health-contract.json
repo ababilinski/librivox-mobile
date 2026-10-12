@@ -1,0 +1,71 @@
+{
+  "$schema": "../../schemas/v1/catalog-source-health-contract.schema.json",
+  "contractId": "org.librivox-mobile.catalog-source-health",
+  "contractVersion": 1,
+  "states": ["unknown", "checking", "available", "broken", "offline"],
+  "providers": {
+    "librivox": {
+      "probeURL": "https://librivox.org/",
+      "recognizableTitleMarkers": ["librivox"]
+    },
+    "lit2go": {
+      "probeURL": "https://etc.usf.edu/lit2go/",
+      "recognizableTitleMarkers": ["lit2go"]
+    },
+    "gutendex": {
+      "probeURL": "https://gutendex.com/",
+      "recognizableTitleMarkers": ["gutendex"]
+    },
+    "wolne_lektury": {
+      "probeURL": "https://wolnelektury.pl/",
+      "recognizableTitleMarkers": ["wolnelektury", "wolne lektury"]
+    }
+  },
+  "probePolicy": {
+    "method": "GET",
+    "timeoutSeconds": 45,
+    "availableStatusRange": {
+      "minimum": 200,
+      "maximumExclusive": 300
+    },
+    "bodyValidation": "provider_specific_title_marker_and_outage_rejection",
+    "unrecognizedSuccessfulResponse": "broken",
+    "outageContentMarkers": [
+      "bad gateway",
+      "gateway timeout",
+      "internal server error",
+      "service unavailable",
+      "temporarily unavailable",
+      "website is down",
+      "origin is unreachable",
+      "error 500",
+      "error 502",
+      "error 503",
+      "error 504"
+    ],
+    "emitCheckingBeforeUncachedProbe": true,
+    "probeProvidersIndependently": true
+  },
+  "classification": {
+    "unknown": "no_probe_is_active_and_no_fresh_cached_result_exists_or_a_generous_probe_timed_out",
+    "available": "stable_root_responded_successfully_with_a_provider_specific_marker",
+    "broken": "stable_root_returned_an_unavailable_or_unrecognized_response_or_nonoffline_nontimeout_transport_failure",
+    "offline": "transport_reported_device_connectivity_unavailable",
+    "checking": "an_uncached_root_probe_is_in_flight"
+  },
+  "failureKinds": ["offline", "http_status", "invalid_content", "timeout", "network"],
+  "cachePolicy": {
+    "availableFreshSeconds": 300,
+    "brokenFreshSeconds": 60,
+    "offlineFreshSeconds": 0,
+    "checkingFreshSeconds": 0,
+    "unknownFreshSeconds": 60,
+    "maximumEntries": 4,
+    "eviction": "deterministic_lru"
+  },
+  "independence": {
+    "rootHealthDoesNotRewriteOperationOutcomes": true,
+    "operationOutcomesDoNotRewriteRootHealth": true,
+    "fieldOperationsContinueToUseCatalogSearchContract": true
+  }
+}

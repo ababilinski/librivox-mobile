@@ -1,0 +1,51 @@
+{
+  "count": 3,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "id": 19573,
+      "title": "Alice's Adventures in Wonderland",
+      "authors": [
+        {
+          "name": "Carroll, Lewis",
+          "birth_year": 1832,
+          "death_year": 1898
+        }
+      ],
+      "languages": ["en"],
+      "subjects": [
+        "Alice (Fictitious character from Carroll) -- Juvenile fiction",
+        "Children's stories",
+        "Fantasy fiction"
+      ],
+      "bookshelves": ["Children's Literature"],
+      "formats": {
+        "text/html": "https://www.gutenberg.org/files/19573/19573-index.html",
+        "audio/ogg": "https://www.gutenberg.org/files/19573/ogg/19573-01.ogg",
+        "audio/mp4": "https://www.gutenberg.org/files/19573/m4b/19573-01.m4b",
+        "audio/mpeg": "https://www.gutenberg.org/files/19573/mp3/19573-01.mp3",
+        "image/jpeg": "https://www.gutenberg.org/cache/epub/19573/pg19573.cover.medium.jpg"
+      }
+    },
+    {
+      "id": 12974,
+      "title": "Christmas Entertainments",
+      "authors": [
+        {
+          "name": "Kellogg, Alice Maude",
+          "birth_year": 1862,
+          "death_year": 1911
+        }
+      ],
+      "languages": ["en"],
+      "subjects": ["Christmas -- Exercises, recitations, etc."],
+      "bookshelves": ["Christmas"],
+      "formats": {
+        "text/html": "https://www.gutenberg.org/ebooks/12974.html.images",
+        "audio/midi": "https://www.gutenberg.org/files/12974/12974-h/bday.midi",
+        "image/jpeg": "https://www.gutenberg.org/cache/epub/12974/pg12974.cover.medium.jpg"
+      }
+    }
+  ]
+}

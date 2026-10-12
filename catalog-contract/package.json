@@ -1,0 +1,14 @@
+{
+  "name": "@librivox-mobile/catalog-contract",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Cross-platform catalog search and source-health behavioral contracts and fixtures",
+  "scripts": {
+    "validate": "node scripts/validate.mjs",
+    "test": "node --test test/*.test.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://librivox-mobile.example/catalog-contract/v1/catalog-source-health-contract.schema.json",
+  "title": "Catalog Source Health Behavioral Contract v1",
+  "type": "object",
+  "required": [
+    "contractId",
+    "contractVersion",
+    "states",
+    "providers",
+    "probePolicy",
+    "classification",
+    "failureKinds",
+    "cachePolicy",
+    "independence"
+  ],
+  "properties": {
+    "$schema": { "type": "string" },
+    "contractId": { "const": "org.librivox-mobile.catalog-source-health" },
+    "contractVersion": { "const": 1 },
+    "states": {
+      "type": "array",
+      "items": { "enum": ["unknown", "checking", "available", "broken", "offline"] },
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueItems": true
+    },
+    "providers": {
+      "type": "object",
+      "required": ["librivox", "lit2go", "gutendex", "wolne_lektury"],
+      "properties": {
+        "librivox": { "$ref": "#/$defs/provider" },
+        "lit2go": { "$ref": "#/$defs/provider" },
+        "gutendex": { "$ref": "#/$defs/provider" },
+        "wolne_lektury": { "$ref": "#/$defs/provider" }
+      },
+      "additionalProperties": false
+    },
+    "probePolicy": {
+      "type": "object",
+      "required": ["method", "timeoutSeconds", "availableStatusRange", "bodyValidation", "unrecognizedSuccessfulResponse", "outageContentMarkers", "emitCheckingBeforeUncachedProbe", "probeProvidersIndependently"],
+      "properties": {
+        "method": { "const": "GET" },
+        "timeoutSeconds": { "type": "number", "minimum": 45 },
+        "availableStatusRange": {
+          "type": "object",
+          "required": ["minimum", "maximumExclusive"],
+          "properties": {
+            "minimum": { "const": 200 },
+            "maximumExclusive": { "const": 300 }
+          },
+          "additionalProperties": false
+        },
+        "bodyValidation": { "const": "provider_specific_title_marker_and_outage_rejection" },
+        "unrecognizedSuccessfulResponse": { "const": "broken" },
+        "outageContentMarkers": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        },
+        "emitCheckingBeforeUncachedProbe": { "const": true },
+        "probeProvidersIndependently": { "const": true }
+      },
+      "additionalProperties": false
+    },
+    "classification": {
+      "type": "object",
+      "required": ["unknown", "available", "broken", "offline", "checking"],
+      "additionalProperties": { "type": "string", "minLength": 1 }
+    },
+    "failureKinds": {
+      "type": "array",
+      "items": { "enum": ["offline", "http_status", "invalid_content", "timeout", "network"] },
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueItems": true
+    },
+    "cachePolicy": {
+      "type": "object",
+      "required": ["availableFreshSeconds", "brokenFreshSeconds", "offlineFreshSeconds", "checkingFreshSeconds", "unknownFreshSeconds", "maximumEntries", "eviction"],
+      "properties": {
+        "availableFreshSeconds": { "const": 300 },
+        "brokenFreshSeconds": { "const": 60 },
+        "offlineFreshSeconds": { "const": 0 },
+        "checkingFreshSeconds": { "const": 0 },
+        "unknownFreshSeconds": { "const": 60 },
+        "maximumEntries": { "const": 4 },
+        "eviction": { "const": "deterministic_lru" }
+      },
+      "additionalProperties": false
+    },
+    "independence": {
+      "type": "object",
+      "required": ["rootHealthDoesNotRewriteOperationOutcomes", "operationOutcomesDoNotRewriteRootHealth", "fieldOperationsContinueToUseCatalogSearchContract"],
+      "properties": {
+        "rootHealthDoesNotRewriteOperationOutcomes": { "const": true },
+        "operationOutcomesDoNotRewriteRootHealth": { "const": true },
+        "fieldOperationsContinueToUseCatalogSearchContract": { "const": true }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "provider": {
+      "type": "object",
+      "required": ["probeURL", "recognizableTitleMarkers"],
+      "properties": {
+        "probeURL": { "type": "string", "pattern": "^https://" },
+        "recognizableTitleMarkers": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

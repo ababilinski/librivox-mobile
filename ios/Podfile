@@ -1,0 +1,11 @@
+platform :ios, '26.0'
+
+use_frameworks!
+
+target 'LibriVoxMobile' do
+  pod 'google-cast-sdk', '~> 4.8.4'
+
+  target 'LibriVoxMobileTests' do
+    inherit! :search_paths
+  end
+end

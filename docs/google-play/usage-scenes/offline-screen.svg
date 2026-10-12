@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1042" height="1510" viewBox="0 0 1042 1510">
+  <defs>
+    <mask id="display" maskUnits="userSpaceOnUse" x="0" y="0" width="1042" height="1510">
+      <rect x="246" y="115" width="512" height="1089" rx="36" fill="white"/>
+      <circle cx="496" cy="144" r="12" fill="black"/>
+    </mask>
+  </defs>
+  <image xlink:href="offline-phone-base.png" width="1042" height="1510"/>
+  <g mask="url(#display)">
+    <rect x="246" y="115" width="512" height="1089" fill="#25262f"/>
+    <image xlink:href="../source-screenshots/usage-2026-10-08/offline-book-playing.png" x="246" y="115" width="512" height="1089" preserveAspectRatio="xMidYMid meet"/>
+  </g>
+</svg>

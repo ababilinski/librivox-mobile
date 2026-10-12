@@ -1,0 +1,6 @@
+{
+  "status": "SUCCESS",
+  "search_page": "1",
+  "pagination": "<a class=\"page-number active\" data-page_number=\"1\" href=\"#\">1</a>",
+  "results": "<li class=\"catalog-result\"><div class=\"catalog-type\"><span class=\"title-icon\"></span>Title</div><a href=\"https://librivox.org/alice-in-wonderland-by-alice-gerstenberg/\" class=\"book-cover\"><img src=\"https://archive.org/download/LibrivoxCdCoverArt33/Alice_in_Wonderland_1310_thumb.jpg\" alt=\"book-cover-65x65\" width=\"65\" height=\"65\" /></a><div class=\"result-data\"><h3><a href=\"https://librivox.org/alice-in-wonderland-by-alice-gerstenberg/\">Alice in Wonderland (Drama)</a></h3><p class=\"book-author\"><a href=\"https://librivox.org/author/71\">Lewis Carroll <span class=\"dod-dob\">(1832 - 1898)</span></a> and <a href=\"https://librivox.org/author/2770\">Alice Gerstenberg <span class=\"dod-dob\">(1885 - 1972)</span></a></p><p class=\"book-meta\">Complete | Dramatic | English</p></div><div class=\"download-btn\"><a href=\"https://archive.org/compress/aliceinwonderland_drama_1310_librivox/formats=64KBPS%20MP3&amp;file=/aliceinwonderland_drama_1310_librivox.zip\">Download</a><span>47MB</span></div></li>"
+}

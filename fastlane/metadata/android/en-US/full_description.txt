@@ -1,0 +1,30 @@
+LibriVox Mobile brings audiobooks from LibriVox, Lit2Go, Project Gutenberg, and Wolne Lektury together in one app. It is 100% free, with no ads, subscriptions, in-app purchases, or paid upgrades. No account is required.
+
+Listen to classic novels, short stories, poetry, and nonfiction. Stream a chapter at home or download it before heading out. Saved chapters keep playing without an internet connection.
+
+The libraries behind the books
+
+• LibriVox: public-domain books recorded by volunteers around the world.
+• Lit2Go: stories and poems from the University of South Florida's educational collection.
+• Project Gutenberg: audiobook editions from its digital library, accessed through the Gutendex catalog.
+• Wolne Lektury: Polish literature and audiobooks from the Wolne Lektury digital library.
+
+LibriVox is enabled when you start. Turn on the additional catalogs in Settings and choose the languages you want to browse. Book details keep source information and reader credits available, with links to the original project pages.
+
+Keep your listening together
+
+Save books to your library and pick up where you left off. Bookmark a passage, add a note, change playback speed, or set a sleep timer for bedtime. Move between chapters and control playback while using other apps or from Android media controls.
+
+You can also cast to compatible Google Cast speakers, TVs, and receivers on the same local network as your phone. Choose the listening device from the player.
+
+Open source for everyone
+
+The app's source code is available under the MIT license. Anyone can read it, report a problem, or contribute improvements:
+https://github.com/ababilinski/librivox-mobile
+
+The recordings come from the volunteers and organizations that make these libraries available. LibriVox Mobile does not charge for access to them. Your library, progress, bookmarks, settings, and downloads are stored on your device.
+
+LibriVox Mobile is an independent app, not affiliated with or endorsed by LibriVox, Lit2Go, Project Gutenberg, or Wolne Lektury. Recordings, artwork, and catalog information retain their source licenses. Public-domain status varies by country; check a work's rights where you live before downloading or using it.
+
+Support: adrian@babilinapps.com
+Privacy policy: https://ababilinski.github.io/librivox-mobile/privacy-policy/

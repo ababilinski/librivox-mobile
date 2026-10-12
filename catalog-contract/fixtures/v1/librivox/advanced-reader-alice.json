@@ -1,0 +1,6 @@
+{
+  "status": "SUCCESS",
+  "search_page": "1",
+  "pagination": "<a class=\"page-number active\" data-page_number=\"1\" href=\"#\">1</a>",
+  "results": "<li class=\"catalog-result\"><div class=\"catalog-type\"><span class=\"title-icon\"></span>Title</div><a href=\"https://librivox.org/the-adventures-of-old-man-coyote-by-thornton-w-burgess-2/\" class=\"book-cover\"><img src=\"https://archive.org/download/oldmancoyote_2508_librivox/adventure_oldman_coyote_2508_thumb.jpg\" alt=\"book-cover-65x65\" width=\"65\" height=\"65\" /></a><div class=\"result-data\"><h3><a href=\"https://librivox.org/the-adventures-of-old-man-coyote-by-thornton-w-burgess-2/\">The Adventures of Old Man Coyote (version 2)</a></h3><p class=\"book-author\"><a href=\"https://librivox.org/author/282\">Thornton W. Burgess <span class=\"dod-dob\">(1874 - 1965)</span></a></p><p class=\"book-meta\">Complete | Collaborative | English</p></div><div class=\"download-btn\"><a href=\"https://archive.org/compress/oldmancoyote_2508_librivox/formats=64KBPS%20MP3&amp;file=/oldmancoyote_2508_librivox.zip\">Download</a><span>51MB</span></div></li>"
+}

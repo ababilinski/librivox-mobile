@@ -1,0 +1,35 @@
+name: Catalog live canaries
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "23 6 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  android-catalog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Run Android live catalog invariants
+        env:
+          RUN_LIVE_CATALOG_TESTS: "1"
+        run: ./gradlew :app:testDebugUnitTest --tests '*CatalogLiveCanaryTest*'
+
+  ios-catalog:
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Swift deterministic and live catalog invariants
+        env:
+          RUN_LIVE_CATALOG_TESTS: "1"
+        run: swift test --package-path ios/LibriVoxCore
