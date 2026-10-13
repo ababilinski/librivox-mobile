@@ -1211,11 +1211,11 @@ h3 {
   }
   .has-js .nav-links a {
     color: var(--ink);
-    font-family: var(--serif);
-    font-size: 32px;
-    font-weight: 400;
-    line-height: 1.15;
-    min-height: 54px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.4;
+    min-height: 44px;
     padding: 8px 0;
   }
   .has-js .nav-links a[aria-current=page] {
