@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="680" viewBox="0 0 480 680">
+<rect width="480" height="680" fill="#35473a"/><rect x="22" y="22" width="436" height="636" fill="none" stroke="#e7ce9f" stroke-opacity=".55"/>
+<text x="240" y="83" text-anchor="middle" fill="#e7ce9f" font-family="Georgia,serif" font-size="14" letter-spacing="2">ARTHUR CONAN DOYLE</text>
+<text x="240" y="174" text-anchor="middle" fill="#e7ce9f" font-family="Georgia,serif" font-size="52">Sherlock</text>
+<text x="240" y="235" text-anchor="middle" fill="#e7ce9f" font-family="Georgia,serif" font-size="52">Holmes</text>
+<path d="M139 558V382Q139 286 240 286T341 382V558Z" fill="none" stroke="#e7ce9f" stroke-width="3"/><path d="M154 546V382Q154 306 240 306T326 382V546Z" fill="#e7ce9f"/><path d="M240 306v240M154 407h172M154 478h172" stroke="#35473a" stroke-width="9"/><circle cx="281" cy="351" r="21" fill="#35473a"/><text x="240" y="621" text-anchor="middle" fill="#e7ce9f" font-family="Georgia,serif" font-size="14" letter-spacing="4">1892 · A CLASSIC</text></svg>

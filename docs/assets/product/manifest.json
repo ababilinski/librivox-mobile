@@ -1,0 +1,245 @@
+[
+  {
+    "file": "browse-360.webp",
+    "source": "docs/google-play/source-screenshots/release-2026-10-08/01-browse.png",
+    "source_sha256": "05143d53d6a775c9673576740990a894bc32d2ce47659b99eefacec9f3f7b1ae",
+    "output_sha256": "dcde8897760fda418be9504b823b0b5a975996c669c9b2a9d1bd440af4f5b4fd",
+    "dimensions": [
+      360,
+      800
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "browse-720.webp",
+    "source": "docs/google-play/source-screenshots/release-2026-10-08/01-browse.png",
+    "source_sha256": "05143d53d6a775c9673576740990a894bc32d2ce47659b99eefacec9f3f7b1ae",
+    "output_sha256": "dac9ec2436ade51874ddf054b9a83f235a23e984d8b69e838ef6659a909acadf",
+    "dimensions": [
+      720,
+      1600
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "casting-360.webp",
+    "source": "docs/google-play/source-screenshots/release-2026-10-08/02-casting.png",
+    "source_sha256": "2aa8ecd49341dbf61cd0f71a6afc50db6ca934c76154dc75516b17f99b419c0a",
+    "output_sha256": "e2941b6d5619dddb8b301c4a6cdbb65bc4eb737bdc7462965a97c84b8a0bdd3c",
+    "dimensions": [
+      360,
+      808
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "casting-720.webp",
+    "source": "docs/google-play/source-screenshots/release-2026-10-08/02-casting.png",
+    "source_sha256": "2aa8ecd49341dbf61cd0f71a6afc50db6ca934c76154dc75516b17f99b419c0a",
+    "output_sha256": "abc275a4600b5f0a09252a7f6eb8077b5ffc5604bd3bff69867869bd06a6b71e",
+    "dimensions": [
+      720,
+      1616
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "player-360.webp",
+    "source": "docs/google-play/source-screenshots/release-2026-10-08/03-player.png",
+    "source_sha256": "8a829e5b8e9a1ba98f7e53ff25edd901935e43ec0d411a5df41f5e71c770add9",
+    "output_sha256": "b8591f2053cf3fc6ac46e920791b47440d12b61c4f302bf3069221d64e56fce0",
+    "dimensions": [
+      360,
+      800
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "player-720.webp",
+    "source": "docs/google-play/source-screenshots/release-2026-10-08/03-player.png",
+    "source_sha256": "8a829e5b8e9a1ba98f7e53ff25edd901935e43ec0d411a5df41f5e71c770add9",
+    "output_sha256": "1541433a34e3718f31075930c10962863ef5ffff89c9675cf86d4c5e9889df8e",
+    "dimensions": [
+      720,
+      1600
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "downloads-360.webp",
+    "source": "docs/google-play/source-screenshots/release-2026-10-08/04-downloads.png",
+    "source_sha256": "524b3b436fe96a818153342c351f1f09de6f7b6fca720ce6fd9e9a75fd880dd7",
+    "output_sha256": "8d7241f4a621d7db508edc29a78b252a2516102d92da48fb414844c88fce2728",
+    "dimensions": [
+      360,
+      800
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "downloads-720.webp",
+    "source": "docs/google-play/source-screenshots/release-2026-10-08/04-downloads.png",
+    "source_sha256": "524b3b436fe96a818153342c351f1f09de6f7b6fca720ce6fd9e9a75fd880dd7",
+    "output_sha256": "0f3978102501b8af6b30edd1d58e5c91934bc32d8ca38706d89c7771d1fc8302",
+    "dimensions": [
+      720,
+      1600
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "library-360.webp",
+    "source": "docs/google-play/source-screenshots/release-2026-10-08/05-library.png",
+    "source_sha256": "e6437319baef1e2a2b704817d223539a13b8f1c8af5202cd4ae2010f21aa3abf",
+    "output_sha256": "f4d7c55ae1fa06b5456b353f0c6b2e5bd3b68fb21f1df0a995e0d2c8e74c311b",
+    "dimensions": [
+      360,
+      800
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "library-720.webp",
+    "source": "docs/google-play/source-screenshots/release-2026-10-08/05-library.png",
+    "source_sha256": "e6437319baef1e2a2b704817d223539a13b8f1c8af5202cd4ae2010f21aa3abf",
+    "output_sha256": "005b12f860b59c3fcd3d8db3fa59446b090860021974833e31c556340d6fe98f",
+    "dimensions": [
+      720,
+      1600
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "chapters-360.webp",
+    "source": "docs/google-play/source-screenshots/release-2026-10-08/06-chapters.png",
+    "source_sha256": "e0b639c3e00fe6d146e2d9c182ee3582011c0943aaffea8bc12083c13fcae99f",
+    "output_sha256": "4f3f9babfe31da4f2d8a95105c779702b365f1e61959548a7d8436b016767262",
+    "dimensions": [
+      360,
+      800
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "chapters-720.webp",
+    "source": "docs/google-play/source-screenshots/release-2026-10-08/06-chapters.png",
+    "source_sha256": "e0b639c3e00fe6d146e2d9c182ee3582011c0943aaffea8bc12083c13fcae99f",
+    "output_sha256": "cc7ad1df2f329793a59fce1764eb43786878da01c0a8d41c62d155a1cbd85d2e",
+    "dimensions": [
+      720,
+      1600
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "bookmarks-360.webp",
+    "source": "docs/google-play/source-screenshots/release-2026-10-08/07-bookmarks.png",
+    "source_sha256": "2a6c0e4acb206e267a885af237c63e106b29ff47ae37c87b52af5e4b116fa1a6",
+    "output_sha256": "e92c5d1af2c4765f761b53993679de62d39c1c4ba7d0489cde6e1a3e2dc4cb6f",
+    "dimensions": [
+      360,
+      800
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "bookmarks-720.webp",
+    "source": "docs/google-play/source-screenshots/release-2026-10-08/07-bookmarks.png",
+    "source_sha256": "2a6c0e4acb206e267a885af237c63e106b29ff47ae37c87b52af5e4b116fa1a6",
+    "output_sha256": "2d81c64307d5b13ddfc34b0264219a6f0ff9d8d69f25f4341099af6a57eb8ac5",
+    "dimensions": [
+      720,
+      1600
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "sleep-timer-360.webp",
+    "source": "docs/google-play/source-screenshots/release-2026-10-08/08-sleep-timer.png",
+    "source_sha256": "2dc98fdddc9545320aaf31ce75f7b8f6bec577606075fa0914c4eff6ef21331f",
+    "output_sha256": "446b89f7c452aa61e99afdc7c4190d7f427a929775ad93cac34f98ea8d4dac74",
+    "dimensions": [
+      360,
+      800
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "sleep-timer-720.webp",
+    "source": "docs/google-play/source-screenshots/release-2026-10-08/08-sleep-timer.png",
+    "source_sha256": "2dc98fdddc9545320aaf31ce75f7b8f6bec577606075fa0914c4eff6ef21331f",
+    "output_sha256": "522f3ed317dee9151bf7c1d7e851764ebf4f65769940f49773a337825ebb10c1",
+    "dimensions": [
+      720,
+      1600
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "app-icon.webp",
+    "source": "docs/google-play/play-store-icon.png",
+    "source_sha256": "f79a3ed85fb4acc9cda71ff4a3279cdf3d6053d9a8a8f642a638e74199237c8d",
+    "dimensions": [
+      80,
+      80
+    ],
+    "transformation": "Proportional resize and WebP encoding."
+  },
+  {
+    "file": "cover-moby.svg",
+    "creator": "Original geometric illustration and typesetting for LibriVox Mobile",
+    "license": "MIT",
+    "work_reference": "https://www.gutenberg.org/ebooks/2701"
+  },
+  {
+    "file": "cover-alice.svg",
+    "creator": "Original geometric illustration and typesetting for LibriVox Mobile",
+    "license": "MIT",
+    "work_reference": "https://www.gutenberg.org/ebooks/11"
+  },
+  {
+    "file": "cover-sherlock.svg",
+    "creator": "Original geometric illustration and typesetting for LibriVox Mobile",
+    "license": "MIT",
+    "work_reference": "https://www.gutenberg.org/ebooks/1661"
+  },
+  {
+    "file": "cover-pride.svg",
+    "creator": "Original geometric illustration and typesetting for LibriVox Mobile",
+    "license": "MIT",
+    "work_reference": "https://www.gutenberg.org/ebooks/1342"
+  },
+  {
+    "file": "cover-tadeusz.svg",
+    "creator": "Original geometric illustration and typesetting for LibriVox Mobile",
+    "license": "MIT",
+    "work_reference": "https://wolnelektury.pl/katalog/lektura/pan-tadeusz/"
+  },
+  {
+    "file": "cover-huckleberry.svg",
+    "creator": "Original geometric illustration and typesetting for LibriVox Mobile",
+    "license": "MIT",
+    "work_reference": "https://etc.usf.edu/lit2go/21/the-adventures-of-huckleberry-finn/"
+  },
+  {
+    "file": "cover-frankenstein.svg",
+    "creator": "Original geometric illustration and typesetting for LibriVox Mobile",
+    "license": "MIT",
+    "work_reference": "https://www.gutenberg.org/ebooks/84"
+  },
+  {
+    "file": "cover-lalka.svg",
+    "creator": "Original geometric illustration and typesetting for LibriVox Mobile",
+    "license": "MIT",
+    "work_reference": "https://wolnelektury.pl/katalog/lektura/lalka/"
+  },
+  {
+    "file": "social-preview.png",
+    "creator": "Original LibriVox Mobile typographic composition",
+    "license": "MIT",
+    "dimensions": [
+      1200,
+      630
+    ]
+  }
+]

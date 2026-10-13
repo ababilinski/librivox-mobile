@@ -90,6 +90,12 @@ npm run serve
 
 Open `http://127.0.0.1:4173/`. Run `npm run check:site` to check the site's HTML, CSS, and local links.
 
+The homepage uses the editorial design, with a book gallery and all listening tools shown together. Content and navigation remain available without JavaScript; shared animations enhance the page when motion is enabled.
+
+Explore the collection highlights at `http://127.0.0.1:4173/sources/`. The Sources page links to original title pages, official donation guidance, and catalog highlights. Project Gutenberg’s ebook total is separate from audio availability.
+
+Run `python3 scripts/generate-site-assets.py` to prepare 26 website assets (requires Pillow, listed in `scripts/requirements-play-assets.txt`). Original illustrations and proportional release captures live in `docs/assets/product/`; its manifest records provenance and hashes. The website uses local assets and system fonts. Shared page entrances and scroll reveals respect reduced motion and keep content visible without JavaScript. `npm run build` validates `docs/`, which GitHub Pages serves directly.
+
 ## Support and contributions
 
 For bugs or feature requests, [open an issue](https://github.com/ababilinski/librivox-mobile/issues). Code and documentation contributions are welcome. For help, email [adrian@babilinapps.com](mailto:adrian@babilinapps.com).

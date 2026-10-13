@@ -3,290 +3,510 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>LibriVox Mobile</title>
-    <meta name="description" content="Stream and cast LibriVox audiobooks on your phone. Completely free.">
-    <meta property="og:title" content="LibriVox Mobile">
-    <meta property="og:description" content="Stream and cast LibriVox audiobooks on your phone. Completely free.">
-    <meta property="og:image" content="assets/book-cover-hero.png">
-    <link rel="icon" href="favicon.ico" sizes="any">
-    <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <link rel="stylesheet" href="assets/site.css">
+    <meta name="theme-color" content="#fbf8f1">
+    <title>
+      LibriVox Mobile — Great books. Read to you.
+    </title>
+    <meta name="description" content="Free classic audiobooks, thoughtful listening tools, and open-source software. Get the Android app or explore the native iOS app in development.">
+    <link rel="canonical" href="https://ababilinski.github.io/librivox-mobile/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="LibriVox Mobile — Great books. Read to you.">
+    <meta property="og:description" content="Free classic audiobooks, thoughtful listening tools, and open-source software. Get the Android app or explore the native iOS app in development.">
+    <meta property="og:url" content="https://ababilinski.github.io/librivox-mobile/">
+    <meta property="og:image" content="https://ababilinski.github.io/librivox-mobile/assets/product/social-preview.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="LibriVox Mobile. Great books. Read to you. Free audiobooks and open-source software.">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" href="./favicon.ico" sizes="any">
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+    <link rel="stylesheet" href="./assets/site.css">
+    <script src="./assets/site.js" defer>
+    </script>
   </head>
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
+  <body class="home-page">
+    <a class="skip-link" href="#main">
+      Skip to content
+    </a>
     <header class="site-header">
       <nav class="nav" aria-label="Primary">
         <a class="brand" href="./" aria-label="LibriVox Mobile home">
-          <span class="brand-mark" aria-hidden="true">LM</span>
-          <span>LibriVox Mobile</span>
+          <img src="./assets/product/app-icon.webp" width="32" height="32" alt="" aria-hidden="true">
+          <span>
+            LibriVox Mobile
+          </span>
         </a>
-        <div class="nav-links">
-          <a href="./" aria-current="page">Home</a>
-          <a href="#features">Features</a>
-          <a href="./faq/">FAQ</a>
-          <a href="./privacy-policy/">Privacy</a>
-          <a href="./terms-of-service/">Terms</a>
-          <a class="nav-button" href="https://librivox.org/">LibriVox</a>
-          <a class="github-link" href="https://github.com/ababilinski/librivox-mobile" aria-label="View LibriVox Mobile on GitHub">
-            <svg class="github-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-              <path d="M12 2C6.48 2 2 6.58 2 12.23c0 4.52 2.87 8.35 6.84 9.7.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.89-2.78.62-3.37-1.22-3.37-1.22-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.9 1.56 2.36 1.11 2.93.85.09-.66.35-1.11.63-1.36-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.35 9.35 0 0 1 12 6.94c.85 0 1.7.12 2.5.34 1.9-1.33 2.74-1.05 2.74-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.79-4.57 5.05.36.32.68.94.68 1.89 0 1.36-.01 2.46-.01 2.8 0 .27.18.59.69.49A10.08 10.08 0 0 0 22 12.23C22 6.58 17.52 2 12 2Z"/>
-            </svg>
-            <span>GitHub</span>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" hidden>
+          Menu
+        </button>
+        <div class="nav-links" id="site-navigation">
+          <a href="./" aria-current="page">
+            Home
           </a>
-          <a href="./support/">Support</a>
+          <a href="./features/">
+            Features
+          </a>
+          <a href="./faq/">
+            FAQ
+          </a>
+          <a href="./sources/">Sources</a>
+          <a href="./support/">
+            Support
+          </a>
         </div>
+        <a class="nav-action" href="https://github.com/ababilinski/librivox-mobile/releases/latest">
+          Get Android app
+        </a>
       </nav>
     </header>
-
     <main id="main">
-      <section class="hero" aria-label="LibriVox Mobile">
-        <div class="hero-inner">
-          <div class="hero-copy">
-            <h1>LibriVox Mobile</h1>
-            <p class="hero-lede">Stream and cast LibriVox audiobooks on your phone. <strong class="free-emphasis">Completely free.</strong></p>
-            <p class="hero-support">Find public-domain recordings from LibriVox, save books for offline listening, and pick up where you left off.</p>
-            <div class="button-row" aria-label="App links">
-              <a class="button" href="#features">Explore features</a>
-              <a class="button secondary" href="https://librivox.org/">LibriVox</a>
-              <a class="button secondary" href="./support/">Support</a>
-            </div>
+      <section class="container hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">
+            Your next chapter starts here
+          </p>
+          <h1 id="hero-title">
+            Great books.
+            <br>
+            <em>
+              Read to you.
+            </em>
+          </h1>
+          <p class="hero-lede">
+            Discover free classic audiobooks, listen at your own pace, and download chapters for offline listening.
+          </p>
+          <div class="actions">
+            <a class="button" href="https://github.com/ababilinski/librivox-mobile/releases/latest">
+              Get the Android app
+            </a>
+            <a class="text-link" href="https://github.com/ababilinski/librivox-mobile">
+              View source
+              <span aria-hidden="true">
+                ↗
+              </span>
+            </a>
           </div>
-        </div>
-      </section>
-
-      <section class="app-preview" aria-labelledby="app-preview-title">
-        <div class="app-preview-copy">
-          <p class="eyebrow">Browse. Listen. Cast.</p>
-          <h2 id="app-preview-title">A simple way to listen to LibriVox.</h2>
-          <p>Search LibriVox, open a book, send audio to nearby Cast devices, save bookmarks, and come back later.</p>
-          <div class="button-row">
-            <a class="button light" href="#features">Explore features</a>
-          </div>
-        </div>
-        <div class="preview-phone-group" aria-label="LibriVox Mobile app screens">
-          <figure class="preview-phone">
-            <img src="assets/appScreens/home.png" alt="Home screen with featured LibriVox audiobooks in LibriVox Mobile" loading="lazy">
-          </figure>
-          <figure class="preview-phone featured">
-            <img src="assets/appScreens/author-search.png" alt="Author search results in LibriVox Mobile" loading="lazy">
-          </figure>
-          <figure class="preview-phone">
-            <img src="assets/appScreens/casting.png" alt="Cast device sheet in LibriVox Mobile" loading="lazy">
-          </figure>
-        </div>
-      </section>
-
-      <section id="features" class="section">
-        <div class="section-header">
-          <h2>Find a book and start listening.</h2>
-          <p>Browse the LibriVox catalog, stream a chapter, download a book, or cast audio to another device.</p>
-        </div>
-        <div class="feature-grid">
-          <article class="feature-card">
-            <h3>Search the catalog</h3>
-            <p>Look up books by title, author, chapter, or reader.</p>
-          </article>
-          <article class="feature-card">
-            <h3>Stream or download</h3>
-            <p>Listen online, or save books for later when you are offline.</p>
-          </article>
-          <article class="feature-card">
-            <h3>Cast audio</h3>
-            <p>Send a book to supported speakers, TVs, and Cast devices.</p>
-          </article>
-          <article class="feature-card">
-            <h3>Keep your place</h3>
-            <p>Your library keeps progress, bookmarks, likes, and recent listens.</p>
-          </article>
-        </div>
-        <div class="button-row">
-          <a class="button light" href="#feature-details">See more features</a>
-        </div>
-      </section>
-
-      <section id="feature-details" class="section tight feature-list" aria-label="LibriVox Mobile features">
-        <article class="feature-detail feature-discover">
-          <div class="feature-copy">
-            <p class="eyebrow">Find books</p>
-            <h2>Browse featured audiobooks</h2>
-            <p>Open the app and start with public-domain books from LibriVox, including featured titles and recent listens.</p>
-          </div>
-          <figure class="feature-phone">
-            <img src="assets/appScreens/home.png" alt="Home screen with featured audiobooks in LibriVox Mobile" loading="lazy">
-          </figure>
-        </article>
-
-        <article class="feature-detail feature-search">
-          <div class="feature-copy">
-            <p class="eyebrow">Search</p>
-            <h2>Search by title, author, chapter, or reader</h2>
-            <p>Use field filters to narrow the LibriVox catalog and keep listening from the mini-player while you browse.</p>
-          </div>
-          <figure class="feature-phone">
-            <img src="assets/appScreens/author-search.png" alt="Author search results in LibriVox Mobile" loading="lazy">
-          </figure>
-        </article>
-
-        <article class="feature-detail feature-details">
-          <div class="feature-copy">
-            <p class="eyebrow">Book details</p>
-            <h2>Know what you are opening</h2>
-            <p>Book pages show descriptions, authors, source links, save options, and chapters.</p>
-          </div>
-          <figure class="feature-phone">
-            <img src="assets/appScreens/book-detail.png" alt="Book details screen in LibriVox Mobile" loading="lazy">
-          </figure>
-        </article>
-
-        <article class="feature-detail feature-chapters">
-          <div class="feature-copy">
-            <p class="eyebrow">Chapters</p>
-            <h2>Jump to the right part</h2>
-            <p>Open a book's chapter list, move around long recordings, and return to the section you wanted.</p>
-          </div>
-          <figure class="feature-phone">
-            <img src="assets/appScreens/chapters.png" alt="Chapter list screen in LibriVox Mobile" loading="lazy">
-          </figure>
-        </article>
-
-        <article class="feature-detail feature-cast">
-          <div class="feature-copy">
-            <p class="eyebrow">Stream and cast</p>
-            <h2>Listen on your phone or nearby Cast devices</h2>
-            <p>Listen on your phone, or cast audio to supported speakers, TVs, and receivers on your local network.</p>
-          </div>
-          <figure class="feature-phone">
-            <img src="assets/appScreens/casting.png" alt="Cast sheet in LibriVox Mobile" loading="lazy">
-          </figure>
-        </article>
-
-        <article class="feature-detail feature-bookmarks">
-          <div class="feature-copy">
-            <p class="eyebrow">Bookmarks</p>
-            <h2>Save moments with notes</h2>
-            <p>Add bookmarks, keep notes, and return to the parts of a book you want to remember.</p>
-          </div>
-          <figure class="feature-phone">
-            <img src="assets/appScreens/bookmark-notes.png" alt="Bookmarks and notes sheet in LibriVox Mobile" loading="lazy">
-          </figure>
-        </article>
-
-        <article class="feature-detail feature-offline">
-          <div class="feature-copy">
-            <p class="eyebrow">Offline</p>
-            <h2>Download books for later</h2>
-            <p>Save books while you have a connection, then listen later when streaming is inconvenient or unavailable.</p>
-          </div>
-          <figure class="feature-phone">
-            <img src="assets/phoneScreenshots/06-offline-listening.png" alt="Offline listening screen in LibriVox Mobile" loading="lazy">
-          </figure>
-        </article>
-
-        <article class="feature-detail feature-library">
-          <div class="feature-copy">
-            <p class="eyebrow">Library</p>
-            <h2>Keep your place</h2>
-            <p>Your library keeps recent books, progress, bookmarks, likes, and downloads so you can get back to the right book quickly.</p>
-          </div>
-          <figure class="feature-phone">
-            <img src="assets/phoneScreenshots/05-library-progress.png" alt="Library progress screen in LibriVox Mobile" loading="lazy">
-          </figure>
-        </article>
-      </section>
-
-      <section class="band">
-        <div class="section value-strip">
-          <div class="wide-copy">
-            <p class="eyebrow">Free means free</p>
-            <h2>Completely free.</h2>
-            <p>No ads. No subscriptions. No paid upgrades. No account required.</p>
-          </div>
-          <ul class="value-points" aria-label="Free app details">
+          <ul class="hero-facts" aria-label="App highlights">
             <li>
-              <strong>No account needed</strong>
-              <span>Start browsing and listening without creating a profile.</span>
+              Completely free
             </li>
             <li>
-              <strong>No ads or paywalls</strong>
-              <span>The app does not include advertising SDKs or paid listening features.</span>
+              No ads
             </li>
             <li>
-              <strong>Local library data</strong>
-              <span>Progress, bookmarks, settings, cache, and downloads stay on your device.</span>
+              No account
             </li>
           </ul>
+          <p class="platform-note">
+            Android 16+ · Native iOS app in development.
+            <a href="https://github.com/ababilinski/librivox-mobile/tree/main/ios">
+              Explore iOS source
+            </a>
+          </p>
         </div>
-      </section>
-
-      <section class="section" aria-labelledby="screenshots">
-        <div class="section-header">
-          <h2 id="screenshots">What it looks like</h2>
-          <p>Browse the catalog, check book details, save books offline, and use listening tools without leaving the player.</p>
-        </div>
-        <div class="screens">
-          <figure class="screen-shot">
-            <img src="assets/phoneScreenshots/01-browse-librivox.png" alt="Browse LibriVox audiobooks screenshot in LibriVox Mobile" loading="lazy">
-            <figcaption>Browse and search the LibriVox catalog.</figcaption>
-          </figure>
-          <figure class="screen-shot">
-            <img src="assets/phoneScreenshots/02-book-details.png" alt="Book details screenshot in LibriVox Mobile" loading="lazy">
-            <figcaption>Book details include chapters, source links, and save options.</figcaption>
-          </figure>
-          <figure class="screen-shot">
-            <img src="assets/phoneScreenshots/03-player-controls.png" alt="Audiobook player screenshot in LibriVox Mobile" loading="lazy">
-            <figcaption>The player shows the current book, chapter, progress, and bookmarks.</figcaption>
-          </figure>
-          <figure class="screen-shot">
-            <img src="assets/phoneScreenshots/06-offline-listening.png" alt="Offline listening screenshot in LibriVox Mobile" loading="lazy">
-            <figcaption>Download books for offline listening.</figcaption>
-          </figure>
-          <figure class="screen-shot">
-            <img src="assets/phoneScreenshots/05-library-progress.png" alt="Library progress screenshot in LibriVox Mobile" loading="lazy">
-            <figcaption>Return to saved books and recent progress.</figcaption>
-          </figure>
-          <figure class="screen-shot">
-            <img src="image-resources/ui-captures/13-player-chapters-panel.png" alt="LibriVox Mobile player with the chapters panel open" loading="lazy">
-            <figcaption>Open the chapter list from the player.</figcaption>
-          </figure>
-          <figure class="screen-shot">
-            <img src="image-resources/ui-captures/14-player-bookmark-notes.png" alt="LibriVox Mobile bookmark notes panel in the audiobook player" loading="lazy">
-            <figcaption>Add a note to a bookmark.</figcaption>
-          </figure>
-          <figure class="screen-shot">
-            <img src="image-resources/ui-captures/16-sleep-timer.png" alt="LibriVox Mobile sleep timer sheet" loading="lazy">
-            <figcaption>Set a sleep timer before bed.</figcaption>
-          </figure>
-        </div>
-      </section>
-
-      <section class="band">
-        <div class="section">
-          <div class="section-header">
-            <h2>About LibriVox</h2>
-            <p>LibriVox Mobile is an independent app. The volunteer audiobook project is at <a href="https://librivox.org/">LibriVox.org</a>.</p>
+        <div class="hero-artwork">
+          <div class="hero-stage" aria-label="Classic book illustrations and the Android app">
+            <img class="stage-cover stage-moby" src="assets/product/cover-moby.svg" width="480" height="680" alt="Original Moby-Dick cover illustration">
+            <img class="stage-cover stage-alice" src="assets/product/cover-alice.svg" width="480" height="680" alt="Original Alice in Wonderland cover illustration">
+            <img class="stage-cover stage-sherlock" src="assets/product/cover-sherlock.svg" width="480" height="680" alt="Original Sherlock Holmes cover illustration">
+            <figure class="phone hero-phone">
+              <img src="assets/product/browse-360.webp" srcset="assets/product/browse-360.webp 360w, assets/product/browse-720.webp 720w" sizes="185px" width="360" height="800" alt="Android app showing featured audiobooks and Continue listening" fetchpriority="high">
+            </figure>
           </div>
-          <p class="notice">LibriVox Mobile is unofficial and is not affiliated with or endorsed by LibriVox. Recordings are made by LibriVox volunteers and are available from LibriVox.org.</p>
+          <p class="stage-caption">
+            A whole shelf. In your pocket.
+          </p>
         </div>
+      </section>
+      <div class="chapter-line">
+        <span>
+          Made for listening
+        </span>
+        <p>
+          From the first chapter to the last.
+        </p>
+      </div>
+      <section class="container" id="features" aria-labelledby="discover-title">
+        <div class="section-intro" data-reveal>
+          <p class="eyebrow">
+            01 / Find your next book
+          </p>
+          <h2 id="discover-title">
+            Old favorites.
+            <br>
+            New discoveries.
+          </h2>
+          <p>
+            Great adventures, curious worlds, and a mystery or two. Browse the collections or search for a title or author you love.
+          </p>
+        </div>
+        <div class="cover-gallery">
+          <figure>
+            <img src="assets/product/cover-moby.svg" width="480" height="680" alt="Original illustrated cover for Moby-Dick" loading="lazy">
+            <figcaption>
+              <span class="book-number">
+                01
+              </span>
+              <h3>
+                Moby-Dick
+              </h3>
+              <p>
+                Herman Melville
+              </p>
+              <a href="https://www.gutenberg.org/ebooks/2701">
+                Read the original
+                <span aria-hidden="true">
+                  ↗
+                </span>
+              </a>
+            </figcaption>
+          </figure>
+          <figure>
+            <img src="assets/product/cover-alice.svg" width="480" height="680" alt="Original illustrated cover for Alice’s Adventures in Wonderland" loading="lazy">
+            <figcaption>
+              <span class="book-number">
+                02
+              </span>
+              <h3>
+                Alice’s Adventures in Wonderland
+              </h3>
+              <p>
+                Lewis Carroll
+              </p>
+              <a href="https://www.gutenberg.org/ebooks/11">
+                Read the original
+                <span aria-hidden="true">
+                  ↗
+                </span>
+              </a>
+            </figcaption>
+          </figure>
+          <figure>
+            <img src="assets/product/cover-sherlock.svg" width="480" height="680" alt="Original illustrated cover for The Adventures of Sherlock Holmes" loading="lazy">
+            <figcaption>
+              <span class="book-number">
+                03
+              </span>
+              <h3>
+                The Adventures of Sherlock Holmes
+              </h3>
+              <p>
+                Arthur Conan Doyle
+              </p>
+              <a href="https://www.gutenberg.org/ebooks/1661">
+                Read the original
+                <span aria-hidden="true">
+                  ↗
+                </span>
+              </a>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+      <section class="listening" id="feature-details" aria-labelledby="listen-title">
+        <div class="container listening-inner">
+          <div data-reveal>
+            <p class="eyebrow">
+              02 / Make time for a chapter
+            </p>
+            <h2 id="listen-title">
+              A good book.
+              <br>
+              A moment for you.
+            </h2>
+            <p class="lede">
+              For the quiet morning, the long walk, or the last few minutes of the day. A player that keeps the story close and the controls at hand.
+            </p>
+            <div class="listening-facts">
+              <article>
+                <h3>
+                  Your own pace.
+                </h3>
+                <p>
+                  Adjust playback speed to find a rhythm that feels right.
+                </p>
+              </article>
+              <article>
+                <h3>
+                  Life keeps moving.
+                </h3>
+                <p>
+                  Background playback lets the story carry on while you use other apps.
+                </p>
+              </article>
+            </div>
+            <a class="text-link" href="features/#listening">
+              Explore listening features
+              <span aria-hidden="true">
+                →
+              </span>
+            </a>
+          </div>
+          <figure class="phone ">
+            <img src="assets/product/player-360.webp" srcset="assets/product/player-360.webp 360w, assets/product/player-720.webp 720w" sizes="272px" width="360" height="800" alt="Bleak House playing with chapter progress and playback controls in the Android release" loading="lazy">
+          </figure>
+        </div>
+      </section>
+      <section class="container" id="screenshots" aria-labelledby="place-title">
+        <div class="section-intro" data-reveal>
+          <p class="eyebrow">
+            03 / Keep your place
+          </p>
+          <h2 id="place-title">
+            Never lose the thread.
+          </h2>
+          <p>
+            Long books, little moments, and the lines that stay with you. Keep your listening organized without leaving the story.
+          </p>
+        </div>
+        <div class="tool-grid">
+          <article class="tool-card" id="tool-chapters">
+            <div>
+              <h3>
+                A chapter at a time.
+              </h3>
+              <p>
+                Find the part you want. Open the chapter list while you listen and jump straight to the next beginning.
+              </p>
+            </div>
+            <figure class="phone ">
+              <img src="assets/product/chapters-360.webp" srcset="assets/product/chapters-360.webp 360w, assets/product/chapters-720.webp 720w" sizes="205px" width="360" height="800" alt="Bleak House chapter list in the Android app" loading="lazy">
+            </figure>
+          </article>
+          <article class="tool-card" id="tool-bookmarks">
+            <div>
+              <h3>
+                Keep the good bits.
+              </h3>
+              <p>
+                Save a moment with a bookmark and a note. Return to the words you wanted to remember.
+              </p>
+            </div>
+            <figure class="phone ">
+              <img src="assets/product/bookmarks-360.webp" srcset="assets/product/bookmarks-360.webp 360w, assets/product/bookmarks-720.webp 720w" sizes="205px" width="360" height="800" alt="A saved bookmark with a note in the Android app" loading="lazy">
+            </figure>
+          </article>
+          <article class="tool-card" id="tool-sleep-timer">
+            <div>
+              <h3>
+                One more before bed.
+              </h3>
+              <p>
+                Set a sleep timer and let the story wind down. Your next chapter will still be there tomorrow.
+              </p>
+            </div>
+            <figure class="phone ">
+              <img src="assets/product/sleep-timer-360.webp" srcset="assets/product/sleep-timer-360.webp 360w, assets/product/sleep-timer-720.webp 720w" sizes="205px" width="360" height="800" alt="Sleep timer options in the Android app" loading="lazy">
+            </figure>
+          </article>
+        </div>
+      </section>
+      <section class="everywhere" aria-labelledby="anywhere-title">
+        <div class="container everywhere-inner">
+          <div data-reveal>
+            <p class="eyebrow">
+              04 / Take the story with you
+            </p>
+            <h2 id="anywhere-title">
+              The next chapter.
+              <br>
+              Wherever you are.
+            </h2>
+            <p class="lede">
+              A book for the journey. A voice to fill the room. Keep listening the way that suits your day.
+            </p>
+            <div class="everywhere-facts">
+              <article>
+                <h3>
+                  Ready when Wi-Fi isn’t.
+                </h3>
+                <p>
+                  Download chapters before you head out, then listen offline.
+                </p>
+              </article>
+              <article>
+                <h3>
+                  Let the room listen, too.
+                </h3>
+                <p>
+                  Send a story to compatible Google Cast speakers or TVs on the same local network.
+                </p>
+              </article>
+              <article>
+                <h3>
+                  Come back to your library.
+                </h3>
+                <p>
+                  Saved books, listening progress, and bookmarks stay on your device.
+                </p>
+              </article>
+            </div>
+          </div>
+          <div class="travel-screens">
+            <figure class="phone ">
+              <img src="assets/product/downloads-360.webp" srcset="assets/product/downloads-360.webp 360w, assets/product/downloads-720.webp 720w" sizes="205px" width="360" height="800" alt="Downloaded audiobook chapter ready for offline listening in the Android app" loading="lazy">
+            </figure>
+            <figure class="phone ">
+              <img src="assets/product/casting-360.webp" srcset="assets/product/casting-360.webp 360w, assets/product/casting-720.webp 720w" sizes="205px" width="360" height="808" alt="Android Cast controls connected to a Kitchen speaker, captured on a Pixel 9" loading="lazy">
+            </figure>
+          </div>
+        </div>
+      </section>
+      <section class="container source-section" id="open-source" aria-labelledby="source-title">
+        <div class="section-intro" data-reveal>
+          <p class="eyebrow">
+            A shared love of books
+          </p>
+          <h2 id="source-title">
+            Free to listen.
+            <br>
+            Open to build.
+          </h2>
+          <p>
+            Good stories deserve to be heard. LibriVox Mobile is free, open-source software, built around recordings and books shared by public collections.
+          </p>
+          <div class="actions">
+            <a class="button" href="https://github.com/ababilinski/librivox-mobile">
+              Explore the code
+              <span aria-hidden="true">
+                &nbsp;↗
+              </span>
+            </a>
+            <a class="text-link" href="https://github.com/ababilinski/librivox-mobile/issues">
+              Help make it better
+              <span aria-hidden="true">
+                ↗
+              </span>
+            </a>
+          </div>
+        </div>
+        <ul class="source-benefits" aria-label="Project principles">
+          <li>
+            No ads
+          </li>
+          <li>
+            No subscriptions
+          </li>
+          <li>
+            No account required
+          </li>
+          <li>
+            <a href="https://github.com/ababilinski/librivox-mobile/blob/main/LICENSE">
+              MIT-licensed software
+            </a>
+          </li>
+        </ul>
+        <div class="collections">
+          <h3>
+            Meet the collections behind the stories
+          </h3>
+          <div class="collection-links">
+            <a href="https://librivox.org/">
+              LibriVox
+            </a>
+            <a href="https://etc.usf.edu/lit2go/">
+              Lit2Go
+            </a>
+            <a href="https://www.gutenberg.org/">
+              Project Gutenberg
+            </a>
+            <a href="https://wolnelektury.pl/">
+              Wolne Lektury
+            </a>
+          </div>
+          <p class="source-disclosure">
+            LibriVox volunteers bring books to life. You can also enable Lit2Go and Wolne Lektury in the app. Project Gutenberg provides linked texts. Recordings, texts, and artwork have their own source terms; public-domain status varies by country.
+          </p>
+          <a class="text-link" href="./sources/">Explore the collections <span aria-hidden="true">→</span></a>
+        </div>
+      </section>
+      <section class="final-cta" aria-labelledby="start-title">
+        <p class="eyebrow">
+          There’s always another chapter
+        </p>
+        <h2 id="start-title">
+          Make room for a story.
+        </h2>
+        <div class="actions">
+          <a class="button" href="https://github.com/ababilinski/librivox-mobile/releases/latest">
+            Get the Android app
+          </a>
+          <a class="text-link" href="features/">
+            Take a closer look
+            <span aria-hidden="true">
+              →
+            </span>
+          </a>
+        </div>
+        <p class="platform-note">
+          Android 16+ · iOS in development · Free and open source
+        </p>
       </section>
     </main>
-
     <footer class="site-footer">
       <div class="footer-inner">
         <div>
-          <strong>LibriVox Mobile</strong>
-          <p>Stream and cast LibriVox audiobooks on your phone. Completely free.</p>
+          <strong>
+            LibriVox Mobile
+          </strong>
+          <p>
+            A little more room for a good book.
+            <br>
+            Free audiobooks. Open-source software.
+          </p>
         </div>
-        <div class="footer-links" aria-label="Footer">
-          <a href="#features">Features</a>
-          <a href="./faq/">FAQ</a>
-          <a href="./privacy-policy/">Privacy</a>
-          <a href="./terms-of-service/">Terms</a>
-          <a href="./support/">Support</a>
-          <a href="./resources/">Resources</a>
+        <div class="footer-groups">
+          <nav aria-label="Explore">
+            <h3>
+              Explore
+            </h3>
+            <a href="./">
+              Home
+            </a>
+            <a href="./features/">
+              Features
+            </a>
+            <a href="./sources/">Sources</a><a href="./resources/">
+              Resources
+            </a>
+          </nav>
+          <nav aria-label="Open source">
+            <h3>
+              Open source
+            </h3>
+            <a href="https://github.com/ababilinski/librivox-mobile">
+              GitHub
+            </a>
+            <a href="https://github.com/ababilinski/librivox-mobile/issues">
+              Report an issue
+            </a>
+            <a href="https://github.com/ababilinski/librivox-mobile/blob/main/LICENSE">
+              MIT license
+            </a>
+          </nav>
+          <nav aria-label="Help and policies">
+            <h3>
+              Help &amp; policies
+            </h3>
+            <a href="./faq/">
+              FAQ
+            </a>
+            <a href="./support/">
+              Support
+            </a>
+            <a href="./privacy-policy/">
+              Privacy
+            </a>
+            <a href="./terms-of-service/">
+              Terms
+            </a>
+          </nav>
         </div>
       </div>
+      <p class="footer-bottom">
+        © 2026 Adrian Babilinski. An independent project, not affiliated with or endorsed by LibriVox or the other content sources.
+      </p>
     </footer>
   </body>
 </html>

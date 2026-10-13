@@ -44,7 +44,7 @@ function stripTags(value) {
 }
 
 async function resolveLocalReference(fromFile, rawRef, label) {
-  if (!rawRef || rawRef.startsWith("#")) return;
+  if (!rawRef) return;
 
   let url;
   try {
@@ -61,10 +61,10 @@ async function resolveLocalReference(fromFile, rawRef, label) {
   }
 
   const cleanRef = rawRef.split("#")[0].split("?")[0];
-  if (!cleanRef) return;
+  if (!cleanRef && !url.hash) return;
 
   const decodedRef = decodeURIComponent(cleanRef);
-  const target = path.resolve(path.dirname(fromFile), decodedRef);
+  let target = cleanRef ? path.resolve(path.dirname(fromFile), decodedRef) : fromFile;
   const relativeToRoot = path.relative(siteRoot, target);
 
   if (relativeToRoot.startsWith("..") || path.isAbsolute(relativeToRoot)) {
@@ -80,8 +80,26 @@ async function resolveLocalReference(fromFile, rawRef, label) {
     return;
   }
 
-  if (targetStat.isDirectory() && !(await exists(path.join(target, "index.html")))) {
-    errors.push(`${fromFile}: directory ${label} reference has no index.html: "${rawRef}"`);
+  if (targetStat.isDirectory()) {
+    target = path.join(target, "index.html");
+    if (!(await exists(target))) {
+      errors.push(`${fromFile}: directory ${label} reference has no index.html: "${rawRef}"`);
+      return;
+    }
+  }
+  if (url.hash && target.endsWith(".html")) {
+    const targetHtml = await readFile(target, "utf8");
+    const ids = [...targetHtml.matchAll(/\bid\s*=\s*["']([^"']+)["']/gi)].map(match => match[1]);
+    if (!ids.includes(decodeURIComponent(url.hash.slice(1)))) {
+      errors.push(`${fromFile}: missing fragment in ${label} reference "${rawRef}"`);
+    }
+  }
+}
+
+async function checkSrcset(filePath, srcset) {
+  for (const candidate of (srcset ?? "").split(",")) {
+    const ref = candidate.trim().split(/\s+/)[0];
+    if (ref) await resolveLocalReference(filePath, ref, "srcset image");
   }
 }
 
@@ -94,10 +112,18 @@ async function checkHtml(filePath) {
 
   for (const match of html.matchAll(/<img\b[^>]*>/gi)) {
     const attrs = parseAttributes(match[0]);
-    if (!attrs.alt?.trim()) {
+    if (!Object.hasOwn(attrs, "alt") || (!attrs.alt.trim() && attrs["aria-hidden"] !== "true")) {
       errors.push(`${filePath}: image missing alt text`);
     }
     await resolveLocalReference(filePath, attrs.src, "image");
+    await checkSrcset(filePath, attrs.srcset);
+  }
+
+  for (const match of html.matchAll(/<(?:script|source|video)\b[^>]*>/gi)) {
+    const attrs = parseAttributes(match[0]);
+    await resolveLocalReference(filePath, attrs.src, "script or media");
+    await resolveLocalReference(filePath, attrs.poster, "video poster");
+    await checkSrcset(filePath, attrs.srcset);
   }
 
   for (const match of html.matchAll(/<link\b[^>]*>/gi)) {

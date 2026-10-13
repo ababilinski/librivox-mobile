@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="680" viewBox="0 0 480 680">
+<rect width="480" height="680" fill="#514c38"/><rect x="22" y="22" width="436" height="636" fill="none" stroke="#f1deb2" stroke-opacity=".55"/>
+<text x="240" y="83" text-anchor="middle" fill="#f1deb2" font-family="Georgia,serif" font-size="14" letter-spacing="2">MARY SHELLEY</text>
+<text x="240" y="174" text-anchor="middle" fill="#f1deb2" font-family="Georgia,serif" font-size="52">Frankenstein</text>
+<text x="240" y="235" text-anchor="middle" fill="#f1deb2" font-family="Georgia,serif" font-size="52"></text>
+<circle cx="240" cy="432" r="112" fill="none" stroke="#f1deb2" stroke-width="2"/><path d="M210 300h65l-48 109h55l-80 155 17-118h-56Z" fill="#f1deb2"/><text x="240" y="621" text-anchor="middle" fill="#f1deb2" font-family="Georgia,serif" font-size="14" letter-spacing="4">1818 · A CLASSIC</text></svg>
