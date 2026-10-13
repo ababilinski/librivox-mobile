@@ -1,25 +1,54 @@
 (() => {
   document.documentElement.classList.add("has-js");
   const menu = document.querySelector(".menu-toggle");
-  const links = document.querySelector(".nav-links");
-  if (menu && links) {
+  const panel = document.querySelector(".nav-panel");
+  if (menu && panel) {
+    const header = menu.closest(".site-header");
+    const backdrop = header.querySelector(".menu-backdrop");
+    const mobile = matchMedia("(max-width: 760px)");
+    const background = [...document.querySelectorAll("main, footer, .skip-link")];
+    const previousInert = new Map();
     menu.hidden = false;
-    const close = () => {
-      menu.setAttribute("aria-expanded", "false");
-      menu.textContent = "Menu";
-      links.classList.remove("is-open");
+    const setOpen = (open, restoreFocus = false) => {
+      open = open && mobile.matches;
+      if (restoreFocus) menu.focus();
+      menu.setAttribute("aria-expanded", String(open));
+      menu.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      header.classList.toggle("menu-open", open);
+      document.documentElement.classList.toggle("menu-active", open);
+      // Inert keeps hidden links and the covered page out of keyboard and screen-reader navigation.
+      panel.inert = mobile.matches && !open;
+      background.forEach(element => {
+        if (open) {
+          if (!previousInert.has(element)) previousInert.set(element, element.inert);
+          element.inert = true;
+        } else if (previousInert.has(element)) {
+          element.inert = previousInert.get(element);
+          previousInert.delete(element);
+        }
+      });
     };
     menu.addEventListener("click", () => {
-      const open = menu.getAttribute("aria-expanded") !== "true";
-      menu.setAttribute("aria-expanded", String(open));
-      menu.textContent = open ? "Close" : "Menu";
-      links.classList.toggle("is-open", open);
+      setOpen(menu.getAttribute("aria-expanded") !== "true");
     });
     document.addEventListener("keydown", event => {
-      if (event.key === "Escape" && menu.getAttribute("aria-expanded") === "true") { close(); menu.focus(); }
+      if (menu.getAttribute("aria-expanded") !== "true") return;
+      if (event.key === "Escape") { setOpen(false, true); return; }
+      if (event.key !== "Tab") return;
+      const focusable = [...header.querySelectorAll("a[href], button:not([hidden])")];
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
     });
-    links.addEventListener("click", event => { if (event.target.closest("a")) close(); });
-    matchMedia("(min-width: 761px)").addEventListener("change", close);
+    backdrop.addEventListener("click", () => setOpen(false, true));
+    header.addEventListener("click", event => { if (event.target.closest("a")) setOpen(false); });
+    mobile.addEventListener("change", () => {
+      if (!mobile.matches && document.activeElement === menu) header.querySelector(".brand").focus();
+      else if (mobile.matches && panel.contains(document.activeElement)) menu.focus();
+      setOpen(false);
+    });
+    setOpen(false);
   }
   // Motion is an enhancement: content remains visible without JavaScript or with reduced motion.
   const motionPreference = matchMedia("(prefers-reduced-motion: reduce)");

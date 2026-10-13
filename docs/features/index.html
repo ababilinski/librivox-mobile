@@ -37,27 +37,30 @@
             LibriVox Mobile
           </span>
         </a>
-        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" hidden>
-          Menu
+        <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-navigation" hidden>
+          <span class="menu-icon" aria-hidden="true"><span></span><span></span></span>
         </button>
-        <div class="nav-links" id="site-navigation">
-          <a href="../">
-            Home
-          </a>
-          <a href="../features/" aria-current="page">
-            Features
-          </a>
-          <a href="../faq/">
-            FAQ
-          </a>
-          <a href="../sources/">Sources</a>
-          <a href="../support/">
-            Support
+        <div class="menu-backdrop" aria-hidden="true"></div>
+        <div class="nav-panel" id="site-navigation">
+          <div class="nav-links">
+            <a href="../">
+              Home
+            </a>
+            <a href="../features/" aria-current="page">
+              Features
+            </a>
+            <a href="../faq/">
+              FAQ
+            </a>
+            <a href="../sources/">Sources</a>
+            <a href="../support/">
+              Support
+            </a>
+          </div>
+          <a class="nav-action" href="https://github.com/ababilinski/librivox-mobile/releases/latest">
+            Get Android app
           </a>
         </div>
-        <a class="nav-action" href="https://github.com/ababilinski/librivox-mobile/releases/latest">
-          Get Android app
-        </a>
       </nav>
     </header>
     <main id="main">
@@ -278,7 +281,7 @@
           <h2 id="source-title">
             Free to listen.
             <br>
-            Open to build.
+            Open source.
           </h2>
           <p>
             Good stories deserve to be heard. LibriVox Mobile is free, open-source software, built around recordings and books shared by public collections.

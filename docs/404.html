@@ -16,14 +16,20 @@
 <header class="site-header">
   <nav class="nav" aria-label="Primary">
     <a class="brand" href="./" aria-label="LibriVox Mobile home"><img src="./assets/product/app-icon.webp" width="32" height="32" alt="" aria-hidden="true"><span>LibriVox Mobile</span></a>
-    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" hidden>Menu</button>
-    <div class="nav-links" id="site-navigation"><a href="./">Home</a>
-<a href="./features/">Features</a>
-<a href="./faq/">FAQ</a>
-<a href="./sources/">Sources</a>
-<a href="./support/">Support</a>
-</div>
-    <a class="nav-action" href="https://github.com/ababilinski/librivox-mobile/releases/latest">Get Android app</a>
+    <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-navigation" hidden>
+      <span class="menu-icon" aria-hidden="true"><span></span><span></span></span>
+    </button>
+    <div class="menu-backdrop" aria-hidden="true"></div>
+    <div class="nav-panel" id="site-navigation">
+      <div class="nav-links">
+        <a href="./">Home</a>
+        <a href="./features/">Features</a>
+        <a href="./faq/">FAQ</a>
+        <a href="./sources/">Sources</a>
+        <a href="./support/">Support</a>
+      </div>
+      <a class="nav-action" href="https://github.com/ababilinski/librivox-mobile/releases/latest">Get Android app</a>
+    </div>
   </nav>
 </header>
     <main id="main">
