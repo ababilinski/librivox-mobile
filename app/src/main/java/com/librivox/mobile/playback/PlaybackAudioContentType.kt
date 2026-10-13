@@ -316,19 +316,19 @@ enum class BookSourcePreference(
     val preferenceValue: String,
     val label: String,
     val description: String,
-    val enabledSources: Set<CatalogSourcePreference>,
+    private val storedSources: Set<CatalogSourcePreference>,
 ) {
     None(
         preferenceValue = "none",
         label = "No sources selected",
         description = "Discovery is paused until at least one catalog source is selected.",
-        enabledSources = emptySet(),
+        storedSources = emptySet(),
     ),
     AllWithGutendex(
         preferenceValue = "all_with_gutendex",
         label = "All sources + Gutendex",
         description = "Browse audiobook catalogs and use Project Gutenberg metadata and ebook links from Gutendex.",
-        enabledSources = setOf(
+        storedSources = setOf(
             CatalogSourcePreference.Lit2Go,
             CatalogSourcePreference.LibriVox,
             CatalogSourcePreference.WolneLektury,
@@ -339,7 +339,7 @@ enum class BookSourcePreference(
         preferenceValue = "all",
         label = "All audiobook sources",
         description = "Browse LibriVox, Lit2Go, and Polish-only Wolne Lektury together. When an English book appears in both LibriVox and Lit2Go, the Lit2Go recording is used and details are combined.",
-        enabledSources = setOf(
+        storedSources = setOf(
             CatalogSourcePreference.Lit2Go,
             CatalogSourcePreference.LibriVox,
             CatalogSourcePreference.WolneLektury,
@@ -349,80 +349,84 @@ enum class BookSourcePreference(
         preferenceValue = "librivox_lit2go_gutendex",
         label = "LibriVox + Lit2Go + Gutendex",
         description = "Browse the English audiobook catalogs and enrich matches with Project Gutenberg metadata.",
-        enabledSources = setOf(CatalogSourcePreference.Lit2Go, CatalogSourcePreference.LibriVox, CatalogSourcePreference.Gutendex),
+        storedSources = setOf(CatalogSourcePreference.Lit2Go, CatalogSourcePreference.LibriVox, CatalogSourcePreference.Gutendex),
     ),
     LibriVoxAndLit2Go(
         preferenceValue = "librivox_lit2go",
         label = "LibriVox + Lit2Go",
         description = "Browse the English-language public audiobook catalogs together.",
-        enabledSources = setOf(CatalogSourcePreference.Lit2Go, CatalogSourcePreference.LibriVox),
+        storedSources = setOf(CatalogSourcePreference.Lit2Go, CatalogSourcePreference.LibriVox),
     ),
     LibriVoxAndWolneLekturyAndGutendex(
         preferenceValue = "librivox_wolne_lektury_gutendex",
         label = "LibriVox + Wolne Lektury + Gutendex",
         description = "Browse LibriVox, Polish-only Wolne Lektury, and Project Gutenberg metadata together.",
-        enabledSources = setOf(CatalogSourcePreference.LibriVox, CatalogSourcePreference.WolneLektury, CatalogSourcePreference.Gutendex),
+        storedSources = setOf(CatalogSourcePreference.LibriVox, CatalogSourcePreference.WolneLektury, CatalogSourcePreference.Gutendex),
     ),
     LibriVoxAndWolneLektury(
         preferenceValue = "librivox_wolne_lektury",
         label = "LibriVox + Wolne Lektury",
         description = "Browse LibriVox and the Polish-only Wolne Lektury catalog.",
-        enabledSources = setOf(CatalogSourcePreference.LibriVox, CatalogSourcePreference.WolneLektury),
+        storedSources = setOf(CatalogSourcePreference.LibriVox, CatalogSourcePreference.WolneLektury),
     ),
     Lit2GoAndWolneLekturyAndGutendex(
         preferenceValue = "lit2go_wolne_lektury_gutendex",
         label = "Lit2Go + Wolne Lektury + Gutendex",
         description = "Browse Lit2Go, Polish-only Wolne Lektury, and Project Gutenberg metadata together.",
-        enabledSources = setOf(CatalogSourcePreference.Lit2Go, CatalogSourcePreference.WolneLektury, CatalogSourcePreference.Gutendex),
+        storedSources = setOf(CatalogSourcePreference.Lit2Go, CatalogSourcePreference.WolneLektury, CatalogSourcePreference.Gutendex),
     ),
     Lit2GoAndWolneLektury(
         preferenceValue = "lit2go_wolne_lektury",
         label = "Lit2Go + Wolne Lektury",
         description = "Browse Lit2Go and the Polish-only Wolne Lektury catalog.",
-        enabledSources = setOf(CatalogSourcePreference.Lit2Go, CatalogSourcePreference.WolneLektury),
+        storedSources = setOf(CatalogSourcePreference.Lit2Go, CatalogSourcePreference.WolneLektury),
     ),
     WolneLekturyAndGutendex(
         preferenceValue = "wolne_lektury_gutendex",
         label = "Wolne Lektury + Gutendex",
         description = "Browse Polish-only Wolne Lektury and Project Gutenberg metadata together.",
-        enabledSources = setOf(CatalogSourcePreference.WolneLektury, CatalogSourcePreference.Gutendex),
+        storedSources = setOf(CatalogSourcePreference.WolneLektury, CatalogSourcePreference.Gutendex),
     ),
     LibriVoxAndGutendex(
         preferenceValue = "librivox_gutendex",
         label = "LibriVox + Gutendex",
         description = "Browse LibriVox and enrich matches with Project Gutenberg metadata.",
-        enabledSources = setOf(CatalogSourcePreference.LibriVox, CatalogSourcePreference.Gutendex),
+        storedSources = setOf(CatalogSourcePreference.LibriVox, CatalogSourcePreference.Gutendex),
     ),
     Lit2GoAndGutendex(
         preferenceValue = "lit2go_gutendex",
         label = "Lit2Go + Gutendex",
         description = "Browse Lit2Go and enrich matches with Project Gutenberg metadata.",
-        enabledSources = setOf(CatalogSourcePreference.Lit2Go, CatalogSourcePreference.Gutendex),
+        storedSources = setOf(CatalogSourcePreference.Lit2Go, CatalogSourcePreference.Gutendex),
     ),
     LibriVoxOnly(
         preferenceValue = "librivox_only",
         label = "LibriVox only",
         description = "Volunteer-recorded public-domain audiobooks.",
-        enabledSources = setOf(CatalogSourcePreference.LibriVox),
+        storedSources = setOf(CatalogSourcePreference.LibriVox),
     ),
     Lit2GoOnly(
         preferenceValue = "lit2go_only",
         label = "Lit2Go only",
         description = "Free educational audiobooks from the University of South Florida.",
-        enabledSources = setOf(CatalogSourcePreference.Lit2Go),
+        storedSources = setOf(CatalogSourcePreference.Lit2Go),
     ),
     WolneLekturyOnly(
         preferenceValue = "wolne_lektury_only",
         label = "Wolne Lektury only",
         description = "Free Polish public-domain audiobooks from WolneLektury.pl.",
-        enabledSources = setOf(CatalogSourcePreference.WolneLektury),
+        storedSources = setOf(CatalogSourcePreference.WolneLektury),
     ),
     GutendexOnly(
         preferenceValue = "gutendex_only",
         label = "Gutendex only",
         description = "Project Gutenberg audiobook records and metadata through the Gutendex API.",
-        enabledSources = setOf(CatalogSourcePreference.Gutendex),
+        storedSources = setOf(CatalogSourcePreference.Gutendex),
     );
+
+    // Legacy enum values still decode, but cannot activate a retired catalog.
+    val enabledSources: Set<CatalogSourcePreference>
+        get() = storedSources - CatalogSourcePreference.Gutendex
 
     val supportsPolish: Boolean
         get() = CatalogSourcePreference.WolneLektury in enabledSources
@@ -431,7 +435,6 @@ enum class BookSourcePreference(
         val SelectableSources: List<CatalogSourcePreference> = listOf(
             CatalogSourcePreference.LibriVox,
             CatalogSourcePreference.Lit2Go,
-            CatalogSourcePreference.Gutendex,
             CatalogSourcePreference.WolneLektury,
         )
         val SelectableSourceSet: Set<CatalogSourcePreference> = SelectableSources.toSet()
@@ -459,8 +462,8 @@ enum class BookSourcePreference(
         fun fromEnabledSources(sources: Set<CatalogSourcePreference>): BookSourcePreference {
             if (sources.isEmpty()) return None
             val normalized = sources.intersect(SelectableSourceSet)
-            if (normalized.isEmpty()) return Default
-            return entries.firstOrNull { it.enabledSources == normalized }
+            if (normalized.isEmpty()) return None
+            return entries.firstOrNull { it.storedSources == normalized }
                 ?: Default
         }
     }
@@ -515,7 +518,12 @@ enum class CatalogSourcePreference(
     WolneLektury(
         label = "Wolne Lektury",
         description = "Polish-only public-domain audiobooks and literary metadata.",
-    ),
+    );
+
+    companion object {
+        // Gutendex remains a decode-only identity for old cached source metadata.
+        val ActiveSources: List<CatalogSourcePreference> = listOf(Lit2Go, LibriVox, WolneLektury)
+    }
 }
 
 enum class CastUiMode(

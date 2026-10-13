@@ -1536,7 +1536,6 @@ class CatalogAutocompleteRepository(
             BookSource.Lit2Go,
             BookSource.LibriVox,
             BookSource.WolneLektury,
-            BookSource.Gutendex,
         )
 
         fun normalizeForAutocomplete(value: String): String =
@@ -1645,7 +1644,6 @@ private fun BookSourcePreference.autocompleteSourceNames(): List<String> =
         CatalogSourcePreference.Lit2Go to BookSource.Lit2Go,
         CatalogSourcePreference.LibriVox to BookSource.LibriVox,
         CatalogSourcePreference.WolneLektury to BookSource.WolneLektury,
-        CatalogSourcePreference.Gutendex to BookSource.Gutendex,
     ).mapNotNull { (catalogSource, bookSource) ->
         bookSource.name.takeIf { catalogSource in enabledSources }
     }

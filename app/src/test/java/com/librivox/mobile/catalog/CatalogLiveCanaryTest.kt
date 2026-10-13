@@ -85,21 +85,6 @@ class CatalogLiveCanaryTest {
     }
 
     @Test
-    fun gutendexAliceReturnsAudioResults() = runBlocking {
-        val books = withLiveClient { client ->
-            GutendexCatalogSource(client).search(
-                query = "Alice",
-                field = CatalogSearchField.All,
-                limit = 20,
-                offset = 0,
-                language = "English",
-            )
-        }
-
-        assertTrue(books.isNotEmpty())
-    }
-
-    @Test
     fun lit2GoAliceEitherParsesOrReportsUnavailable() = runBlocking {
         val result = runCatching {
             withLiveClient { client ->
@@ -123,7 +108,7 @@ class CatalogLiveCanaryTest {
         val statuses = withLiveClient { client ->
             CatalogSourceHealthProbe(
                 transport = OkHttpCatalogHttpTransport(client),
-            ).probe(CatalogSourcePreference.entries)
+            ).probe(CatalogSourcePreference.ActiveSources)
         }
 
         val failures = statuses.values

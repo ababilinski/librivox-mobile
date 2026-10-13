@@ -798,7 +798,7 @@ import ZIPFoundation
     )
     settings.normalizeForAvailableSources()
     #expect(settings.enabledSources == [.lit2Go])
-    #expect(settings.sourcePriority == [.gutendex, .lit2Go, .libriVox, .wolneLektury])
+    #expect(settings.sourcePriority == [.lit2Go, .libriVox, .wolneLektury])
     #expect(settings.orderedEnabledSources == [.lit2Go])
     #expect(settings.preferredLanguages == [.english])
 

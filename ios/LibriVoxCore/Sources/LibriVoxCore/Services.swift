@@ -17,12 +17,12 @@ public struct CatalogSearchRequest: Hashable, Sendable {
         self.query = query
         self.field = field
         self.languages = languages
-        self.sources = sources
+        self.sources = Set(sources.filter(\.isAvailableCatalogSource))
         self.sourcePriority = BookSource.normalizedPublicCatalogPriority(sourcePriority)
     }
 
     public var orderedSources: [BookSource] {
-        sourcePriority.filter { sources.contains($0) }
+        sourcePriority.filter { $0.isAvailableCatalogSource && sources.contains($0) }
     }
 }
 

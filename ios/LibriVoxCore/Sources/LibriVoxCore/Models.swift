@@ -4,6 +4,7 @@ public enum BookSource: String, Codable, CaseIterable, Identifiable, Sendable {
     case libriVox
     case lit2Go
     case wolneLektury
+    // Retained for decoding books and playback state saved before this catalog was retired.
     case gutendex
     case localAsset
     case customLocal
@@ -18,6 +19,14 @@ public enum BookSource: String, Codable, CaseIterable, Identifiable, Sendable {
         case .gutendex: "Gutendex"
         case .localAsset: "Local asset"
         case .customLocal: "Custom local"
+        }
+    }
+
+    /// Whether this origin can still be selected for online catalog requests.
+    public var isAvailableCatalogSource: Bool {
+        switch self {
+        case .libriVox, .lit2Go, .wolneLektury: true
+        case .gutendex, .localAsset, .customLocal: false
         }
     }
 
@@ -42,14 +51,14 @@ public extension BookSource {
     }
 
     static var defaultPublicCatalogPriority: [BookSource] {
-        [.lit2Go, .libriVox, .wolneLektury, .gutendex]
+        [.lit2Go, .libriVox, .wolneLektury]
     }
 
     static func normalizedPublicCatalogPriority(_ sources: [BookSource]) -> [BookSource] {
         var seen: Set<BookSource> = []
         var priority: [BookSource] = []
 
-        for source in sources where source.isPublicAudiobookSource && seen.insert(source).inserted {
+        for source in sources where source.isAvailableCatalogSource && seen.insert(source).inserted {
             priority.append(source)
         }
         for source in defaultPublicCatalogPriority where seen.insert(source).inserted {

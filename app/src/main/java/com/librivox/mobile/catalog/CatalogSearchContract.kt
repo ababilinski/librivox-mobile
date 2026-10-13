@@ -18,7 +18,6 @@ val DefaultCatalogSourcePriority: List<CatalogSourcePreference> = listOf(
     CatalogSourcePreference.Lit2Go,
     CatalogSourcePreference.LibriVox,
     CatalogSourcePreference.WolneLektury,
-    CatalogSourcePreference.Gutendex,
 )
 
 enum class CatalogSearchMode { Search, Browse }
@@ -210,16 +209,6 @@ object CatalogSearchPlanner {
             ),
             supportedLanguages = setOf("english"),
         ),
-        CatalogSourcePreference.Gutendex to CatalogSourceCapabilities(
-            source = CatalogSourcePreference.Gutendex,
-            supportedFields = setOf(
-                CatalogSearchField.All,
-                CatalogSearchField.Title,
-                CatalogSearchField.Author,
-                CatalogSearchField.Genre,
-            ),
-            supportedLanguages = setOf("english", "french", "german", "spanish", "italian", "portuguese"),
-        ),
         CatalogSourcePreference.WolneLektury to CatalogSourceCapabilities(
             source = CatalogSourcePreference.WolneLektury,
             supportedFields = setOf(
@@ -262,7 +251,7 @@ object CatalogSearchPlanner {
             .distinctBy(::normalizedCatalogSearchText)
             .ifEmpty { listOf("") }
         val anyLanguage = requestedLanguages.any { it.isBlank() }
-        val operations = CatalogSourcePreference.entries
+        val operations = CatalogSourcePreference.ActiveSources
             .filter { it in sourcePreference.enabledSources }
             .flatMap { source ->
                 val capabilities = requireNotNull(capabilities[source])
@@ -337,7 +326,7 @@ object CatalogSearchPlanner {
             pageSize = pageSize.coerceAtLeast(1),
             sourcePriority = (
                 sourcePriority.filter { it in sourcePreference.enabledSources } +
-                    CatalogSourcePreference.entries.filter { it in sourcePreference.enabledSources }
+                    CatalogSourcePreference.ActiveSources.filter { it in sourcePreference.enabledSources }
                 ).distinct(),
         )
     }

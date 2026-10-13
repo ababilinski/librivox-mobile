@@ -54,9 +54,9 @@ private val aliceRows = listOf(
         supportingText = "Lewis Carroll · Lit2Go",
     ),
     DiscoverSearchRow(
-        key = "gutenberg-11",
+        key = "librivox-alice-version-2",
         title = "Alice's Adventures in Wonderland",
-        supportingText = "Lewis Carroll · Gutendex",
+        supportingText = "Lewis Carroll · LibriVox",
     ),
 )
 
@@ -172,8 +172,8 @@ fun DiscoverPartialResultsScreenshot() {
                 status = DiscoverSourceStatusPresentation.Loading(interimCount = 2),
             ),
             DiscoverSourceStatusItem(
-                key = "gutendex",
-                label = "Gutendex",
+                key = "lit2go",
+                label = "Lit2Go",
                 status = DiscoverSourceStatusPresentation.Ready(count = 1),
             ),
         ),
@@ -311,8 +311,8 @@ fun DiscoverUnavailableScreenshot() {
                 status = DiscoverSourceStatusPresentation.Broken(),
             ),
             DiscoverSourceStatusItem(
-                key = "gutendex",
-                label = "Gutendex",
+                key = "lit2go",
+                label = "Lit2Go",
                 status = DiscoverSourceStatusPresentation.Ready(count = 1),
             ),
         ),
@@ -327,7 +327,7 @@ fun DiscoverUnavailableScreenshot() {
             isLoading = false,
             completedOperations = 5,
             totalOperations = 7,
-            unavailableMessage = "LibriVox and Lit2Go did not respond. Results from other catalogs remain available.",
+            unavailableMessage = "LibriVox did not respond. Results from other catalogs remain available.",
             onHistorySelected = {},
             onHistoryDeleted = {},
             onClearHistory = {},

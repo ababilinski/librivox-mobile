@@ -260,7 +260,7 @@ public struct UserSettings: Codable, Hashable, Sendable {
     ) {
         self.themeMode = themeMode
         self.animationSpeed = animationSpeed
-        self.enabledSources = enabledSources
+        self.enabledSources = Set(enabledSources.filter(\.isAvailableCatalogSource))
         self.sourcePriority = BookSource.normalizedPublicCatalogPriority(sourcePriority)
         self.preferredLanguages = preferredLanguages
         self.showSearchBarOnDiscover = showSearchBarOnDiscover
@@ -375,7 +375,7 @@ public struct UserSettings: Codable, Hashable, Sendable {
     }
 
     public mutating func normalizeForAvailableSources() {
-        enabledSources = Set(enabledSources.filter(\.isPublicAudiobookSource))
+        enabledSources = Set(enabledSources.filter(\.isAvailableCatalogSource))
         sourcePriority = BookSource.normalizedPublicCatalogPriority(sourcePriority)
 
         if !enabledSources.contains(.wolneLektury) {
@@ -394,7 +394,7 @@ public struct UserSettings: Codable, Hashable, Sendable {
     }
 
     public var orderedEnabledSources: [BookSource] {
-        sourcePriority.filter { enabledSources.contains($0) }
+        sourcePriority.filter { $0.isAvailableCatalogSource && enabledSources.contains($0) }
     }
 
     public func shouldAutoDownloadLibraryAddition(wasInLibrary: Bool) -> Bool {

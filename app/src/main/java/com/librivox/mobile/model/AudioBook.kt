@@ -80,6 +80,7 @@ enum class BookSource {
     LibriVox,
     Lit2Go,
     WolneLektury,
+    // Retained for saved library records; the remote catalog is retired.
     Gutendex,
     LocalAsset,
     CustomLocal,

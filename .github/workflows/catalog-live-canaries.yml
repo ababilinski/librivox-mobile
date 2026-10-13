@@ -17,12 +17,21 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: "17"
+          java-version: "21"
       - uses: gradle/actions/setup-gradle@v4
       - name: Run Android live catalog invariants
         env:
           RUN_LIVE_CATALOG_TESTS: "1"
         run: ./gradlew :app:testDebugUnitTest --tests '*CatalogLiveCanaryTest*'
+      - name: Save Android live catalog reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-live-catalog-reports
+          path: |
+            app/build/test-results/
+            app/build/reports/tests/
+          retention-days: 7
 
   ios-catalog:
     runs-on: macos-15
@@ -32,4 +41,14 @@ jobs:
       - name: Run Swift deterministic and live catalog invariants
         env:
           RUN_LIVE_CATALOG_TESTS: "1"
-        run: swift test --package-path ios/LibriVoxCore
+        shell: bash
+        run: |
+          mkdir -p artifacts
+          swift test --package-path ios/LibriVoxCore 2>&1 | tee artifacts/swift-live-tests.log
+      - name: Save Swift live catalog log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: swift-live-catalog-log
+          path: artifacts/swift-live-tests.log
+          retention-days: 7

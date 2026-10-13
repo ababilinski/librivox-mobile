@@ -39,21 +39,13 @@ public struct CatalogSourceCapabilities: Codable, Equatable, Sendable {
                 supportedFields: [.title, .author],
                 supportedLanguages: [.english]
             )
-        case .gutendex:
-            return CatalogSourceCapabilities(
-                source: source,
-                supportedFields: [.title, .author, .genre],
-                // Gutendex supports additional ISO language filters, but shared v1 only
-                // treats English as compatible; Polish-only discovery belongs to Wolne.
-                supportedLanguages: [.english, .french, .german, .italian, .spanish]
-            )
         case .wolneLektury:
             return CatalogSourceCapabilities(
                 source: source,
                 supportedFields: [.title, .author, .genre],
                 supportedLanguages: [.polish]
             )
-        case .localAsset, .customLocal:
+        case .gutendex, .localAsset, .customLocal:
             return nil
         }
     }

@@ -353,7 +353,8 @@ final class CatalogSearchUITests: XCTestCase {
         saveUnifiedScreenshot(app, named: "Onboarding welcome with bundled audiobook covers")
         next.tap()
 
-        let sourceIDs = ["libriVox", "lit2Go", "gutendex", "wolneLektury"]
+        XCTAssertFalse(app.buttons["onboarding-source-gutendex"].exists)
+        let sourceIDs = ["libriVox", "lit2Go", "wolneLektury"]
         for sourceID in sourceIDs {
             let source = app.buttons["onboarding-source-\(sourceID)"]
             XCTAssertTrue(source.waitForExistence(timeout: 4))
@@ -571,7 +572,7 @@ final class CatalogSearchUITests: XCTestCase {
         ).firstMatch
         XCTAssertTrue(catalog.waitForExistence(timeout: 4))
         catalog.tap()
-        for source in ["LibriVox", "Lit2Go", "Gutendex"] {
+        for source in ["LibriVox", "Lit2Go"] {
             let toggle = app.switches.matching(
                 NSPredicate(format: "label CONTAINS %@", source)
             ).firstMatch

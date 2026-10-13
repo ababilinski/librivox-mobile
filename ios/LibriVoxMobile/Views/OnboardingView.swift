@@ -1,7 +1,7 @@
 import LibriVoxCore
 import SwiftUI
 
-private let publicSourceOptions: [BookSource] = [.libriVox, .lit2Go, .gutendex, .wolneLektury]
+private let publicSourceOptions: [BookSource] = [.libriVox, .lit2Go, .wolneLektury]
 
 private enum OnboardingStep: Int, CaseIterable {
     case welcome, sources, languages, downloads, speakers
@@ -148,7 +148,7 @@ struct OnboardingView: View {
             )
             ForEach(publicSourceOptions) { source in
                 OnboardingSelectionRow(
-                    title: source == .gutendex ? "Project Gutenberg" : source.label,
+                    title: source.label,
                     detail: source.onboardingDescription,
                     symbol: source.onboardingSymbol,
                     selected: app.settings.enabledSources.contains(source)

@@ -20,10 +20,10 @@
       "required": ["query", "sources", "fields", "languages", "sourcePriority"],
       "properties": {
         "query": { "type": "string" },
-        "sources": { "type": "array", "items": { "enum": ["librivox", "lit2go", "gutendex", "wolne_lektury"] }, "uniqueItems": true },
+        "sources": { "type": "array", "items": { "enum": ["librivox", "lit2go", "wolne_lektury"] }, "uniqueItems": true },
         "fields": { "type": "array", "items": { "enum": ["title", "author", "reader", "chapter", "genre"] }, "uniqueItems": true },
         "languages": { "type": "array", "items": { "enum": ["any", "english", "polish"] }, "uniqueItems": true },
-        "sourcePriority": { "type": "array", "items": { "enum": ["librivox", "lit2go", "gutendex", "wolne_lektury"] }, "uniqueItems": true }
+        "sourcePriority": { "type": "array", "items": { "enum": ["librivox", "lit2go", "wolne_lektury"] }, "uniqueItems": true }
       },
       "additionalProperties": false
     },
@@ -31,7 +31,7 @@
       "type": "object",
       "required": ["operationKey", "result"],
       "properties": {
-        "operationKey": { "type": "string", "pattern": "^(librivox|lit2go|gutendex|wolne_lektury):(title|author|reader|chapter|genre):(any|english|polish)$" },
+        "operationKey": { "type": "string", "pattern": "^(librivox|lit2go|wolne_lektury):(title|author|reader|chapter|genre):(any|english|polish)$" },
         "result": { "enum": ["response", "timeout", "transport_error", "cancelled"] },
         "status": { "type": "integer", "minimum": 100, "maximum": 599 },
         "fixture": { "type": "string" },

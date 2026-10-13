@@ -262,78 +262,8 @@ public struct Lit2GoCatalogClient: CatalogSourceClient {
     }
 }
 
-public struct GutendexCatalogClient: CatalogSourceClient {
-    public let source: BookSource = .gutendex
-    private static let booksURL = URL(string: "https://gutendex.com/books/")!
-    private let transport: any CatalogHTTPTransport
-
-    public init(transport: any CatalogHTTPTransport = URLSessionCatalogHTTPTransport()) {
-        self.transport = transport
-    }
-
-    public func featuredBooks(limit: Int) async throws -> [AudioBook] {
-        try await fetch(queryItems: [
-            URLQueryItem(name: "sort", value: "popular"),
-            URLQueryItem(name: "mime_type", value: "audio"),
-        ], limit: limit)
-    }
-
-    public func search(_ request: CatalogSearchRequest) async throws -> [AudioBook] {
-        guard request.sources.contains(.gutendex) else { return [] }
-        if request.field == .chapter || request.field == .reader { return [] }
-        var items = [
-            URLQueryItem(name: "mime_type", value: "audio"),
-        ]
-        let trimmed = request.query.trimmingCharacters(in: .whitespacesAndNewlines)
-        if !trimmed.isEmpty {
-            items.append(URLQueryItem(name: "search", value: trimmed))
-        } else {
-            items.append(URLQueryItem(name: "sort", value: "popular"))
-        }
-        if let code = request.primaryGutendexLanguageCode {
-            items.append(URLQueryItem(name: "languages", value: code))
-        }
-        let books = try await fetch(queryItems: items, limit: 40)
-        guard !trimmed.isEmpty else { return books }
-        return books.filter { book in
-            switch request.field {
-            case .title:
-                return book.title.localizedCaseInsensitiveContains(trimmed)
-            case .author:
-                return book.author.localizedCaseInsensitiveContains(trimmed)
-            case .all:
-                return book.title.localizedCaseInsensitiveContains(trimmed) ||
-                    book.author.localizedCaseInsensitiveContains(trimmed) ||
-                    book.genres.joined(separator: " ").localizedCaseInsensitiveContains(trimmed)
-            case .chapter, .reader:
-                return false
-            case .genre:
-                return book.genres.joined(separator: " ").localizedCaseInsensitiveContains(trimmed)
-            }
-        }
-    }
-
-    public func hydrate(_ book: AudioBook) async throws -> AudioBook {
-        guard book.source == .gutendex,
-              book.id.hasPrefix("gutendex-"),
-              let id = book.id.replacingOccurrences(of: "gutendex-", with: "").nilIfBlank
-        else { return book }
-        let url = Self.booksURL.appendingPathComponent(id)
-        let data = try await transport.catalogData(from: url, accept: "application/json")
-        return Self.parseBooks(data).first?.preservingUserState(from: book) ?? book
-    }
-
-    private func fetch(queryItems: [URLQueryItem], limit: Int) async throws -> [AudioBook] {
-        var components = URLComponents(url: Self.booksURL, resolvingAgainstBaseURL: false)
-        components?.queryItems = queryItems
-        guard let url = components?.url else { throw URLError(.badURL) }
-        let data = try await transport.catalogData(from: url, accept: "application/json")
-        guard let root = try JSONSerialization.jsonObject(with: data) as? [String: Any],
-              root["results"] is [[String: Any]]
-        else { throw URLError(.cannotParseResponse) }
-        return Array(Self.parseBooks(data).prefix(max(1, limit)))
-    }
-
+/// Parses recorded metadata for compatibility checks; this retired catalog has no network client.
+enum LegacyGutendexBookParser {
     static func parseBooks(_ data: Data) -> [AudioBook] {
         guard let root = try? JSONSerialization.jsonObject(with: data) else { return [] }
         let objects: [[String: Any]]
@@ -956,17 +886,6 @@ private extension CatalogSearchRequest {
 
     var allowsPolish: Bool {
         languages.contains(.all) || languages.contains(.polish)
-    }
-
-    var primaryGutendexLanguageCode: String? {
-        if languages.contains(.all) { return nil }
-        if languages.contains(.english) { return "en" }
-        if languages.contains(.french) { return "fr" }
-        if languages.contains(.german) { return "de" }
-        if languages.contains(.italian) { return "it" }
-        if languages.contains(.spanish) { return "es" }
-        if languages.contains(.polish) { return "pl" }
-        return nil
     }
 }
 

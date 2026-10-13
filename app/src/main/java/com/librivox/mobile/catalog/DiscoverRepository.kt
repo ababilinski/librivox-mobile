@@ -1,6 +1,8 @@
 package com.librivox.mobile.catalog
 
 import com.librivox.mobile.model.AudioBook
+import com.librivox.mobile.model.LibraryStatus
+import com.librivox.mobile.model.hasDownloadedBookAssets
 import com.librivox.mobile.model.AudioBookLibrary
 import com.librivox.mobile.model.BookSource
 import com.librivox.mobile.model.LibraryRepository
@@ -204,7 +206,7 @@ class DiscoverRepository(
             _discoverCache.value = current
             return
         }
-        if (sourcePreference.enabledSources.isEmpty()) {
+        if (sourcePreference.enabledSources.isEmpty() && isDefaultBrowse) {
             invalidateDiscoverLoad()
             val emptyState = DiscoverCacheState(
                 searchField = request.field,
@@ -664,7 +666,20 @@ class DiscoverRepository(
             val retainInterimAfterFailure = request.reset &&
                 cachedInterim.isNotEmpty() &&
                 remoteLoad.hadFailure
-            val retainedInterim = if (retainInterimAfterFailure) cachedInterim else emptyList()
+            // Retiring a catalog must not hide books the listener already saved. Keep these
+            // local matches even when the remaining catalogs complete with no remote results.
+            val savedRetiredMatches = if (isDefaultBrowse) emptyList() else {
+                discoverLocalSearchBooks(
+                    librarySnapshot.copy(books = librarySnapshot.books.filter { it.source == BookSource.Gutendex }),
+                    normalizedQuery,
+                    request.field,
+                    request.languages,
+                    request.sourcePreference,
+                ).filter { it.source == BookSource.Gutendex }
+            }
+            val retainedInterim = (
+                (if (retainInterimAfterFailure) cachedInterim else emptyList()) + savedRetiredMatches
+            ).distinctBy { "${it.source}:${it.id}" }
             val retainedInterimHits = retainedInterim.map { book ->
                 book.asInterimCatalogHit(request.field)
             }
@@ -681,8 +696,7 @@ class DiscoverRepository(
             val browseFallbackHits = browseFallback.map { it.asInterimCatalogHit(request.field) }
             val pageResults = when {
                 browseFallback.isNotEmpty() -> browseFallback
-                retainInterimAfterFailure -> retainedInterim + page
-                else -> page
+                else -> retainedInterim + page
             }
             val currentResults = _discoverCache.value.results
             val merged = withContext(Dispatchers.Default) {
@@ -1085,7 +1099,7 @@ internal fun catalogSearchOperations(
     sourcePreference: BookSourcePreference,
     field: CatalogSearchField,
 ): List<CatalogSearchOperation> =
-    CatalogSourcePreference.entries
+    CatalogSourcePreference.ActiveSources
         .filter { it in sourcePreference.enabledSources }
         .flatMap { source ->
             val fields = if (field == CatalogSearchField.All) {
@@ -1127,8 +1141,7 @@ private fun AudioBook.supportsDetailHydration(): Boolean =
         (
             source == BookSource.LibriVox ||
                 source == BookSource.Lit2Go ||
-                source == BookSource.WolneLektury ||
-                source == BookSource.Gutendex
+                source == BookSource.WolneLektury
             )
 
 private fun AudioBook.needsDetailHydration(): Boolean =
@@ -1187,7 +1200,7 @@ private fun List<AudioBook>.filterBySourcePreference(sourcePreference: BookSourc
             BookSource.LibriVox -> CatalogSourcePreference.LibriVox in sourcePreference.enabledSources
             BookSource.Lit2Go -> CatalogSourcePreference.Lit2Go in sourcePreference.enabledSources
             BookSource.WolneLektury -> CatalogSourcePreference.WolneLektury in sourcePreference.enabledSources
-            BookSource.Gutendex -> CatalogSourcePreference.Gutendex in sourcePreference.enabledSources
+            BookSource.Gutendex -> book.libraryStatus == LibraryStatus.InLibrary || book.hasDownloadedBookAssets()
             BookSource.LocalAsset,
             BookSource.CustomLocal -> true
         }

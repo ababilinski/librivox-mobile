@@ -55,11 +55,6 @@ val DefaultCatalogSourceHealthEndpoints: Map<CatalogSourcePreference, CatalogSou
             expectedTitleMarkers = setOf("lit2go"),
         ),
         CatalogSourceHealthEndpoint(
-            source = CatalogSourcePreference.Gutendex,
-            rootUrl = "https://gutendex.com/",
-            expectedTitleMarkers = setOf("gutendex"),
-        ),
-        CatalogSourceHealthEndpoint(
             source = CatalogSourcePreference.WolneLektury,
             rootUrl = "https://wolnelektury.pl/",
             expectedTitleMarkers = setOf("wolnelektury", "wolne lektury"),
@@ -91,6 +86,7 @@ class CatalogSourceHealthProbe(
         onStatus: suspend (CatalogSourceStatus) -> Unit = {},
     ): Map<CatalogSourcePreference, CatalogSourceStatus> = supervisorScope {
         sources
+            .filter { it in CatalogSourcePreference.ActiveSources }
             .distinct()
             .map { source ->
                 async {
@@ -106,6 +102,13 @@ class CatalogSourceHealthProbe(
         force: Boolean = false,
         onStatus: suspend (CatalogSourceStatus) -> Unit = {},
     ): CatalogSourceStatus {
+        if (source !in CatalogSourcePreference.ActiveSources) {
+            return CatalogSourceStatus(
+                source = source,
+                state = CatalogSourceHealth.Broken,
+                message = "This catalog is no longer available in the app.",
+            )
+        }
         val endpoint = requireNotNull(endpoints[source]) {
             "No root health endpoint is configured for ${source.name}."
         }
@@ -213,7 +216,7 @@ class CatalogSourceHealthProbe(
         }
     }
 
-    fun invalidate(sources: Collection<CatalogSourcePreference> = CatalogSourcePreference.entries) {
+    fun invalidate(sources: Collection<CatalogSourcePreference> = CatalogSourcePreference.ActiveSources) {
         sources.forEach(cachedStatuses::remove)
     }
 

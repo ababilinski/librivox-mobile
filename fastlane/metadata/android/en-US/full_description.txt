@@ -1,4 +1,4 @@
-LibriVox Mobile brings audiobooks from LibriVox, Lit2Go, Project Gutenberg, and Wolne Lektury together in one app. It is 100% free, with no ads, subscriptions, in-app purchases, or paid upgrades. No account is required.
+LibriVox Mobile brings audiobooks from LibriVox, Lit2Go, and Wolne Lektury together in one app. It is 100% free, with no ads, subscriptions, in-app purchases, or paid upgrades. No account is required.
 
 Listen to classic novels, short stories, poetry, and nonfiction. Stream a chapter at home or download it before heading out. Saved chapters keep playing without an internet connection.
 
@@ -6,7 +6,6 @@ The libraries behind the books
 
 • LibriVox: public-domain books recorded by volunteers around the world.
 • Lit2Go: stories and poems from the University of South Florida's educational collection.
-• Project Gutenberg: audiobook editions from its digital library, accessed through the Gutendex catalog.
 • Wolne Lektury: Polish literature and audiobooks from the Wolne Lektury digital library.
 
 LibriVox is enabled when you start. Turn on the additional catalogs in Settings and choose the languages you want to browse. Book details keep source information and reader credits available, with links to the original project pages.
@@ -24,7 +23,7 @@ https://github.com/ababilinski/librivox-mobile
 
 The recordings come from the volunteers and organizations that make these libraries available. LibriVox Mobile does not charge for access to them. Your library, progress, bookmarks, settings, and downloads are stored on your device.
 
-LibriVox Mobile is an independent app, not affiliated with or endorsed by LibriVox, Lit2Go, Project Gutenberg, or Wolne Lektury. Recordings, artwork, and catalog information retain their source licenses. Public-domain status varies by country; check a work's rights where you live before downloading or using it.
+LibriVox Mobile is an independent app, not affiliated with or endorsed by LibriVox, Lit2Go, or Wolne Lektury. Recordings, artwork, and catalog information retain their source licenses. Public-domain status varies by country; check a work's rights where you live before downloading or using it.
 
 Support: adrian@babilinapps.com
 Privacy policy: https://ababilinski.github.io/librivox-mobile/privacy-policy/

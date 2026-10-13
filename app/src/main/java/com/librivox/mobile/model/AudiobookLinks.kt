@@ -176,10 +176,6 @@ fun externalAudiobookLinkTarget(url: String): ExternalAudiobookLinkTarget? {
             val slug = segments[2]
             ExternalAudiobookLinkTarget(bookId = "lit2go-${numericId}__$slug")
         }
-        host == "gutenberg.org" && segments.size >= 2 && segments[0] == "ebooks" -> {
-            val id = segments[1].substringBefore('.').takeIf { it.all(Char::isDigit) }
-            id?.let { ExternalAudiobookLinkTarget(bookId = "gutendex-$it") }
-        }
         host == "librivox.org" && segments.isNotEmpty() -> {
             val slug = segments.first()
             ExternalAudiobookLinkTarget(

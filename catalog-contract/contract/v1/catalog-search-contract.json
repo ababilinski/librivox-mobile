@@ -45,7 +45,7 @@
     ]
   },
   "enums": {
-    "sources": ["librivox", "lit2go", "gutendex", "wolne_lektury"],
+    "sources": ["librivox", "lit2go", "wolne_lektury"],
     "fields": ["title", "author", "reader", "chapter", "genre"],
     "languages": ["any", "english", "polish"],
     "outcomes": ["pending", "success", "authoritative_empty", "skipped", "failed"],
@@ -74,15 +74,6 @@
         "author": "strict_index_and_detail"
       }
     },
-    "gutendex": {
-      "fields": ["title", "author", "genre"],
-      "languages": ["any", "english"],
-      "adapters": {
-        "title": "search_api",
-        "author": "search_api",
-        "genre": "search_api"
-      }
-    },
     "wolne_lektury": {
       "fields": ["title", "author", "genre"],
       "languages": ["any", "polish"],
@@ -96,7 +87,7 @@
   "planning": {
     "operationIndependence": "source_and_field",
     "allFieldsExpansion": ["title", "author", "reader", "chapter", "genre"],
-    "allSourcesExpansion": ["librivox", "lit2go", "gutendex", "wolne_lektury"],
+    "allSourcesExpansion": ["librivox", "lit2go", "wolne_lektury"],
     "anyLanguageBehavior": "run_each_source_in_its_native_supported_languages",
     "incompatibleLanguageBehavior": "emit_skipped_operation_without_network_request",
     "unsupportedFieldBehavior": "emit_skipped_operation_without_network_request",
@@ -177,8 +168,7 @@
       "librivox_alice_contains_id_200",
       "librivox_partial_author_reader_and_chapter_resolve",
       "lit2go_alice_parses_or_reports_unavailable",
-      "wolne_lektury_antek_resolves",
-      "gutendex_alice_is_nonempty"
+      "wolne_lektury_antek_resolves"
     ]
   }
 }

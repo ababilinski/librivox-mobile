@@ -130,6 +130,7 @@ import com.librivox.mobile.model.AudioBook
 import com.librivox.mobile.model.AudioBookLibrary
 import com.librivox.mobile.model.BookSource
 import com.librivox.mobile.model.LibraryStatus
+import com.librivox.mobile.model.hasDownloadedBookAssets
 import com.librivox.mobile.model.LibraryState
 import com.librivox.mobile.model.activeDownloadChapterCount
 import com.librivox.mobile.model.authorSearchQuery
@@ -274,7 +275,7 @@ fun DiscoverScreen(
     var wasOnline by remember { mutableStateOf(networkStatus.isOnline) }
     var connectivityRefreshRevision by remember { mutableIntStateOf(0) }
     val browseLanguageFilters = preferredLanguages.catalogLanguageRequestFilters(bookSourcePreference)
-    val availableSearchSources = CatalogSourcePreference.entries
+    val availableSearchSources = CatalogSourcePreference.ActiveSources
         .filter { it in bookSourcePreference.enabledSources }
     val availableSearchLanguages = bookSourcePreference
         .selectableLanguages()
@@ -1188,7 +1189,7 @@ private fun List<AudioBook>.filterBySourcePreference(sourcePreference: BookSourc
             BookSource.LibriVox -> CatalogSourcePreference.LibriVox in sourcePreference.enabledSources
             BookSource.Lit2Go -> CatalogSourcePreference.Lit2Go in sourcePreference.enabledSources
             BookSource.WolneLektury -> CatalogSourcePreference.WolneLektury in sourcePreference.enabledSources
-            BookSource.Gutendex -> CatalogSourcePreference.Gutendex in sourcePreference.enabledSources
+            BookSource.Gutendex -> book.libraryStatus == LibraryStatus.InLibrary || book.hasDownloadedBookAssets()
             BookSource.LocalAsset,
             BookSource.CustomLocal -> true
         }
@@ -1368,7 +1369,7 @@ private fun discoverBrowseStatusText(
 }
 
 private fun BookSourcePreference.discoverSourceNames(): String =
-    CatalogSourcePreference.entries
+    CatalogSourcePreference.ActiveSources
         .filter { it in enabledSources }
         .joinToString { it.label }
         .ifBlank { label }
@@ -1879,7 +1880,7 @@ private fun DiscoverSearchResultRow(
                     text = when (book.source) {
                         BookSource.LibriVox -> "LibriVox"
                         BookSource.Lit2Go -> "Lit2Go"
-                        BookSource.Gutendex -> "Gutendex"
+                        BookSource.Gutendex -> "Project Gutenberg (saved)"
                         BookSource.WolneLektury -> "Wolne"
                         BookSource.LocalAsset,
                         BookSource.CustomLocal -> "On device"

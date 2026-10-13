@@ -53,3 +53,7 @@ descriptions. They are deterministic test data, not live availability probes.
 Live catalog tests must be opt-in (`RUN_LIVE_CATALOG_TESTS=1`) and assert durable
 invariants rather than exact counts. A source outage must not require updating
 these recorded fixtures.
+
+Gutendex is no longer an active catalog. Its recorded fixtures remain for legacy
+data compatibility; they are excluded from search scenarios and health probes.
+Saved source identifiers and direct media links must remain readable by both apps.

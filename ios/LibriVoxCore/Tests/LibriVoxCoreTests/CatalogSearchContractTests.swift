@@ -68,17 +68,6 @@ import Testing
     }
 }
 
-@Test func catalogPlanMarksGutendexPolishOnlyAsIncompatible() {
-    let plan = CatalogSearchPlan(request: CatalogSearchRequest(
-        query: "alice",
-        field: .title,
-        languages: [.polish],
-        sources: [.gutendex]
-    ))
-    let operation = CatalogSearchOperation(source: .gutendex, field: .title)
-    #expect(plan.initialOutcomes[operation.id] == .skipped(.incompatibleLanguage))
-}
-
 @Test func catalogPlanMarksUnsupportedFieldInsteadOfEmptySuccess() {
     let plan = CatalogSearchPlan(request: CatalogSearchRequest(
         query: "alice",
@@ -573,12 +562,6 @@ import Testing
     } catch {}
 
     do {
-        _ = try await GutendexCatalogClient(transport: malformed).search(CatalogSearchRequest(
-            query: "alice", field: .title, languages: [.all], sources: [.gutendex]
-        ))
-        Issue.record("malformed Gutendex JSON must not become authoritative empty")
-    } catch {}
-    do {
         _ = try await WolneLekturyCatalogClient(transport: malformed).search(CatalogSearchRequest(
             query: "Antek", field: .title, languages: [.polish], sources: [.wolneLektury]
         ))
@@ -789,7 +772,7 @@ import Testing
         numericID: "1", slug: "alices-adventures-in-wonderland", html: litDetail
     ).title.localizedCaseInsensitiveContains("Alice"))
 
-    let gutendex = GutendexCatalogClient.parseBooks(
+    let gutendex = LegacyGutendexBookParser.parseBooks(
         try Data(contentsOf: fixtures.appendingPathComponent("gutendex/search-alice.json"))
     )
     #expect(!gutendex.isEmpty)
@@ -823,10 +806,6 @@ import Testing
     ))
     #expect(wolne.contains { $0.title.localizedCaseInsensitiveContains("Antek") })
 
-    let gutenberg = try await GutendexCatalogClient().search(CatalogSearchRequest(
-        query: "Alice", field: .all, languages: [.all], sources: [.gutendex]
-    ))
-    #expect(!gutenberg.isEmpty)
 }
 
 @Test func polishTitleAndAllSearchesPresentParentBooksWithoutWaitingForAudioHydration() async throws {

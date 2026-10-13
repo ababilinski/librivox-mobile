@@ -22,10 +22,10 @@ class AudiobookLinksTest {
     }
 
     @Test
-    fun externalAudiobookLinkTarget_mapsGutenbergUrlToGutendexId() {
+    fun externalAudiobookLinkTarget_doesNotImportFromRetiredCatalog() {
         val target = externalAudiobookLinkTarget("https://www.gutenberg.org/ebooks/1342")
 
-        assertEquals("gutendex-1342", target?.bookId)
+        assertEquals(null, target)
     }
 
     @Test

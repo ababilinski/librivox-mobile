@@ -586,7 +586,7 @@ final class AppModel {
     }
 
     func isEnabledRecommendation(_ book: AudioBook) -> Bool {
-        book.source.isPublicAudiobookSource && settings.enabledSources.contains(book.source)
+        book.source.isAvailableCatalogSource && settings.enabledSources.contains(book.source)
     }
 
     func relatedBooksByAuthor(for book: AudioBook, limit: Int = 12) async -> [AudioBook] {
@@ -2035,7 +2035,7 @@ final class AppModel {
             sources: Set<BookSource>,
             sourcePriority: [BookSource]
         ) {
-            let publicSources = Set(sources.filter(\.isPublicAudiobookSource))
+            let publicSources = Set(sources.filter(\.isAvailableCatalogSource))
                 .intersection(settings.enabledSources)
             guard !publicSources.isEmpty else { return }
             let safeLanguages = languages.isEmpty ? [.all] : languages
@@ -2055,7 +2055,7 @@ final class AppModel {
             requests.append(request)
         }
 
-        if book.source.isPublicAudiobookSource {
+        if book.source.isAvailableCatalogSource {
             appendRequest(
                 languages: bookLanguages,
                 sources: [book.source],
@@ -2320,14 +2320,6 @@ private struct CatalogUITestFixtureClient: CatalogSourceClient {
             author: "Lewis Carroll",
             source: .lit2Go,
             language: "English"
-        ),
-        AudioBook(
-            id: "gutendex-19573",
-            title: "Alice's Adventures in Wonderland",
-            author: "Lewis Carroll",
-            source: .gutendex,
-            language: "English",
-            genres: ["Fantasy"]
         ),
         AudioBook(
             id: "wolne-antek",

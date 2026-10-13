@@ -14,14 +14,12 @@ public enum CatalogSourceHealthContract {
     public static let providerURLs: [BookSource: URL] = [
         .libriVox: URL(string: "https://librivox.org/")!,
         .lit2Go: URL(string: "https://etc.usf.edu/lit2go/")!,
-        .gutendex: URL(string: "https://gutendex.com/")!,
         .wolneLektury: URL(string: "https://wolnelektury.pl/")!,
     ]
 
     public static let recognizableTitleMarkers: [BookSource: [String]] = [
         .libriVox: ["librivox"],
         .lit2Go: ["lit2go"],
-        .gutendex: ["gutendex"],
         .wolneLektury: ["wolnelektury", "wolne lektury"],
     ]
 
@@ -229,7 +227,7 @@ public actor CatalogSourceHealthProbe {
     /// Returns fresh cached health when it exists; otherwise the source is
     /// unchecked. `checking` is reserved for streams with an active probe.
     public func currentStatus(for source: BookSource) -> CatalogSourceHealthStatus {
-        guard source.isPublicAudiobookSource else {
+        guard source.isAvailableCatalogSource else {
             return CatalogSourceHealthStatus(source: source)
         }
         return freshCachedStatus(for: source, at: clock.now())
@@ -319,7 +317,7 @@ public actor CatalogSourceHealthProbe {
     private func normalizedPublicSources(_ sources: [BookSource]) -> [BookSource] {
         var seen: Set<BookSource> = []
         return sources.filter { source in
-            source.isPublicAudiobookSource && seen.insert(source).inserted
+            source.isAvailableCatalogSource && seen.insert(source).inserted
         }
     }
 

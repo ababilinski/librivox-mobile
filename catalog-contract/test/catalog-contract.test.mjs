@@ -39,7 +39,7 @@ test("source health is versioned, bounded, and independent from field outcomes",
 
   assert.equal(health.contractVersion, 1);
   assert.deepEqual(health.states, ["unknown", "checking", "available", "broken", "offline"]);
-  assert.deepEqual(Object.keys(health.providers).sort(), ["gutendex", "librivox", "lit2go", "wolne_lektury"]);
+  assert.deepEqual(Object.keys(health.providers).sort(), ["librivox", "lit2go", "wolne_lektury"]);
   assert.ok(Object.values(health.providers).every((provider) => provider.probeURL.startsWith("https://")));
   assert.equal(health.probePolicy.timeoutSeconds, 45);
   assert.equal(health.probePolicy.bodyValidation, "provider_specific_title_marker_and_outage_rejection");

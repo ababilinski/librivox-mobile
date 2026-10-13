@@ -27,7 +27,6 @@ public actor CatalogSearchCoordinator {
         clients: [any CatalogSourceClient] = [
             LibriVoxCatalogClient(),
             Lit2GoCatalogClient(),
-            GutendexCatalogClient(),
             WolneLekturyCatalogClient(),
         ],
         cache: any CatalogSearchCaching = JSONCatalogSearchCache(),
@@ -35,7 +34,9 @@ public actor CatalogSearchCoordinator {
         connectivity: any CatalogConnectivityProviding = MutableCatalogConnectivity(),
         cachingEnabled: Bool = true
     ) {
-        self.clients = Dictionary(uniqueKeysWithValues: clients.map { ($0.source, $0) })
+        self.clients = Dictionary(uniqueKeysWithValues: clients
+            .filter { $0.source.isAvailableCatalogSource }
+            .map { ($0.source, $0) })
         self.cache = cache
         self.clock = clock
         self.connectivity = connectivity

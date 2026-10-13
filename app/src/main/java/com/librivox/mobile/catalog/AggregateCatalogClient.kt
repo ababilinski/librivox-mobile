@@ -11,7 +11,6 @@ import kotlinx.coroutines.coroutineScope
 class AggregateCatalogClient(
     private val librivox: CatalogSource,
     private val lit2go: CatalogSource,
-    private val gutendex: CatalogSource,
     private val wolneLektury: CatalogSource,
     private val settings: PlaybackSettingsStore,
 ) : CatalogSource {
@@ -20,15 +19,14 @@ class AggregateCatalogClient(
         fanOutSelected(
             librivoxCall = { librivox.featuredBooks() },
             lit2goCall = { lit2go.featuredBooks() },
-            gutendexCall = { gutendex.featuredBooks() },
             wolneLekturyCall = { wolneLektury.featuredBooks() },
         )
 
     override suspend fun fetchByIds(vararg ids: String): List<AudioBook> {
         if (ids.isEmpty()) return emptyList()
         val lit2goIds = ids.filter { it.startsWith(LIT2GO_ID_PREFIX) }.toTypedArray()
-        val gutendexIds = ids.filter { it.startsWith(GUTENDEX_ID_PREFIX) }.toTypedArray()
         val wolneLekturyIds = ids.filter { it.startsWith(WOLNE_LEKTURY_ID_PREFIX) }.toTypedArray()
+        // Retired Gutendex IDs remain valid saved-book identities, never remote lookups.
         val librivoxIds = ids
             .filterNot {
                 it.startsWith(LIT2GO_ID_PREFIX) ||
@@ -43,9 +41,6 @@ class AggregateCatalogClient(
             val lit2goAsync = lit2goIds.takeIf { it.isNotEmpty() }?.let { sourceIds ->
                 async { runCatching { lit2go.fetchByIds(*sourceIds) }.getOrDefault(emptyList()) }
             }
-            val gutendexAsync = gutendexIds.takeIf { it.isNotEmpty() }?.let { sourceIds ->
-                async { runCatching { gutendex.fetchByIds(*sourceIds) }.getOrDefault(emptyList()) }
-            }
             val wolneLekturyAsync = wolneLekturyIds.takeIf { it.isNotEmpty() }?.let { sourceIds ->
                 async { runCatching { wolneLektury.fetchByIds(*sourceIds) }.getOrDefault(emptyList()) }
             }
@@ -53,7 +48,6 @@ class AggregateCatalogClient(
                 librivoxAsync?.await().orEmpty(),
                 lit2goAsync?.await().orEmpty(),
                 wolneLekturyAsync?.await().orEmpty(),
-                gutendexAsync?.await().orEmpty(),
             )
         }
     }
@@ -68,7 +62,6 @@ class AggregateCatalogClient(
         fanOutSelected(
             librivoxCall = { librivox.search(query, field, limit, offset, language) },
             lit2goCall = { lit2go.search(query, field, limit, offset, language) },
-            gutendexCall = { gutendex.search(query, field, limit, offset, language) },
             wolneLekturyCall = { wolneLektury.search(query, field, limit, offset, language) },
         ).rankForCatalogSearch(query, field)
 
@@ -76,7 +69,6 @@ class AggregateCatalogClient(
         fanOutSelected(
             librivoxCall = { librivox.browse(limit, offset, language) },
             lit2goCall = { lit2go.browse(limit, offset, language) },
-            gutendexCall = { gutendex.browse(limit, offset, language) },
             wolneLekturyCall = { wolneLektury.browse(limit, offset, language) },
         )
 
@@ -89,7 +81,7 @@ class AggregateCatalogClient(
         when (source) {
             CatalogSourcePreference.Lit2Go -> lit2go.browse(limit, offset, language)
             CatalogSourcePreference.LibriVox -> librivox.browse(limit, offset, language)
-            CatalogSourcePreference.Gutendex -> gutendex.browse(limit, offset, language)
+            CatalogSourcePreference.Gutendex -> emptyList()
             CatalogSourcePreference.WolneLektury -> wolneLektury.browse(limit, offset, language)
         }
 
@@ -104,7 +96,7 @@ class AggregateCatalogClient(
         when (source) {
             CatalogSourcePreference.Lit2Go -> lit2go.search(query, field, limit, offset, language)
             CatalogSourcePreference.LibriVox -> librivox.search(query, field, limit, offset, language)
-            CatalogSourcePreference.Gutendex -> gutendex.search(query, field, limit, offset, language)
+            CatalogSourcePreference.Gutendex -> emptyList()
             CatalogSourcePreference.WolneLektury -> wolneLektury.search(query, field, limit, offset, language)
         }
 
@@ -117,7 +109,7 @@ class AggregateCatalogClient(
         when (source) {
             CatalogSourcePreference.Lit2Go -> lit2go.featuredBooks()
             CatalogSourcePreference.LibriVox -> librivox.featuredBooks()
-            CatalogSourcePreference.Gutendex -> gutendex.featuredBooks()
+            CatalogSourcePreference.Gutendex -> emptyList()
             CatalogSourcePreference.WolneLektury -> wolneLektury.featuredBooks()
         }
 
@@ -125,7 +117,6 @@ class AggregateCatalogClient(
         fanOutSelected(
             librivoxCall = { librivox.recent(sinceEpochSeconds, limit) },
             lit2goCall = { lit2go.recent(sinceEpochSeconds, limit) },
-            gutendexCall = { gutendex.recent(sinceEpochSeconds, limit) },
             wolneLekturyCall = { wolneLektury.recent(sinceEpochSeconds, limit) },
         )
 
@@ -133,7 +124,6 @@ class AggregateCatalogClient(
         fanOutSelected(
             librivoxCall = { librivox.byGenre(genre, limit, language) },
             lit2goCall = { lit2go.byGenre(genre, limit, language) },
-            gutendexCall = { gutendex.byGenre(genre, limit, language) },
             wolneLekturyCall = { wolneLektury.byGenre(genre, limit, language) },
         )
 
@@ -141,14 +131,12 @@ class AggregateCatalogClient(
         fanOutSelected(
             librivoxCall = { librivox.byAuthor(author, limit, language) },
             lit2goCall = { lit2go.byAuthor(author, limit, language) },
-            gutendexCall = { gutendex.byAuthor(author, limit, language) },
             wolneLekturyCall = { wolneLektury.byAuthor(author, limit, language) },
         )
 
     private suspend inline fun fanOutSelected(
         crossinline librivoxCall: suspend () -> List<AudioBook>,
         crossinline lit2goCall: suspend () -> List<AudioBook>,
-        crossinline gutendexCall: suspend () -> List<AudioBook>,
         crossinline wolneLekturyCall: suspend () -> List<AudioBook>,
     ): List<AudioBook> = coroutineScope {
         val selected = BookSourcePreference
@@ -164,11 +152,6 @@ class AggregateCatalogClient(
         } else {
             null
         }
-        val gutendexAsync: Deferred<List<AudioBook>>? = if (CatalogSourcePreference.Gutendex in selected) {
-            async { sourceCallOrEmpty { gutendexCall() } }
-        } else {
-            null
-        }
         val wolneLekturyAsync: Deferred<List<AudioBook>>? = if (CatalogSourcePreference.WolneLektury in selected) {
             async { sourceCallOrEmpty { wolneLekturyCall() } }
         } else {
@@ -178,7 +161,6 @@ class AggregateCatalogClient(
             librivoxAsync?.await().orEmpty(),
             lit2goAsync?.await().orEmpty(),
             wolneLekturyAsync?.await().orEmpty(),
-            gutendexAsync?.await().orEmpty(),
         )
     }
 

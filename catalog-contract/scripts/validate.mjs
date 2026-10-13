@@ -6,7 +6,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 const scriptDirectory = dirname(fileURLToPath(import.meta.url));
 export const packageRoot = resolve(scriptDirectory, "..");
 
-const operationPattern = /^(librivox|lit2go|gutendex|wolne_lektury):(title|author|reader|chapter|genre):(any|english|polish)$/;
+const operationPattern = /^(librivox|lit2go|wolne_lektury):(title|author|reader|chapter|genre):(any|english|polish)$/;
 
 export function normalizeSearchText(value) {
   return value
@@ -92,7 +92,18 @@ function validateContract(contract, errors) {
     if (Array.isArray(contract.enums?.[name])) checkUnique(contract.enums[name], `contract: enums.${name}`, errors);
   }
 
-  for (const source of contract.enums?.sources ?? []) {
+  const activeSources = contract.enums?.sources ?? [];
+  check(
+    JSON.stringify(Object.keys(contract.sourceCapabilities ?? {}).sort()) === JSON.stringify([...activeSources].sort()),
+    "contract: capabilities must match active catalog sources",
+    errors
+  );
+  check(
+    JSON.stringify(contract.planning?.allSourcesExpansion) === JSON.stringify(activeSources),
+    "contract: all-source expansion must match active catalog sources",
+    errors
+  );
+  for (const source of activeSources) {
     const capability = contract.sourceCapabilities?.[source];
     check(Boolean(capability), `contract: missing capabilities for ${source}`, errors);
     if (!capability) continue;
@@ -227,7 +238,8 @@ function validateScenario(scenario, contract, manifestPaths, errors) {
   }
 }
 
-function validateScenarioCoverage(scenarios, errors) {
+function validateScenarioCoverage(scenarios, contract, errors) {
+  const activeSources = contract.enums.sources;
   const tags = new Set(scenarios.flatMap((scenario) => scenario.tags));
   const requiredTags = [
     "alice", "advice-from-a-caterpillar", "common-sense", "antek", "ante", "boleslaw-prus", "no-match", "whitespace-only",
@@ -239,14 +251,14 @@ function validateScenarioCoverage(scenarios, errors) {
   for (const tag of requiredTags) check(tags.has(tag), `scenarios: missing required coverage tag ${tag}`, errors);
 
   const sourceAlone = new Set(scenarios.filter((scenario) => scenario.tags.includes("source-alone") && scenario.request.sources.length === 1).map((scenario) => scenario.request.sources[0]));
-  for (const source of ["librivox", "lit2go", "gutendex", "wolne_lektury"]) {
+  for (const source of activeSources) {
     check(sourceAlone.has(source), `scenarios: missing source-alone scenario for ${source}`, errors);
   }
 
   const languages = new Set(scenarios.flatMap((scenario) => scenario.request.languages));
   for (const language of ["any", "english", "polish"]) check(languages.has(language), `scenarios: missing ${language} language configuration`, errors);
 
-  check(scenarios.some((scenario) => scenario.request.sources.length === 4 && scenario.request.fields.length === 5), "scenarios: missing all-source/all-field configuration", errors);
+  check(scenarios.some((scenario) => scenario.request.sources.length === activeSources.length && activeSources.every((source) => scenario.request.sources.includes(source)) && scenario.request.fields.length === 5), "scenarios: missing all-source/all-field configuration", errors);
   check(scenarios.some((scenario) => scenario.request.sources.length === 0), "scenarios: missing no-source configuration", errors);
 }
 
@@ -322,7 +334,7 @@ export async function validatePackage(root = packageRoot) {
   const scenarios = scenariosDocument.scenarios ?? [];
   checkUnique(scenarios.map((scenario) => scenario.id), "scenario ids", errors);
   for (const scenario of scenarios) validateScenario(scenario, contract, manifestPaths, errors);
-  validateScenarioCoverage(scenarios, errors);
+  validateScenarioCoverage(scenarios, contract, errors);
 
   for (const scenario of scenarios) {
     for (const step of scenario.transport ?? []) {

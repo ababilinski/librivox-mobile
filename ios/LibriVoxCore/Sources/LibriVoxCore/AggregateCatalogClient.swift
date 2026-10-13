@@ -33,10 +33,11 @@ public struct AggregateCatalogClient: CatalogSourceClient {
     public init(clients: [any CatalogSourceClient] = [
         LibriVoxCatalogClient(),
         Lit2GoCatalogClient(),
-        GutendexCatalogClient(),
         WolneLekturyCatalogClient(),
     ]) {
-        self.clients = Dictionary(uniqueKeysWithValues: clients.map { ($0.source, $0) })
+        self.clients = Dictionary(uniqueKeysWithValues: clients
+            .filter { $0.source.isAvailableCatalogSource }
+            .map { ($0.source, $0) })
     }
 
     public func featuredBooks(limit: Int) async throws -> [AudioBook] {
@@ -153,7 +154,7 @@ public struct AggregateCatalogClient: CatalogSourceClient {
     private func normalizedSourceOrder(_ sourceOrder: [BookSource]) -> [BookSource] {
         var seen: Set<BookSource> = []
         return sourceOrder.filter { source in
-            source.isPublicAudiobookSource &&
+            source.isAvailableCatalogSource &&
                 clients[source] != nil &&
                 seen.insert(source).inserted
         }

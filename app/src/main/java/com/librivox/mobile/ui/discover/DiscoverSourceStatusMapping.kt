@@ -18,7 +18,7 @@ internal fun discoverSourceStatusItems(
     if (isOffline) return emptyList()
 
     val operationsBySource = progressItems.groupBy { it.operation.source }
-    return CatalogSourcePreference.entries.mapNotNull { source ->
+    return CatalogSourcePreference.ActiveSources.mapNotNull { source ->
         if (source !in sourcePreference.enabledSources) return@mapNotNull null
 
         val health = sourceHealth.statusFor(source)

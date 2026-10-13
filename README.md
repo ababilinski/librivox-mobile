@@ -4,7 +4,7 @@
   <img src="docs/google-play/play-store-icon.png" alt="LibriVox Mobile: four colorful book spines inside cream headphones on navy" width="112" />
 </p>
 
-LibriVox Mobile is a free, open-source audiobook app for Android and iOS. Listen to books from LibriVox, Lit2Go, Project Gutenberg, and Wolne Lektury, or download chapters to listen offline.
+LibriVox Mobile is a free, open-source audiobook app for Android and iOS. Listen to books from LibriVox, Lit2Go, and Wolne Lektury, or download chapters to listen offline.
 
 There are no ads, subscriptions, in-app purchases, or paid upgrades. All features are free, and no account is required.
 
@@ -18,7 +18,6 @@ The books and recordings come from these projects. Book details include source l
 | --- | --- |
 | [LibriVox](https://librivox.org/) | Public-domain books recorded by volunteers around the world. |
 | [Lit2Go](https://etc.usf.edu/lit2go/) | Stories and poems from the University of South Florida's educational collection. |
-| [Project Gutenberg](https://www.gutenberg.org/) | Audiobook editions from its digital library, accessed through [Gutendex](https://gutendex.com/). |
 | [Wolne Lektury](https://wolnelektury.pl/) | Polish literature and audiobooks from the Wolne Lektury digital library. |
 
 LibriVox is enabled by default. Turn on the other catalogs in Settings and choose the languages you want to browse.
@@ -53,7 +52,7 @@ Illustrative scenes using app screenshots:
 
 ## Build for Android
 
-Use JDK 17 and Android SDK 37. The app runs on Android API 36 or later.
+Use JDK 21 and Android SDK 37. The app runs on Android API 36 or later.
 
 ```bash
 ./gradlew :app:assembleDebug

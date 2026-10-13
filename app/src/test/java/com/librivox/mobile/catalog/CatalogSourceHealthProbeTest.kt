@@ -90,10 +90,7 @@ class CatalogSourceHealthProbeTest {
             "https://etc.usf.edu/lit2go/",
             DefaultCatalogSourceHealthEndpoints[CatalogSourcePreference.Lit2Go]?.rootUrl,
         )
-        assertEquals(
-            "https://gutendex.com/",
-            DefaultCatalogSourceHealthEndpoints[CatalogSourcePreference.Gutendex]?.rootUrl,
-        )
+        assertFalse(DefaultCatalogSourceHealthEndpoints.containsKey(CatalogSourcePreference.Gutendex))
         assertEquals(
             "https://wolnelektury.pl/",
             DefaultCatalogSourceHealthEndpoints[CatalogSourcePreference.WolneLektury]?.rootUrl,

@@ -229,12 +229,13 @@ class DiscoverLocalSearchTest {
     }
 
     @Test
-    fun localSearchShowsPlayableGutendexAudioRows() {
+    fun localSearchKeepsSavedPlayableGutenbergBooksAfterCatalogRemoval() {
         val playableGutenbergAudio = AudioBook(
             id = "gutendex-20687",
             title = "Pride and Prejudice",
             author = "Jane Austen",
             source = BookSource.Gutendex,
+            libraryStatus = LibraryStatus.InLibrary,
             language = "English",
             chapters = listOf(
                 AudioBookChapter(
@@ -251,7 +252,7 @@ class DiscoverLocalSearchTest {
             query = "Pride",
             field = CatalogSearchField.Title,
             languages = listOf("English"),
-            sourcePreference = BookSourcePreference.GutendexOnly,
+            sourcePreference = BookSourcePreference.None,
         )
 
         assertEquals(listOf("gutendex-20687"), results.map { it.id })

@@ -2240,7 +2240,7 @@ private fun BookSource.cacheLabel(): String =
         BookSource.LibriVox -> "LibriVox"
         BookSource.Lit2Go -> "Lit2Go"
         BookSource.WolneLektury -> "Wolne Lektury"
-        BookSource.Gutendex -> "Gutendex"
+        BookSource.Gutendex -> "Project Gutenberg (saved)"
         BookSource.LocalAsset -> "Local assets"
         BookSource.CustomLocal -> "Custom local"
     }
@@ -2262,7 +2262,7 @@ private fun catalogSourcesOverviewInfo(): CatalogSourceInfo =
         title = "Catalog sources",
         summary = "Choose the libraries Discover should search and browse.",
         details = "New installs start with LibriVox only. You can opt into other public audiobook sources from the Catalog screen whenever you want broader discovery.",
-        bestFor = "Use LibriVox for broad volunteer recordings. Lit2Go adds English educational classics, Gutendex adds Project Gutenberg audiobook metadata, and Wolne Lektury is Polish-only.",
+        bestFor = "Use LibriVox for broad volunteer recordings. Lit2Go adds English educational classics, and Wolne Lektury is Polish-only.",
     )
 
 private fun CatalogSourcePreference.catalogSourceInfo(): CatalogSourceInfo =
@@ -2284,12 +2284,12 @@ private fun CatalogSourcePreference.catalogSourceInfo(): CatalogSourceInfo =
             websiteUrl = "https://librivox.org/pages/about-librivox/",
         )
         CatalogSourcePreference.Gutendex -> CatalogSourceInfo(
-            title = "Gutendex",
-            summary = "A JSON web API for Project Gutenberg book metadata.",
-            details = "Gutendex exposes Project Gutenberg catalog records in an app-friendly API. The app filters it to audiobook records, expands Gutenberg audio index pages into chapters when possible, and uses AudiobookCovers.com as a best-effort cover fallback when Gutenberg has no image.",
-            bestFor = "Good for Project Gutenberg public-domain audio records and metadata from the Gutenberg catalog.",
-            websiteLabel = "Open Gutendex",
-            websiteUrl = "https://gutendex.com/",
+            title = "Project Gutenberg (saved books)",
+            summary = "This catalog is no longer available in the app.",
+            details = "Previously saved books and downloads remain in your library.",
+            bestFor = null,
+            websiteLabel = "Open Project Gutenberg",
+            websiteUrl = "https://www.gutenberg.org/",
         )
         CatalogSourcePreference.WolneLektury -> CatalogSourceInfo(
             title = "Wolne Lektury",

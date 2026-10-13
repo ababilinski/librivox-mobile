@@ -102,7 +102,7 @@ class DailyFeaturedCacheStateTest {
         assertEquals(CatalogSourcePreference.Lit2Go, BookSourcePreference.LibriVoxAndLit2Go.featuredCatalogSource())
         assertEquals(CatalogSourcePreference.Lit2Go, BookSourcePreference.All.featuredCatalogSource())
         assertEquals(CatalogSourcePreference.LibriVox, BookSourcePreference.LibriVoxOnly.featuredCatalogSource())
-        assertEquals(CatalogSourcePreference.Gutendex, BookSourcePreference.GutendexOnly.featuredCatalogSource())
+        assertEquals(null, BookSourcePreference.GutendexOnly.featuredCatalogSource())
         assertEquals(CatalogSourcePreference.WolneLektury, BookSourcePreference.WolneLekturyOnly.featuredCatalogSource())
     }
 
@@ -111,7 +111,7 @@ class DailyFeaturedCacheStateTest {
         assertEquals(BookSourcePreference.LibriVoxOnly, CatalogSourcePreference.LibriVox.asSingleSourcePreference())
         assertEquals(BookSourcePreference.Lit2GoOnly, CatalogSourcePreference.Lit2Go.asSingleSourcePreference())
         assertEquals(BookSourcePreference.WolneLekturyOnly, CatalogSourcePreference.WolneLektury.asSingleSourcePreference())
-        assertEquals(BookSourcePreference.GutendexOnly, CatalogSourcePreference.Gutendex.asSingleSourcePreference())
+        assertEquals(BookSourcePreference.None, CatalogSourcePreference.Gutendex.asSingleSourcePreference())
     }
 
     private fun candidates(): List<AudioBook> =

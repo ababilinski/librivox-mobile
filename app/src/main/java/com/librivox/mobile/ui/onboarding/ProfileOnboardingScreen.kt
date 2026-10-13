@@ -1854,7 +1854,7 @@ private fun languageSupportingText(
         language == BookLanguagePreference.Polish ->
             "Select Wolne Lektury to browse Polish audiobooks."
         else ->
-            "Add LibriVox, Lit2Go, or Gutendex to browse this language."
+            "Add LibriVox or Lit2Go to browse this language."
     }
 
 private fun languageInactiveMessage(
@@ -1867,7 +1867,7 @@ private fun languageInactiveMessage(
         language == BookLanguagePreference.Polish ->
             "Select Wolne Lektury before choosing Polish."
         else ->
-            "Select LibriVox, Lit2Go, or Gutendex before choosing ${language.label}."
+            "Select LibriVox or Lit2Go before choosing ${language.label}."
     }
 
 internal data class OnboardingCarouselTitle(
@@ -1947,7 +1947,7 @@ private val CatalogSourcePreference.onboardingDescription: String
         CatalogSourcePreference.Lit2Go ->
             "Curated educational audiobooks and short works from the University of South Florida, often with readable text."
         CatalogSourcePreference.Gutendex ->
-            "Project Gutenberg audiobook records and metadata, useful when a public-domain title has Gutenberg audio."
+            "This catalog is no longer available in the app."
         CatalogSourcePreference.WolneLektury ->
             "Polish-only public-domain audiobooks, ebooks, and literary metadata from WolneLektury.pl."
     }

@@ -74,7 +74,6 @@ private val PreferredFeaturedSources = listOf(
     CatalogSourcePreference.Lit2Go,
     CatalogSourcePreference.LibriVox,
     CatalogSourcePreference.WolneLektury,
-    CatalogSourcePreference.Gutendex,
 )
 
 private const val DEFAULT_DAILY_FEATURED_LIMIT = 12

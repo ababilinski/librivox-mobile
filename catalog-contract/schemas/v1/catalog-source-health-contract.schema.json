@@ -27,11 +27,10 @@
     },
     "providers": {
       "type": "object",
-      "required": ["librivox", "lit2go", "gutendex", "wolne_lektury"],
+      "required": ["librivox", "lit2go", "wolne_lektury"],
       "properties": {
         "librivox": { "$ref": "#/$defs/provider" },
         "lit2go": { "$ref": "#/$defs/provider" },
-        "gutendex": { "$ref": "#/$defs/provider" },
         "wolne_lektury": { "$ref": "#/$defs/provider" }
       },
       "additionalProperties": false

@@ -2077,8 +2077,7 @@ private fun BookSource.bookDetailSourceLabel(): String? =
 private fun BookSource.supportsCatalogRefresh(): Boolean =
     this == BookSource.LibriVox ||
         this == BookSource.Lit2Go ||
-        this == BookSource.WolneLektury ||
-        this == BookSource.Gutendex
+        this == BookSource.WolneLektury
 
 private fun missingAudiobookDetailsMessage(
     bookId: String,
@@ -2087,7 +2086,7 @@ private fun missingAudiobookDetailsMessage(
 ): String =
     when {
         book?.source == BookSource.Gutendex || bookId.startsWith("gutendex-") ->
-            "This Project Gutenberg record does not include an audiobook version."
+            "This saved Project Gutenberg book has no playable chapters. Its catalog is no longer available in the app."
         noPlayableChapters -> "No playable chapters were found for this audiobook."
         else -> "Could not load audiobook details."
     }

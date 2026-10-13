@@ -13,7 +13,6 @@ import com.librivox.mobile.catalog.CatalogConnectivityTransition
 import com.librivox.mobile.catalog.CatalogReconnectGate
 import com.librivox.mobile.catalog.CatalogSourceHealthProbe
 import com.librivox.mobile.catalog.DiscoverRepository
-import com.librivox.mobile.catalog.GutendexCatalogSource
 import com.librivox.mobile.catalog.LibriVoxCatalogSource
 import com.librivox.mobile.catalog.Lit2GoCatalogSource
 import com.librivox.mobile.catalog.OkHttpCatalogHttpTransport
@@ -139,7 +138,6 @@ class AudiobookApplication : Application(), Configuration.Provider {
         catalogClient = AggregateCatalogClient(
             librivox = librivoxCatalog,
             lit2go = Lit2GoCatalogSource(this),
-            gutendex = GutendexCatalogSource(this),
             wolneLektury = WolneLekturyCatalogSource(this),
             settings = playbackSettingsStore,
         )

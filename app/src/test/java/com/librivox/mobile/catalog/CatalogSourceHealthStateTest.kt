@@ -13,7 +13,7 @@ class CatalogSourceHealthStateTest {
     fun defaults_allSourcesUnknownButUsable() {
         val state = CatalogSourceHealthState()
 
-        CatalogSourcePreference.entries.forEach { source ->
+        CatalogSourcePreference.ActiveSources.forEach { source ->
             assertEquals(CatalogSourceHealth.Unknown, state.statusFor(source).state)
             assertTrue(state.isAvailable(source))
         }
@@ -48,14 +48,14 @@ class CatalogSourceHealthStateTest {
     @Test
     fun markAvailable_restoresSourceAfterFailure() {
         val state = CatalogSourceHealthState()
-            .markUnavailable(CatalogSourcePreference.Gutendex, "HTTP 503")
-            .markAvailable(CatalogSourcePreference.Gutendex)
+            .markUnavailable(CatalogSourcePreference.Lit2Go, "HTTP 503")
+            .markAvailable(CatalogSourcePreference.Lit2Go)
 
-        assertTrue(state.isAvailable(CatalogSourcePreference.Gutendex))
+        assertTrue(state.isAvailable(CatalogSourcePreference.Lit2Go))
         assertEquals(
             CatalogSourceHealth.Available,
-            state.statusFor(CatalogSourcePreference.Gutendex).state,
+            state.statusFor(CatalogSourcePreference.Lit2Go).state,
         )
-        assertFalse(state.statusFor(CatalogSourcePreference.Gutendex).message?.isNotBlank() == true)
+        assertFalse(state.statusFor(CatalogSourcePreference.Lit2Go).message?.isNotBlank() == true)
     }
 }

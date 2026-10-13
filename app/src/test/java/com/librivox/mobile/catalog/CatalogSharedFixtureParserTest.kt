@@ -36,9 +36,6 @@ class CatalogSharedFixtureParserTest {
         assertEquals("lit2go-1__alices-adventures-in-wonderland", litBook.id)
         assertTrue(litBook.chapters.any { "Advice from a Caterpillar" in it.title })
 
-        val gutendex = GutendexCatalogSource().parseBooksJson(fixture("gutendex/search-alice.json"))
-        assertEquals(setOf("gutendex-19573", "gutendex-12974"), gutendex.map { it.id }.toSet())
-
         val wolneSource = WolneLekturyCatalogSource()
         val wolneStubs = wolneSource.parseAudiobookIndexJson(fixture("wolne/index-antek.json"))
         assertTrue(wolneStubs.any { it.slug == "antek" })
@@ -57,10 +54,6 @@ class CatalogSharedFixtureParserTest {
         assertTrue(runCatching { librivox.parseBooksJson(fixture("failures/malformed-json.txt")) }.isFailure)
         assertTrue(runCatching { librivox.parseAdvancedSearchJson(fixture("failures/blank.html")) }.isFailure)
         assertTrue(runCatching { librivox.parseBooksJson("{}") }.isFailure)
-
-        val gutendex = GutendexCatalogSource()
-        assertTrue(runCatching { gutendex.parseBooksJson("{}") }.isFailure)
-        assertTrue(gutendex.parseBooksJson("""{"results":[]}""").isEmpty())
 
         val wolne = WolneLekturyCatalogSource()
         assertTrue(runCatching { wolne.parseAudiobookIndexJson("{}") }.isFailure)

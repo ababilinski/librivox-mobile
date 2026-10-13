@@ -12,10 +12,6 @@
       "probeURL": "https://etc.usf.edu/lit2go/",
       "recognizableTitleMarkers": ["lit2go"]
     },
-    "gutendex": {
-      "probeURL": "https://gutendex.com/",
-      "recognizableTitleMarkers": ["gutendex"]
-    },
     "wolne_lektury": {
       "probeURL": "https://wolnelektury.pl/",
       "recognizableTitleMarkers": ["wolnelektury", "wolne lektury"]

@@ -62,7 +62,7 @@
     },
     "sourceCapabilities": {
       "type": "object",
-      "required": ["librivox", "lit2go", "gutendex", "wolne_lektury"],
+      "required": ["librivox", "lit2go", "wolne_lektury"],
       "additionalProperties": {
         "type": "object",
         "required": ["fields", "languages", "adapters"],

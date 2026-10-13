@@ -14,9 +14,9 @@ import Testing
     let sourceNames: [String: BookSource] = [
         "librivox": .libriVox,
         "lit2go": .lit2Go,
-        "gutendex": .gutendex,
         "wolne_lektury": .wolneLektury,
     ]
+    #expect(Set(providers.keys) == Set(sourceNames.keys))
     for (name, source) in sourceNames {
         let provider = try #require(providers[name])
         #expect(provider["probeURL"] as? String == CatalogSourceHealthContract.providerURLs[source]?.absoluteString)
@@ -50,8 +50,6 @@ import Testing
             )
         case "etc.usf.edu":
             return CatalogHTTPResponse(data: outagePage, statusCode: 200)
-        case "gutendex.com":
-            throw URLError(.notConnectedToInternet)
         case "wolnelektury.pl":
             throw URLError(.cannotConnectToHost)
         default:
@@ -62,7 +60,7 @@ import Testing
 
     #expect(await probe.currentStatus(for: .libriVox).state == .unknown)
     var snapshots: [CatalogSourceHealthSnapshot] = []
-    for await snapshot in await probe.snapshots(for: [.libriVox, .lit2Go, .gutendex, .wolneLektury]) {
+    for await snapshot in await probe.snapshots(for: [.libriVox, .lit2Go, .wolneLektury]) {
         snapshots.append(snapshot)
     }
 
@@ -73,16 +71,13 @@ import Testing
     #expect(final.isComplete)
     #expect(final.statuses[.libriVox]?.state == .available)
     #expect(final.statuses[.lit2Go]?.state == .broken)
-    #expect(final.statuses[.gutendex]?.state == .offline)
     #expect(final.statuses[.wolneLektury]?.state == .broken)
     #expect(final.statuses[.wolneLektury]?.failure?.kind == .network)
     #expect(final.statuses[.lit2Go]?.statusCode == 200)
     #expect(final.statuses[.lit2Go]?.failure?.kind == .invalidContent)
-    #expect(final.statuses[.gutendex]?.statusCode == nil)
-    #expect(final.statuses[.gutendex]?.failure?.kind == .offline)
 
     let requests = await recorder.requests
-    #expect(requests.count == 4)
+    #expect(requests.count == 3)
     #expect(requests.allSatisfy { $0.method == "GET" })
     #expect(requests.allSatisfy { $0.timeout == 45 })
 }
@@ -116,7 +111,7 @@ import Testing
             )
         case "etc.usf.edu":
             return CatalogHTTPResponse(data: Data("Welcome to Lit2Go".utf8), statusCode: 500)
-        case "gutendex.com":
+        case "wolnelektury.pl":
             throw URLError(.notConnectedToInternet)
         default:
             throw URLError(.badURL)
@@ -142,9 +137,9 @@ import Testing
     _ = await probe.check(sources: [.lit2Go])
     #expect(await recorder.count(for: "etc.usf.edu") == 2)
 
-    #expect(await probe.check(sources: [.gutendex]).statuses[.gutendex]?.state == .offline)
-    #expect(await probe.check(sources: [.gutendex]).statuses[.gutendex]?.state == .offline)
-    #expect(await recorder.count(for: "gutendex.com") == 2)
+    #expect(await probe.check(sources: [.wolneLektury]).statuses[.wolneLektury]?.state == .offline)
+    #expect(await probe.check(sources: [.wolneLektury]).statuses[.wolneLektury]?.state == .offline)
+    #expect(await recorder.count(for: "wolnelektury.pl") == 2)
     #expect(await probe.cachedHealthCount() == 2)
 }
 
@@ -181,7 +176,7 @@ import Testing
         let body: String = switch request.url?.host {
         case "librivox.org": "<title>LibriVox | free public domain audiobooks</title>"
         case "etc.usf.edu": "<title>Welcome to Lit2Go ETC</title>"
-        case "gutendex.com": "<title>Gutendex</title>"
+        case "wolnelektury.pl": "<title>Wolne Lektury</title>"
         default: "<title>WolneLektury.pl</title>"
         }
         return CatalogHTTPResponse(data: Data(body.utf8), statusCode: 200)
@@ -198,7 +193,7 @@ import Testing
     clock.advance(by: 1)
     #expect(await probe.check(sources: [.libriVox]).statuses[.libriVox]?.isCached == true)
     clock.advance(by: 1)
-    _ = await probe.check(sources: [.gutendex])
+    _ = await probe.check(sources: [.wolneLektury])
 
     #expect(await probe.cachedHealthCount() == 2)
     #expect(await recorder.count(for: "librivox.org") == 1)

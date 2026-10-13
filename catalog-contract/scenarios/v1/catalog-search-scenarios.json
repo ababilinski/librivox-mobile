@@ -25,10 +25,10 @@
       "tags": ["whitespace-only", "empty-query"],
       "request": {
         "query": " \t \n ",
-        "sources": ["librivox", "lit2go", "gutendex", "wolne_lektury"],
+        "sources": ["librivox", "lit2go", "wolne_lektury"],
         "fields": ["title", "author", "reader", "chapter", "genre"],
         "languages": ["any"],
-        "sourcePriority": ["librivox", "lit2go", "gutendex", "wolne_lektury"]
+        "sourcePriority": ["librivox", "lit2go", "wolne_lektury"]
       },
       "expected": {
         "normalizedQuery": "",
@@ -204,42 +204,6 @@
       }
     },
     {
-      "id": "retrieve-alice-gutendex-only",
-      "kind": "retrieval",
-      "tags": ["alice", "gutendex-only", "source-alone"],
-      "request": {
-        "query": "alice",
-        "sources": ["gutendex"],
-        "fields": ["title", "author"],
-        "languages": ["english"],
-        "sourcePriority": ["gutendex"]
-      },
-      "transport": [
-        {
-          "operationKey": "gutendex:title:english",
-          "result": "response",
-          "status": 200,
-          "fixture": "fixtures/v1/gutendex/search-alice.json"
-        },
-        {
-          "operationKey": "gutendex:author:english",
-          "result": "response",
-          "status": 200,
-          "fixture": "fixtures/v1/gutendex/search-alice.json"
-        }
-      ],
-      "expected": {
-        "normalizedQuery": "alice",
-        "plannedOperationKeys": ["gutendex:title:english", "gutendex:author:english"],
-        "outcomes": { "gutendex:title:english": "success", "gutendex:author:english": "success" },
-        "requiredVariantIds": ["gutendex:19573", "gutendex:12974"],
-        "requiredMatchedFields": { "gutendex:19573": ["title"], "gutendex:12974": ["author"] },
-        "sourceFacetMinimums": { "gutendex": 2 },
-        "completeness": "complete",
-        "networkRequestCount": 2
-      }
-    },
-    {
       "id": "retrieve-antek-wolne-only",
       "kind": "retrieval",
       "tags": ["antek", "wolne-only", "source-alone", "polish"],
@@ -280,10 +244,10 @@
       "tags": ["alice", "all-fields", "all-sources", "any-language", "progressive", "acceptance"],
       "request": {
         "query": "alice ",
-        "sources": ["librivox", "lit2go", "gutendex", "wolne_lektury"],
+        "sources": ["librivox", "lit2go", "wolne_lektury"],
         "fields": ["title", "author", "reader", "chapter", "genre"],
         "languages": ["any"],
-        "sourcePriority": ["librivox", "lit2go", "gutendex", "wolne_lektury"]
+        "sourcePriority": ["librivox", "lit2go", "wolne_lektury"]
       },
       "transport": [
         { "operationKey": "librivox:title:any", "result": "response", "status": 200, "fixture": "fixtures/v1/librivox/feed-title-alice.json", "delayMilliseconds": 40 },
@@ -294,9 +258,6 @@
         { "operationKey": "lit2go:title:any", "result": "response", "status": 200, "fixture": "fixtures/v1/lit2go/index-a.html", "delayMilliseconds": 60 },
         { "operationKey": "lit2go:title:any", "result": "response", "status": 200, "fixture": "fixtures/v1/lit2go/detail-alice.html", "delayMilliseconds": 70 },
         { "operationKey": "lit2go:author:any", "result": "response", "status": 200, "fixture": "fixtures/v1/lit2go/index-a.html", "delayMilliseconds": 100 },
-        { "operationKey": "gutendex:title:any", "result": "response", "status": 200, "fixture": "fixtures/v1/gutendex/search-alice.json", "delayMilliseconds": 90 },
-        { "operationKey": "gutendex:author:any", "result": "response", "status": 200, "fixture": "fixtures/v1/gutendex/search-alice.json", "delayMilliseconds": 130 },
-        { "operationKey": "gutendex:genre:any", "result": "response", "status": 200, "fixture": "fixtures/v1/gutendex/search-alice.json", "delayMilliseconds": 170 },
         { "operationKey": "wolne_lektury:title:any", "result": "response", "status": 200, "fixture": "fixtures/v1/wolne/index-antek.json", "delayMilliseconds": 50 },
         { "operationKey": "wolne_lektury:author:any", "result": "response", "status": 200, "fixture": "fixtures/v1/wolne/index-antek.json", "delayMilliseconds": 110 },
         { "operationKey": "wolne_lektury:genre:any", "result": "response", "status": 200, "fixture": "fixtures/v1/wolne/index-antek.json", "delayMilliseconds": 190 }
@@ -306,24 +267,21 @@
         "plannedOperationKeys": [
           "librivox:title:any", "librivox:author:any", "librivox:reader:any", "librivox:chapter:any", "librivox:genre:any",
           "lit2go:title:any", "lit2go:author:any", "lit2go:reader:any", "lit2go:chapter:any", "lit2go:genre:any",
-          "gutendex:title:any", "gutendex:author:any", "gutendex:reader:any", "gutendex:chapter:any", "gutendex:genre:any",
           "wolne_lektury:title:any", "wolne_lektury:author:any", "wolne_lektury:reader:any", "wolne_lektury:chapter:any", "wolne_lektury:genre:any"
         ],
         "outcomes": {
           "librivox:title:any": "success", "librivox:author:any": "success", "librivox:reader:any": "success", "librivox:chapter:any": "success", "librivox:genre:any": "authoritative_empty",
           "lit2go:title:any": "success", "lit2go:author:any": "success", "lit2go:reader:any": "skipped", "lit2go:chapter:any": "skipped", "lit2go:genre:any": "skipped",
-          "gutendex:title:any": "success", "gutendex:author:any": "success", "gutendex:reader:any": "skipped", "gutendex:chapter:any": "skipped", "gutendex:genre:any": "success",
           "wolne_lektury:title:any": "authoritative_empty", "wolne_lektury:author:any": "authoritative_empty", "wolne_lektury:reader:any": "skipped", "wolne_lektury:chapter:any": "skipped", "wolne_lektury:genre:any": "authoritative_empty"
         },
         "skipReasons": {
           "lit2go:reader:any": "unsupported_field", "lit2go:chapter:any": "unsupported_field", "lit2go:genre:any": "unsupported_field",
-          "gutendex:reader:any": "unsupported_field", "gutendex:chapter:any": "unsupported_field",
           "wolne_lektury:reader:any": "unsupported_field", "wolne_lektury:chapter:any": "unsupported_field"
         },
-        "requiredVariantIds": ["librivox:200", "lit2go:1", "gutendex:19573"],
-        "sourceFacetMinimums": { "librivox": 1, "lit2go": 1, "gutendex": 1, "wolne_lektury": 0 },
+        "requiredVariantIds": ["librivox:200", "lit2go:1"],
+        "sourceFacetMinimums": { "librivox": 1, "lit2go": 1, "wolne_lektury": 0 },
         "facetStates": {
-          "source:librivox": "ready", "source:lit2go": "ready", "source:gutendex": "ready", "source:wolne_lektury": "ready",
+          "source:librivox": "ready", "source:lit2go": "ready", "source:wolne_lektury": "ready",
           "field:title": "ready", "field:author": "ready", "field:reader": "ready", "field:chapter": "ready", "field:genre": "ready"
         },
         "completeness": "complete",
@@ -543,19 +501,19 @@
       "tags": ["no-match", "valid-empty", "negative-cache"],
       "request": {
         "query": "zzzz-no-such-catalog-item",
-        "sources": ["librivox", "gutendex"],
+        "sources": ["librivox", "wolne_lektury"],
         "fields": ["title"],
         "languages": ["any"],
-        "sourcePriority": ["librivox", "gutendex"]
+        "sourcePriority": ["librivox", "wolne_lektury"]
       },
       "transport": [
         { "operationKey": "librivox:title:any", "result": "response", "status": 200, "fixture": "fixtures/v1/librivox/feed-empty.json" },
-        { "operationKey": "gutendex:title:any", "result": "response", "status": 200, "fixture": "fixtures/v1/gutendex/search-empty.json" }
+        { "operationKey": "wolne_lektury:title:any", "result": "response", "status": 200, "fixture": "fixtures/v1/wolne/index-antek.json" }
       ],
       "expected": {
         "normalizedQuery": "zzzz-no-such-catalog-item",
-        "plannedOperationKeys": ["librivox:title:any", "gutendex:title:any"],
-        "outcomes": { "librivox:title:any": "authoritative_empty", "gutendex:title:any": "authoritative_empty" },
+        "plannedOperationKeys": ["librivox:title:any", "wolne_lektury:title:any"],
+        "outcomes": { "librivox:title:any": "authoritative_empty", "wolne_lektury:title:any": "authoritative_empty" },
         "requiredVariantIds": [],
         "completeness": "empty",
         "cacheDisposition": "miss",
@@ -703,17 +661,17 @@
       "tags": ["timeout", "failure"],
       "request": {
         "query": "alice",
-        "sources": ["gutendex"],
+        "sources": ["librivox"],
         "fields": ["title"],
         "languages": ["english"],
-        "sourcePriority": ["gutendex"]
+        "sourcePriority": ["librivox"]
       },
       "transport": [
-        { "operationKey": "gutendex:title:english", "result": "timeout", "errorCode": "request_timeout" }
+        { "operationKey": "librivox:title:english", "result": "timeout", "errorCode": "request_timeout" }
       ],
       "expected": {
         "normalizedQuery": "alice",
-        "outcomes": { "gutendex:title:english": "failed" },
+        "outcomes": { "librivox:title:english": "failed" },
         "completeness": "partial",
         "cacheWrite": false
       }
@@ -772,29 +730,26 @@
       "tags": ["all-source-failure", "failure"],
       "request": {
         "query": "alice",
-        "sources": ["librivox", "lit2go", "gutendex", "wolne_lektury"],
+        "sources": ["librivox", "lit2go", "wolne_lektury"],
         "fields": ["title"],
         "languages": ["any"],
-        "sourcePriority": ["librivox", "lit2go", "gutendex", "wolne_lektury"]
+        "sourcePriority": ["librivox", "lit2go", "wolne_lektury"]
       },
       "transport": [
         { "operationKey": "librivox:title:any", "result": "timeout", "errorCode": "request_timeout" },
         { "operationKey": "lit2go:title:any", "result": "response", "status": 500, "fixture": "fixtures/v1/failures/http-500.html" },
-        { "operationKey": "gutendex:title:any", "result": "transport_error", "errorCode": "dns_failure" },
-        { "operationKey": "wolne_lektury:title:any", "result": "response", "status": 200, "fixture": "fixtures/v1/failures/malformed-json.txt" }
+        { "operationKey": "wolne_lektury:title:any", "result": "transport_error", "errorCode": "dns_failure" }
       ],
       "expected": {
         "normalizedQuery": "alice",
         "outcomes": {
           "librivox:title:any": "failed",
           "lit2go:title:any": "failed",
-          "gutendex:title:any": "failed",
           "wolne_lektury:title:any": "failed"
         },
         "facetStates": {
           "source:librivox": "unavailable",
           "source:lit2go": "unavailable",
-          "source:gutendex": "unavailable",
           "source:wolne_lektury": "unavailable"
         },
         "completeness": "partial",
@@ -829,10 +784,10 @@
       "tags": ["fresh-cache", "negative-cache", "ttl-5-minutes"],
       "request": {
         "query": "no match",
-        "sources": ["gutendex"],
+        "sources": ["librivox"],
         "fields": ["title"],
         "languages": ["english"],
-        "sourcePriority": ["gutendex"]
+        "sourcePriority": ["librivox"]
       },
       "initialState": {
         "now": "2026-07-10T20:00:00Z",
@@ -948,12 +903,12 @@
       "tags": ["lru", "maximum-100", "eviction"],
       "request": {
         "query": "entry 101",
-        "sources": ["gutendex"],
+        "sources": ["librivox"],
         "fields": ["title"],
         "languages": ["english"],
-        "sourcePriority": ["gutendex"]
+        "sourcePriority": ["librivox"]
       },
-      "initialState": { "cacheEntryCount": 100, "leastRecentlyUsedKey": "1|entry 1|gutendex|title|english" },
+      "initialState": { "cacheEntryCount": 100, "leastRecentlyUsedKey": "1|entry 1|librivox|title|english" },
       "expected": {
         "normalizedQuery": "entry 101",
         "networkRequestCount": 1,

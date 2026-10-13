@@ -57,7 +57,7 @@ class DiscoverCacheStateTest {
             searchField = CatalogSearchField.Title,
             loadedAtMillis = 1L,
             isDefaultBrowse = false,
-            bookSource = BookSourcePreference.GutendexOnly,
+            bookSource = BookSourcePreference.Lit2GoOnly,
         )
 
         assertTrue(
@@ -65,7 +65,7 @@ class DiscoverCacheStateTest {
                 query = "gatsby",
                 field = CatalogSearchField.Title,
                 language = "",
-                bookSource = BookSourcePreference.GutendexOnly,
+                bookSource = BookSourcePreference.Lit2GoOnly,
                 sortOrder = DiscoverSortOrder.MostPopular,
             ),
         )

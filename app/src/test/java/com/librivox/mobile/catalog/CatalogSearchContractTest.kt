@@ -166,10 +166,10 @@ class CatalogSearchContractTest {
             query = "alice",
             field = CatalogSearchField.All,
             languages = listOf(""),
-            sourcePreference = BookSourcePreference.AllWithGutendex,
+            sourcePreference = BookSourcePreference.All,
         )
 
-        assertEquals(20, plan.operations.size)
+        assertEquals(15, plan.operations.size)
         val lit2Go = plan.operations.filter {
             it.operation.source == CatalogSourcePreference.Lit2Go
         }

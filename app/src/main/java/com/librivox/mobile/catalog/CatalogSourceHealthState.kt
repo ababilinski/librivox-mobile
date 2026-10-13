@@ -42,18 +42,18 @@ data class CatalogSourceStatus(
 
 data class CatalogSourceHealthState(
     val statuses: Map<CatalogSourcePreference, CatalogSourceStatus> =
-        CatalogSourcePreference.entries.associateWith { CatalogSourceStatus(source = it) },
+        CatalogSourcePreference.ActiveSources.associateWith { CatalogSourceStatus(source = it) },
 ) {
     fun statusFor(source: CatalogSourcePreference): CatalogSourceStatus =
         statuses[source] ?: CatalogSourceStatus(source = source)
 
     fun isAvailable(source: CatalogSourcePreference): Boolean =
-        statusFor(source).isAvailable
+        source in CatalogSourcePreference.ActiveSources && statusFor(source).isAvailable
 
     fun unavailableSelectedSources(preference: BookSourcePreference): List<CatalogSourcePreference> =
         preference.enabledSources
             .filterNot { isAvailable(it) }
-            .sortedBy { CatalogSourcePreference.entries.indexOf(it) }
+            .sortedBy { CatalogSourcePreference.ActiveSources.indexOf(it) }
 
     fun availablePreference(preference: BookSourcePreference): BookSourcePreference =
         BookSourcePreference.fromEnabledSources(
