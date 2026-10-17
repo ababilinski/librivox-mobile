@@ -92,6 +92,10 @@ Open `http://127.0.0.1:4173/`. Run `npm run check:site` to check the site's HTML
 
 The homepage uses the editorial design, with a book gallery and all listening tools shown together. Content and navigation remain available without JavaScript; shared animations enhance the page when motion is enabled.
 
+English pages keep their original URLs. Polish pages live under `/pl/`, including `/pl/features/` and `/pl/sources/`. The header's EN / PL switch preserves the current page and section and remembers the choice in browser storage. The unprefixed homepage uses that choice or the browser's preferred languages; direct page URLs retain their language. No device location is requested. Without JavaScript, both versions remain readable and the language links still work.
+
+Edit English pages in `docs/` and translations in `docs/i18n/pl.json`, then run `python3 scripts/localize-site.py` to regenerate the Polish pages and language metadata. Generated pages are committed so GitHub Pages can serve them directly. `npm run build` requires Python 3 and checks translation coverage, generated output, language routing, and local links.
+
 Explore the collection highlights at `http://127.0.0.1:4173/sources/`. The Sources page links to original title pages, official donation guidance, and catalog highlights. Project Gutenberg’s ebook total is separate from audio availability.
 
 Run `python3 scripts/generate-site-assets.py` to prepare 26 website assets (requires Pillow, listed in `scripts/requirements-play-assets.txt`). Original illustrations and proportional release captures live in `docs/assets/product/`; its manifest records provenance and hashes. The website uses local assets and system fonts. Shared page entrances and scroll reveals respect reduced motion and keep content visible without JavaScript. `npm run build` validates `docs/`, which GitHub Pages serves directly.

@@ -8,12 +8,15 @@
     const mobile = matchMedia("(max-width: 760px)");
     const background = [...document.querySelectorAll("main, footer, .skip-link")];
     const previousInert = new Map();
+    const labels = document.documentElement.lang === "pl"
+      ? { open: "Otwórz menu", close: "Zamknij menu" }
+      : { open: "Open menu", close: "Close menu" };
     menu.hidden = false;
     const setOpen = (open, restoreFocus = false) => {
       open = open && mobile.matches;
       if (restoreFocus) menu.focus();
       menu.setAttribute("aria-expanded", String(open));
-      menu.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      menu.setAttribute("aria-label", open ? labels.close : labels.open);
       header.classList.toggle("menu-open", open);
       document.documentElement.classList.toggle("menu-active", open);
       // Inert keeps hidden links and the covered page out of keyboard and screen-reader navigation.

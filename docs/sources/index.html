@@ -2,13 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <script src="../assets/locale.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#fbf8f1">
     <title>
       Sources — LibriVox Mobile
     </title>
     <meta name="description" content="Meet LibriVox, Lit2Go, Project Gutenberg, and Wolne Lektury. Explore classic titles and support the collections.">
-    <link rel="canonical" href="https://ababilinski.github.io/librivox-mobile/sources/">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Sources — LibriVox Mobile">
     <meta property="og:description" content="Meet LibriVox, Lit2Go, Project Gutenberg, and Wolne Lektury. Explore classic titles and support the collections.">
@@ -24,6 +24,15 @@
     <link rel="stylesheet" href="../assets/site.css">
     <script src="../assets/site.js" defer>
     </script>
+
+    <!-- locale metadata -->
+    <link rel="canonical" href="https://ababilinski.github.io/librivox-mobile/sources/">
+    <link rel="alternate" hreflang="en" href="https://ababilinski.github.io/librivox-mobile/sources/">
+    <link rel="alternate" hreflang="pl" href="https://ababilinski.github.io/librivox-mobile/pl/sources/">
+    <link rel="alternate" hreflang="x-default" href="https://ababilinski.github.io/librivox-mobile/sources/">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="pl_PL">
+    <!-- /locale metadata -->
   </head>
   <body class="sources-page">
     <a class="skip-link" href="#main">
@@ -37,6 +46,10 @@
             LibriVox Mobile
           </span>
         </a>
+        <div class="language-switch" role="group" aria-label="Website language" translate="no">
+          <a href="./?lang=en" data-locale="en" lang="en" hreflang="en" aria-label="English" aria-current="true">EN</a>
+          <a href="../pl/sources/?lang=pl" data-locale="pl" lang="pl" hreflang="pl" aria-label="Polski">PL</a>
+        </div>
         <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-navigation" hidden>
           <span class="menu-icon" aria-hidden="true"><span></span><span></span></span>
         </button>

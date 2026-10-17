@@ -7,7 +7,8 @@
     "serve": "node scripts/serve-site.mjs",
     "preview": "npm run serve",
     "check:site": "node scripts/check-site.mjs",
-    "build": "npm run check:site"
+    "check:locales": "python3 scripts/localize-site.py --check && node --test scripts/test-site-locales.mjs",
+    "build": "npm run check:locales && npm run check:site"
   },
   "engines": {
     "node": ">=18"

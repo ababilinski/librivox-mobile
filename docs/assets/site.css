@@ -127,6 +127,37 @@ h3 {
 .nav-panel {
   display: contents;
 }
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  order: 4;
+  padding: 2px;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  gap: 2px;
+}
+.language-switch a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  min-height: 28px;
+  padding: 4px 6px;
+  border-radius: 99px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: .04em;
+  text-decoration: none;
+}
+.language-switch a:hover {
+  color: var(--ink);
+}
+.language-switch a[aria-current=true] {
+  background: var(--ink);
+  color: var(--paper);
+}
 .menu-backdrop {
   display: none;
 }
@@ -1161,8 +1192,8 @@ h3 {
     padding: 10px 20px;
     padding-inline: max(20px,env(safe-area-inset-left)) max(20px,env(safe-area-inset-right));
     display: grid;
-    grid-template-columns: minmax(0,1fr) auto;
-    gap: 0 12px;
+    grid-template-columns: minmax(0,1fr) auto auto;
+    gap: 0 6px;
     min-height: 64px;
   }
   .brand {
@@ -1294,6 +1325,10 @@ h3 {
   }
   .has-js .menu-toggle {
     display: block;
+    order: 3;
+    justify-self: end;
+  }
+  .language-switch {
     order: 2;
     justify-self: end;
   }
