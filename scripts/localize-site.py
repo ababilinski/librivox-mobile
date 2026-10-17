@@ -61,7 +61,39 @@ def prepare_english(page):
     return source
 
 
+def polish_highlights(source, page):
+    """Lead with Polish books and collections while keeping English curation intact."""
+    if page == Path("index.html"):
+        replacements = {
+            "Original Moby-Dick cover illustration": "Original Pan Tadeusz cover illustration",
+            "Original illustrated cover for Moby-Dick": "Original illustrated cover for Pan Tadeusz",
+            "Original Alice in Wonderland cover illustration": "Original Lalka cover illustration",
+            "Original illustrated cover for Alice’s Adventures in Wonderland": "Original illustrated cover for Lalka",
+            "cover-moby.svg": "cover-tadeusz.svg",
+            "cover-alice.svg": "cover-lalka.svg",
+            "Moby-Dick": "Pan Tadeusz",
+            "Herman Melville": "Adam Mickiewicz",
+            "Alice’s Adventures in Wonderland": "Lalka",
+            "Lewis Carroll": "Bolesław Prus",
+            "https://www.gutenberg.org/ebooks/2701": "https://wolnelektury.pl/katalog/lektura/pan-tadeusz/",
+            "https://www.gutenberg.org/ebooks/11": "https://wolnelektury.pl/katalog/lektura/lalka/",
+        }
+        for original, replacement in replacements.items():
+            source = source.replace(original, replacement)
+    elif page == Path("sources/index.html"):
+        pattern = r'<article\b[^>]*\bid="(?:librivox|lit2go|wolne-lektury)"[^>]*>[\s\S]*?</article>'
+        cards = {re.search(r'\bid="([^"]+)"', match[0])[1]: match[0] for match in re.finditer(pattern, source)}
+        cards["librivox"] = cards["librivox"].replace(" source-tile--wide", "", 1)
+        cards["wolne-lektury"] = cards["wolne-lektury"].replace('class="source-tile ', 'class="source-tile source-tile--wide ', 1)
+        order = {"librivox": "wolne-lektury", "lit2go": "librivox", "wolne-lektury": "lit2go"}
+        source = re.sub(pattern, lambda match: cards[order[re.search(r'\bid="([^"]+)"', match[0])[1]]], source)
+        source = source.replace('source-primary" aria-labelledby="librivox-title"', 'source-primary" aria-labelledby="wolne-title"', 1)
+        source = source.replace('<a href="#librivox">LibriVox</a>', '<a href="#wolne-lektury">Wolne Lektury</a>', 1)
+    return source
+
+
 def localize(source, page, catalog, missing):
+    source = polish_highlights(source, page)
     destination = Path("pl") / page
     skip = False
     output = []

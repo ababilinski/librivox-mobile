@@ -96,6 +96,8 @@ English pages keep their original URLs. Polish pages live under `/pl/`, includin
 
 Edit English pages in `docs/` and translations in `docs/i18n/pl.json`, then run `python3 scripts/localize-site.py` to regenerate the Polish pages and language metadata. Generated pages are committed so GitHub Pages can serve them directly. `npm run build` requires Python 3 and checks translation coverage, generated output, language routing, and local links.
 
+The Polish edition highlights Wolne Lektury, Pan Tadeusz, and Lalka on the homepage and leads with Wolne Lektury on the Sources page. Collection order and book choices are curated in `polish_highlights` in the generator; the English edition retains its existing collection highlights.
+
 Explore the collection highlights at `http://127.0.0.1:4173/sources/`. The Sources page links to original title pages, official donation guidance, and catalog highlights. Project Gutenberg’s ebook total is separate from audio availability.
 
 Run `python3 scripts/generate-site-assets.py` to prepare 26 website assets (requires Pillow, listed in `scripts/requirements-play-assets.txt`). Original illustrations and proportional release captures live in `docs/assets/product/`; its manifest records provenance and hashes. The website uses local assets and system fonts. Shared page entrances and scroll reveals respect reduced motion and keep content visible without JavaScript. `npm run build` validates `docs/`, which GitHub Pages serves directly.
