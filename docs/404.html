@@ -4,12 +4,15 @@
     <meta charset="utf-8">
     <script src="assets/locale.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#fbf8f1">
+    <script src="assets/theme.js"></script>
     <title>Page Not Found | LibriVox Mobile</title>
     <link rel="icon" href="favicon.ico" sizes="any">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="stylesheet" href="assets/site.css">
+    <link rel="stylesheet" href="assets/theme.css">
     <script src="assets/site.js" defer></script>
 
     <!-- locale metadata -->
@@ -26,10 +29,11 @@
 <header class="site-header">
   <nav class="nav" aria-label="Primary">
     <a class="brand" href="./" aria-label="LibriVox Mobile home"><img src="./assets/product/app-icon.webp" width="32" height="32" alt="" aria-hidden="true"><span>LibriVox Mobile</span></a>
-    <div class="language-switch" role="group" aria-label="Website language" translate="no">
-      <a href="404.html?lang=en" data-locale="en" lang="en" hreflang="en" aria-label="English" aria-current="true">EN</a>
-      <a href="pl/404.html?lang=pl" data-locale="pl" lang="pl" hreflang="pl" aria-label="Polski">PL</a>
-    </div>
+    <fieldset class="appearance-switch" hidden>
+          <legend>Appearance</legend>
+          <label><input type="radio" name="site-theme" value="light" aria-label="Light appearance" title="Light appearance"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></label>
+          <label><input type="radio" name="site-theme" value="dark" aria-label="Dark appearance" title="Dark appearance"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z"/></svg></label>
+        </fieldset>
     <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-navigation" hidden>
       <span class="menu-icon" aria-hidden="true"><span></span><span></span></span>
     </button>
@@ -64,6 +68,10 @@
       <nav aria-label="Open source"><h3>Open source</h3><a href="https://github.com/ababilinski/librivox-mobile">GitHub</a><a href="https://github.com/ababilinski/librivox-mobile/issues">Report an issue</a><a href="https://github.com/ababilinski/librivox-mobile/blob/main/LICENSE">MIT license</a></nav>
       <nav aria-label="Help and policies"><h3>Help &amp; policies</h3><a href="./faq/">FAQ</a><a href="./support/">Support</a><a href="./privacy-policy/">Privacy</a><a href="./terms-of-service/">Terms</a></nav>
     </div>
+  </div>
+  <div class="language-switch" role="group" aria-label="Website language" translate="no">
+    <a href="404.html?lang=en" data-locale="en" lang="en" hreflang="en" aria-label="English" aria-current="true">EN</a>
+    <a href="pl/404.html?lang=pl" data-locale="pl" lang="pl" hreflang="pl" aria-label="Polski">PL</a>
   </div>
   <p class="footer-bottom">© 2026 Adrian Babilinski. An independent project, not affiliated with or endorsed by LibriVox or the other content sources.</p>
 </footer>

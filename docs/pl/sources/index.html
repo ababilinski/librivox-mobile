@@ -5,6 +5,7 @@
     <script src="../../assets/locale.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#fbf8f1">
+    <script src="../../assets/theme.js"></script>
     <title>
       Źródła | LibriVox Mobile
     </title>
@@ -22,6 +23,7 @@
     <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
     <link rel="stylesheet" href="../../assets/site.css">
+    <link rel="stylesheet" href="../../assets/theme.css">
     <script src="../../assets/site.js" defer>
     </script>
 
@@ -46,10 +48,11 @@
             LibriVox Mobile
           </span>
         </a>
-        <div class="language-switch" role="group" aria-label="Język strony" translate="no">
-          <a href="../../sources/?lang=en" data-locale="en" lang="en" hreflang="en" aria-label="English">EN</a>
-          <a href="./?lang=pl" data-locale="pl" lang="pl" hreflang="pl" aria-label="Polski" aria-current="true">PL</a>
-        </div>
+        <fieldset class="appearance-switch" hidden>
+          <legend>Wygląd</legend>
+          <label><input type="radio" name="site-theme" value="light" aria-label="Jasny wygląd" title="Jasny wygląd"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></label>
+          <label><input type="radio" name="site-theme" value="dark" aria-label="Ciemny wygląd" title="Ciemny wygląd"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z"/></svg></label>
+        </fieldset>
         <button class="menu-toggle" type="button" aria-label="Otwórz menu" aria-expanded="false" aria-controls="site-navigation" hidden>
           <span class="menu-icon" aria-hidden="true"><span></span><span></span></span>
         </button>
@@ -325,6 +328,10 @@
             </a>
           </nav>
         </div>
+      </div>
+      <div class="language-switch" role="group" aria-label="Język strony" translate="no">
+        <a href="../../sources/?lang=en" data-locale="en" lang="en" hreflang="en" aria-label="English">EN</a>
+        <a href="./?lang=pl" data-locale="pl" lang="pl" hreflang="pl" aria-label="Polski" aria-current="true">PL</a>
       </div>
       <p class="footer-bottom">
         © 2026 Adrian Babilinski. Niezależny projekt, niepowiązany z LibriVox ani innymi dostawcami treści i przez nich nierekomendowany.

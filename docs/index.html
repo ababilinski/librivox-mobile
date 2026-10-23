@@ -5,6 +5,7 @@
     <script src="assets/locale.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#fbf8f1">
+    <script src="assets/theme.js"></script>
     <title>
       LibriVox Mobile — Great books. Read to you.
     </title>
@@ -22,6 +23,7 @@
     <link rel="icon" href="./favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="./apple-touch-icon.png">
     <link rel="stylesheet" href="./assets/site.css">
+    <link rel="stylesheet" href="assets/theme.css">
     <script src="./assets/site.js" defer>
     </script>
 
@@ -46,10 +48,11 @@
             LibriVox Mobile
           </span>
         </a>
-        <div class="language-switch" role="group" aria-label="Website language" translate="no">
-          <a href="./?lang=en" data-locale="en" lang="en" hreflang="en" aria-label="English" aria-current="true">EN</a>
-          <a href="pl/?lang=pl" data-locale="pl" lang="pl" hreflang="pl" aria-label="Polski">PL</a>
-        </div>
+        <fieldset class="appearance-switch" hidden>
+          <legend>Appearance</legend>
+          <label><input type="radio" name="site-theme" value="light" aria-label="Light appearance" title="Light appearance"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></label>
+          <label><input type="radio" name="site-theme" value="dark" aria-label="Dark appearance" title="Dark appearance"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z"/></svg></label>
+        </fieldset>
         <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-navigation" hidden>
           <span class="menu-icon" aria-hidden="true"><span></span><span></span></span>
         </button>
@@ -127,7 +130,7 @@
             <img class="stage-cover stage-alice" src="assets/product/cover-alice.svg" width="480" height="680" alt="Original Alice in Wonderland cover illustration">
             <img class="stage-cover stage-sherlock" src="assets/product/cover-sherlock.svg" width="480" height="680" alt="Original Sherlock Holmes cover illustration">
             <figure class="phone hero-phone">
-              <img src="assets/product/browse-360.webp" srcset="assets/product/browse-360.webp 360w, assets/product/browse-720.webp 720w" sizes="185px" width="360" height="800" alt="Android app showing featured audiobooks and Continue listening" fetchpriority="high">
+              <picture data-app-capture="browse"><source data-theme="dark" media="(prefers-color-scheme: dark)" srcset="assets/product/en/dark/browse-360.webp 360w, assets/product/en/dark/browse-720.webp 720w" sizes="185px"><source data-theme="light" media="(prefers-color-scheme: light)" srcset="assets/product/en/light/browse-360.webp 360w, assets/product/en/light/browse-720.webp 720w" sizes="185px"><img src="assets/product/en/light/browse-360.webp" srcset="assets/product/en/light/browse-360.webp 360w, assets/product/en/light/browse-720.webp 720w" sizes="185px" width="360" height="800" alt="Android app showing featured audiobooks and Continue listening" fetchpriority="high"></picture>
             </figure>
           </div>
           <p class="stage-caption">
@@ -260,7 +263,7 @@
             </a>
           </div>
           <figure class="phone ">
-            <img src="assets/product/player-360.webp" srcset="assets/product/player-360.webp 360w, assets/product/player-720.webp 720w" sizes="272px" width="360" height="800" alt="Bleak House playing with chapter progress and playback controls in the Android release" loading="lazy">
+            <picture data-app-capture="player"><source data-theme="dark" media="(prefers-color-scheme: dark)" srcset="assets/product/en/dark/player-360.webp 360w, assets/product/en/dark/player-720.webp 720w" sizes="272px"><source data-theme="light" media="(prefers-color-scheme: light)" srcset="assets/product/en/light/player-360.webp 360w, assets/product/en/light/player-720.webp 720w" sizes="272px"><img src="assets/product/en/light/player-360.webp" srcset="assets/product/en/light/player-360.webp 360w, assets/product/en/light/player-720.webp 720w" sizes="272px" width="360" height="800" alt="Bleak House playing with chapter progress and playback controls in the Android app" loading="lazy"></picture>
           </figure>
         </div>
       </section>
@@ -287,7 +290,7 @@
               </p>
             </div>
             <figure class="phone ">
-              <img src="assets/product/chapters-360.webp" srcset="assets/product/chapters-360.webp 360w, assets/product/chapters-720.webp 720w" sizes="205px" width="360" height="800" alt="Bleak House chapter list in the Android app" loading="lazy">
+              <picture data-app-capture="chapters"><source data-theme="dark" media="(prefers-color-scheme: dark)" srcset="assets/product/en/dark/chapters-360.webp 360w, assets/product/en/dark/chapters-720.webp 720w" sizes="205px"><source data-theme="light" media="(prefers-color-scheme: light)" srcset="assets/product/en/light/chapters-360.webp 360w, assets/product/en/light/chapters-720.webp 720w" sizes="205px"><img src="assets/product/en/light/chapters-360.webp" srcset="assets/product/en/light/chapters-360.webp 360w, assets/product/en/light/chapters-720.webp 720w" sizes="205px" width="360" height="800" alt="Bleak House chapter list in the Android app" loading="lazy"></picture>
             </figure>
           </article>
           <article class="tool-card" id="tool-bookmarks">
@@ -300,7 +303,7 @@
               </p>
             </div>
             <figure class="phone ">
-              <img src="assets/product/bookmarks-360.webp" srcset="assets/product/bookmarks-360.webp 360w, assets/product/bookmarks-720.webp 720w" sizes="205px" width="360" height="800" alt="A saved bookmark with a note in the Android app" loading="lazy">
+              <picture data-app-capture="bookmarks"><source data-theme="dark" media="(prefers-color-scheme: dark)" srcset="assets/product/en/dark/bookmarks-360.webp 360w, assets/product/en/dark/bookmarks-720.webp 720w" sizes="205px"><source data-theme="light" media="(prefers-color-scheme: light)" srcset="assets/product/en/light/bookmarks-360.webp 360w, assets/product/en/light/bookmarks-720.webp 720w" sizes="205px"><img src="assets/product/en/light/bookmarks-360.webp" srcset="assets/product/en/light/bookmarks-360.webp 360w, assets/product/en/light/bookmarks-720.webp 720w" sizes="205px" width="360" height="800" alt="A saved bookmark with a note in the Android app" loading="lazy"></picture>
             </figure>
           </article>
           <article class="tool-card" id="tool-sleep-timer">
@@ -313,7 +316,7 @@
               </p>
             </div>
             <figure class="phone ">
-              <img src="assets/product/sleep-timer-360.webp" srcset="assets/product/sleep-timer-360.webp 360w, assets/product/sleep-timer-720.webp 720w" sizes="205px" width="360" height="800" alt="Sleep timer options in the Android app" loading="lazy">
+              <picture data-app-capture="sleep-timer"><source data-theme="dark" media="(prefers-color-scheme: dark)" srcset="assets/product/en/dark/sleep-timer-360.webp 360w, assets/product/en/dark/sleep-timer-720.webp 720w" sizes="205px"><source data-theme="light" media="(prefers-color-scheme: light)" srcset="assets/product/en/light/sleep-timer-360.webp 360w, assets/product/en/light/sleep-timer-720.webp 720w" sizes="205px"><img src="assets/product/en/light/sleep-timer-360.webp" srcset="assets/product/en/light/sleep-timer-360.webp 360w, assets/product/en/light/sleep-timer-720.webp 720w" sizes="205px" width="360" height="800" alt="Sleep timer options in the Android app" loading="lazy"></picture>
             </figure>
           </article>
         </div>
@@ -361,10 +364,10 @@
           </div>
           <div class="travel-screens">
             <figure class="phone ">
-              <img src="assets/product/downloads-360.webp" srcset="assets/product/downloads-360.webp 360w, assets/product/downloads-720.webp 720w" sizes="205px" width="360" height="800" alt="Downloaded audiobook chapter ready for offline listening in the Android app" loading="lazy">
+              <picture data-app-capture="downloads"><source data-theme="dark" media="(prefers-color-scheme: dark)" srcset="assets/product/en/dark/downloads-360.webp 360w, assets/product/en/dark/downloads-720.webp 720w" sizes="205px"><source data-theme="light" media="(prefers-color-scheme: light)" srcset="assets/product/en/light/downloads-360.webp 360w, assets/product/en/light/downloads-720.webp 720w" sizes="205px"><img src="assets/product/en/light/downloads-360.webp" srcset="assets/product/en/light/downloads-360.webp 360w, assets/product/en/light/downloads-720.webp 720w" sizes="205px" width="360" height="800" alt="Downloaded audiobook chapter ready for offline listening in the Android app" loading="lazy"></picture>
             </figure>
             <figure class="phone ">
-              <img src="assets/product/casting-360.webp" srcset="assets/product/casting-360.webp 360w, assets/product/casting-720.webp 720w" sizes="205px" width="360" height="808" alt="Android Cast controls connected to a Kitchen speaker, captured on a Pixel 9" loading="lazy">
+              <picture data-app-capture="casting"><source data-theme="dark" media="(prefers-color-scheme: dark)" srcset="assets/product/en/dark/casting-360.webp 360w, assets/product/en/dark/casting-720.webp 720w" sizes="205px"><source data-theme="light" media="(prefers-color-scheme: light)" srcset="assets/product/en/light/casting-360.webp 360w, assets/product/en/light/casting-720.webp 720w" sizes="205px"><img src="assets/product/en/light/casting-360.webp" srcset="assets/product/en/light/casting-360.webp 360w, assets/product/en/light/casting-720.webp 720w" sizes="205px" width="360" height="800" alt="Android Cast picker showing available audio outputs" loading="lazy"></picture>
             </figure>
           </div>
         </div>
@@ -519,6 +522,10 @@
             </a>
           </nav>
         </div>
+      </div>
+      <div class="language-switch" role="group" aria-label="Website language" translate="no">
+        <a href="./?lang=en" data-locale="en" lang="en" hreflang="en" aria-label="English" aria-current="true">EN</a>
+        <a href="pl/?lang=pl" data-locale="pl" lang="pl" hreflang="pl" aria-label="Polski">PL</a>
       </div>
       <p class="footer-bottom">
         © 2026 Adrian Babilinski. An independent project, not affiliated with or endorsed by LibriVox or the other content sources.

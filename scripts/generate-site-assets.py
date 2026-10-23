@@ -7,21 +7,45 @@ from PIL import Image, ImageDraw, ImageFont
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "docs/assets/product"
 OUT.mkdir(parents=True, exist_ok=True)
-SOURCE = ROOT / "docs/google-play/source-screenshots/release-2026-10-08"
-manifest = []
-for filename, name in [
+import argparse
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--platform-device', choices=['android-phone', 'ios-iphone', 'ios-ipad'], default='android-phone')
+parser.add_argument('--capture-root', type=Path, help='Override the selected platform capture folder.')
+parser.add_argument('--locale', action='append', choices=['en', 'pl'])
+parser.add_argument('--theme', action='append', choices=['light', 'dark'])
+parser.add_argument('--scene', action='append', choices=['browse', 'casting', 'player', 'downloads', 'library', 'chapters', 'bookmarks', 'sleep-timer'])
+parser.add_argument('--legacy', action='store_true', help='Recreate the frozen English-only release derivatives.')
+args = parser.parse_args()
+SCENES = [
     ("01-browse.png", "browse"), ("02-casting.png", "casting"),
     ("03-player.png", "player"), ("04-downloads.png", "downloads"),
     ("05-library.png", "library"), ("06-chapters.png", "chapters"),
     ("07-bookmarks.png", "bookmarks"), ("08-sleep-timer.png", "sleep-timer"),
-]:
-    source = SOURCE / filename
+]
+if args.scene:
+    SCENES = [(filename, name) for filename, name in SCENES if name in args.scene]
+capture_root = args.capture_root or ROOT / 'docs/marketing/captures' / args.platform_device
+product_root = OUT if args.platform_device == 'android-phone' else OUT / args.platform_device
+variants = [(locale, theme) for locale in (args.locale or ['en', 'pl']) for theme in (args.theme or ['light', 'dark'])]
+if args.legacy:
+    variants = [(None, None)]
+sources = [(locale, theme, filename, name,
+            ROOT / 'docs/google-play/source-screenshots/release-2026-10-08' / filename if args.legacy else capture_root / locale / theme / filename)
+           for locale, theme in variants for filename, name in SCENES]
+missing = [str(source) for *_, source in sources if not source.is_file()]
+if missing:
+    raise SystemExit('Missing authentic app captures; no language/theme substitution is allowed: ' + ', '.join(missing))
+manifest = []
+for locale, theme, filename, name, source in sources:
+    destination = OUT if args.legacy else product_root / locale / theme
+    destination.mkdir(parents=True, exist_ok=True)
     with Image.open(source) as capture:
         for width in (360, 720):
             size = (width, round(capture.height * width / capture.width))
-            target = OUT / f"{name}-{width}.webp"
+            target = destination / f"{name}-{width}.webp"
             capture.resize(size, Image.Resampling.LANCZOS).save(target, "WEBP", quality=88, method=6)
-            manifest.append({"file": target.name, "source": str(source.relative_to(ROOT)),
+            manifest.append({"file": str(target.relative_to(OUT)), "source": str(source.relative_to(ROOT)),
+                             "platform": args.platform_device, "locale": locale or "en", "theme": theme or "dark",
                              "source_sha256": sha256(source.read_bytes()).hexdigest(),
                              "output_sha256": sha256(target.read_bytes()).hexdigest(),
                              "dimensions": size, "transformation": "Proportional resize and WebP encoding; complete UI preserved."})
@@ -102,5 +126,6 @@ for x, y, bg, title in [(756, 104, '#193f4c', 'Moby\nDick'), (938, 203, '#a74e36
 social.save(OUT / "social-preview.png", optimize=True)
 manifest.append({"file": "social-preview.png", "creator": "Original LibriVox Mobile typographic composition",
                  "license": "MIT", "dimensions": [1200, 630]})
-(OUT / "manifest.json").write_text(json.dumps(manifest, indent=2) + '\n')
+product_root.mkdir(parents=True, exist_ok=True)
+(product_root / "manifest.json").write_text(json.dumps(manifest, indent=2) + '\n')
 print(f"Prepared {len(manifest)} website assets in {OUT}")

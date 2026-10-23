@@ -67,7 +67,7 @@
   "Long books, little moments, and the lines that stay with you. Keep your listening organized without leaving the story.": "Długie książki, krótkie chwile i słowa, które zostają w pamięci. Miej porządek w słuchaniu i wracaj do opowieści.",
   "A chapter at a time.": "Rozdział po rozdziale.",
   "Find the part you want. Open the chapter list while you listen and jump straight to the next beginning.": "Znajdź właściwy fragment. Otwórz listę rozdziałów podczas słuchania i przejdź do kolejnego.",
-  "Bleak House chapter list in the Android app": "Lista rozdziałów Bleak House w aplikacji na Androida",
+  "Bleak House chapter list in the Android app": "Lista rozdziałów Pana Tadeusza w aplikacji na Androida",
   "Keep the good bits.": "Zachowaj ulubione fragmenty.",
   "Save a moment with a bookmark and a note. Return to the words you wanted to remember.": "Dodaj zakładkę i notatkę. Wróć do słów, które chcesz zapamiętać.",
   "A saved bookmark with a note in the Android app": "Zapisana zakładka z notatką w aplikacji na Androida",
@@ -178,7 +178,7 @@
   "A sleep timer stops playback after your chosen interval.": "Wyłącznik czasowy zatrzyma odtwarzanie po wybranym czasie.",
   "Carry on in the background.": "Słuchaj dalej w tle.",
   "Use Android media controls while you move between apps.": "Korzystaj z systemowego sterowania odtwarzaniem Androida, przechodząc między aplikacjami.",
-  "Android audiobook player showing Bleak House and playback controls": "Odtwarzacz audiobooków na Androidzie z książką Bleak House i przyciskami odtwarzania",
+  "Android audiobook player showing Bleak House and playback controls": "Odtwarzacz audiobooków na Androidzie z Panem Tadeuszem i przyciskami odtwarzania",
   "03 / Your library": "03 / Twoja biblioteka",
   "Pick up the thread.": "Wróć do opowieści.",
   "Some books take an afternoon. Others stay with you for weeks. Your library makes it easy to return.": "Niektóre książki wystarczą na popołudnie. Inne zostają z Tobą na tygodnie. Z biblioteki łatwo do nich wrócisz.",
@@ -417,5 +417,14 @@
   "Your selected website language is saved locally in this browser. On the homepage, the site can use your browser's preferred languages to choose an initial language. It does not request device location.": "Wybrany język strony jest zapisywany lokalnie w tej przeglądarce. Na stronie głównej witryna może dobrać początkowy język na podstawie preferowanych języków przeglądarki. Nie prosi o dostęp do lokalizacji urządzenia.",
   "Original Lalka cover illustration": "Autorska ilustracja okładki Lalki",
   "Original illustrated cover for Pan Tadeusz": "Autorska ilustracja okładki Pana Tadeusza",
-  "Original illustrated cover for Lalka": "Autorska ilustracja okładki Lalki"
+  "Original illustrated cover for Lalka": "Autorska ilustracja okładki Lalki",
+  "Appearance": "Wygląd",
+  "Light appearance": "Jasny wygląd",
+  "System appearance": "Wygląd systemowy",
+  "Dark appearance": "Ciemny wygląd",
+  "System": "System",
+  "Your selected website language and appearance are saved locally in this browser. On the homepage, the site can use your browser's preferred languages to choose an initial language. It does not request device location.": "Wybrany język i wygląd strony są zapisywane lokalnie w tej przeglądarce. Na stronie głównej witryna może wybrać początkowy język na podstawie preferencji przeglądarki. Nie prosi o lokalizację urządzenia.",
+  "Bleak House playing with chapter progress and playback controls in the Android app": "Pan Tadeusz z postępem rozdziału i przyciskami odtwarzania w aplikacji na Androida",
+  "Android Cast picker showing available audio outputs": "Lista dostępnych urządzeń audio w panelu Cast na Androidzie",
+  "Native Android audio output and Cast device picker": "Wybór urządzenia audio i Cast w aplikacji na Androida"
 }

@@ -38,7 +38,7 @@
       if (menu.getAttribute("aria-expanded") !== "true") return;
       if (event.key === "Escape") { setOpen(false, true); return; }
       if (event.key !== "Tab") return;
-      const focusable = [...header.querySelectorAll("a[href], button:not([hidden])")];
+      const focusable = [...header.querySelectorAll("a[href], button:not([hidden]), input:checked")];
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
       if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }

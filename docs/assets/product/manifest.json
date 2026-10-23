@@ -1,9 +1,12 @@
 [
   {
-    "file": "browse-360.webp",
-    "source": "docs/google-play/source-screenshots/release-2026-10-08/01-browse.png",
-    "source_sha256": "05143d53d6a775c9673576740990a894bc32d2ce47659b99eefacec9f3f7b1ae",
-    "output_sha256": "dcde8897760fda418be9504b823b0b5a975996c669c9b2a9d1bd440af4f5b4fd",
+    "file": "en/light/browse-360.webp",
+    "source": "docs/marketing/captures/android-phone/en/light/01-browse.png",
+    "platform": "android-phone",
+    "locale": "en",
+    "theme": "light",
+    "source_sha256": "0fe7549ac1a44f969fea16a66b6a844c9fc50d11728dcf8f9dc2f370b0044b72",
+    "output_sha256": "3d1ca8cac5d6f9c834781b6cb22d431f00ac2ccd6dd3df3e89a3594080f04b4a",
     "dimensions": [
       360,
       800
@@ -11,10 +14,13 @@
     "transformation": "Proportional resize and WebP encoding; complete UI preserved."
   },
   {
-    "file": "browse-720.webp",
-    "source": "docs/google-play/source-screenshots/release-2026-10-08/01-browse.png",
-    "source_sha256": "05143d53d6a775c9673576740990a894bc32d2ce47659b99eefacec9f3f7b1ae",
-    "output_sha256": "dac9ec2436ade51874ddf054b9a83f235a23e984d8b69e838ef6659a909acadf",
+    "file": "en/light/browse-720.webp",
+    "source": "docs/marketing/captures/android-phone/en/light/01-browse.png",
+    "platform": "android-phone",
+    "locale": "en",
+    "theme": "light",
+    "source_sha256": "0fe7549ac1a44f969fea16a66b6a844c9fc50d11728dcf8f9dc2f370b0044b72",
+    "output_sha256": "b19de2ed0d90fd16958b2affd9109be1751a6f8242bfe339349f9f4f4b48c9c7",
     "dimensions": [
       720,
       1600
@@ -22,32 +28,13 @@
     "transformation": "Proportional resize and WebP encoding; complete UI preserved."
   },
   {
-    "file": "casting-360.webp",
-    "source": "docs/google-play/source-screenshots/release-2026-10-08/02-casting.png",
-    "source_sha256": "2aa8ecd49341dbf61cd0f71a6afc50db6ca934c76154dc75516b17f99b419c0a",
-    "output_sha256": "e2941b6d5619dddb8b301c4a6cdbb65bc4eb737bdc7462965a97c84b8a0bdd3c",
-    "dimensions": [
-      360,
-      808
-    ],
-    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
-  },
-  {
-    "file": "casting-720.webp",
-    "source": "docs/google-play/source-screenshots/release-2026-10-08/02-casting.png",
-    "source_sha256": "2aa8ecd49341dbf61cd0f71a6afc50db6ca934c76154dc75516b17f99b419c0a",
-    "output_sha256": "abc275a4600b5f0a09252a7f6eb8077b5ffc5604bd3bff69867869bd06a6b71e",
-    "dimensions": [
-      720,
-      1616
-    ],
-    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
-  },
-  {
-    "file": "player-360.webp",
-    "source": "docs/google-play/source-screenshots/release-2026-10-08/03-player.png",
-    "source_sha256": "8a829e5b8e9a1ba98f7e53ff25edd901935e43ec0d411a5df41f5e71c770add9",
-    "output_sha256": "b8591f2053cf3fc6ac46e920791b47440d12b61c4f302bf3069221d64e56fce0",
+    "file": "en/light/casting-360.webp",
+    "source": "docs/marketing/captures/android-phone/en/light/02-casting.png",
+    "platform": "android-phone",
+    "locale": "en",
+    "theme": "light",
+    "source_sha256": "4c76f02fa0fa4375b37cf28617a39d7a1d89ccddc8744944247e2167a5b63596",
+    "output_sha256": "51b65e970db92117e8f3fa8ae4459d6ca62050960bbc153161fbb10173fc367a",
     "dimensions": [
       360,
       800
@@ -55,10 +42,13 @@
     "transformation": "Proportional resize and WebP encoding; complete UI preserved."
   },
   {
-    "file": "player-720.webp",
-    "source": "docs/google-play/source-screenshots/release-2026-10-08/03-player.png",
-    "source_sha256": "8a829e5b8e9a1ba98f7e53ff25edd901935e43ec0d411a5df41f5e71c770add9",
-    "output_sha256": "1541433a34e3718f31075930c10962863ef5ffff89c9675cf86d4c5e9889df8e",
+    "file": "en/light/casting-720.webp",
+    "source": "docs/marketing/captures/android-phone/en/light/02-casting.png",
+    "platform": "android-phone",
+    "locale": "en",
+    "theme": "light",
+    "source_sha256": "4c76f02fa0fa4375b37cf28617a39d7a1d89ccddc8744944247e2167a5b63596",
+    "output_sha256": "1691082484b58cb51b401d00b7a86b2d059495208f6227b7dba8e4664c9c0ff1",
     "dimensions": [
       720,
       1600
@@ -66,10 +56,13 @@
     "transformation": "Proportional resize and WebP encoding; complete UI preserved."
   },
   {
-    "file": "downloads-360.webp",
-    "source": "docs/google-play/source-screenshots/release-2026-10-08/04-downloads.png",
-    "source_sha256": "524b3b436fe96a818153342c351f1f09de6f7b6fca720ce6fd9e9a75fd880dd7",
-    "output_sha256": "8d7241f4a621d7db508edc29a78b252a2516102d92da48fb414844c88fce2728",
+    "file": "en/light/player-360.webp",
+    "source": "docs/marketing/captures/android-phone/en/light/03-player.png",
+    "platform": "android-phone",
+    "locale": "en",
+    "theme": "light",
+    "source_sha256": "1842d8800b762e76106a1c6ea181657c994cd892b12016d4df7c33077a427ba0",
+    "output_sha256": "b42f51545b0c19f0e5a44ae3d9f0431b2a4746f04bfc0c253b0399b76202bc0b",
     "dimensions": [
       360,
       800
@@ -77,10 +70,13 @@
     "transformation": "Proportional resize and WebP encoding; complete UI preserved."
   },
   {
-    "file": "downloads-720.webp",
-    "source": "docs/google-play/source-screenshots/release-2026-10-08/04-downloads.png",
-    "source_sha256": "524b3b436fe96a818153342c351f1f09de6f7b6fca720ce6fd9e9a75fd880dd7",
-    "output_sha256": "0f3978102501b8af6b30edd1d58e5c91934bc32d8ca38706d89c7771d1fc8302",
+    "file": "en/light/player-720.webp",
+    "source": "docs/marketing/captures/android-phone/en/light/03-player.png",
+    "platform": "android-phone",
+    "locale": "en",
+    "theme": "light",
+    "source_sha256": "1842d8800b762e76106a1c6ea181657c994cd892b12016d4df7c33077a427ba0",
+    "output_sha256": "8023c1471b492dc4a39bada347abf2b72a66dfb1bf02bb33f41fec0d20dcb68e",
     "dimensions": [
       720,
       1600
@@ -88,10 +84,13 @@
     "transformation": "Proportional resize and WebP encoding; complete UI preserved."
   },
   {
-    "file": "library-360.webp",
-    "source": "docs/google-play/source-screenshots/release-2026-10-08/05-library.png",
-    "source_sha256": "e6437319baef1e2a2b704817d223539a13b8f1c8af5202cd4ae2010f21aa3abf",
-    "output_sha256": "f4d7c55ae1fa06b5456b353f0c6b2e5bd3b68fb21f1df0a995e0d2c8e74c311b",
+    "file": "en/light/downloads-360.webp",
+    "source": "docs/marketing/captures/android-phone/en/light/04-downloads.png",
+    "platform": "android-phone",
+    "locale": "en",
+    "theme": "light",
+    "source_sha256": "62f4a57850da13d14cfe831c1d9a473f30ecc2957f81c71edf0c6e989108d609",
+    "output_sha256": "b53ab451e868e2a083c8d668643a4bf7632e9cd74abd09cd52e86086dc94e6ec",
     "dimensions": [
       360,
       800
@@ -99,10 +98,13 @@
     "transformation": "Proportional resize and WebP encoding; complete UI preserved."
   },
   {
-    "file": "library-720.webp",
-    "source": "docs/google-play/source-screenshots/release-2026-10-08/05-library.png",
-    "source_sha256": "e6437319baef1e2a2b704817d223539a13b8f1c8af5202cd4ae2010f21aa3abf",
-    "output_sha256": "005b12f860b59c3fcd3d8db3fa59446b090860021974833e31c556340d6fe98f",
+    "file": "en/light/downloads-720.webp",
+    "source": "docs/marketing/captures/android-phone/en/light/04-downloads.png",
+    "platform": "android-phone",
+    "locale": "en",
+    "theme": "light",
+    "source_sha256": "62f4a57850da13d14cfe831c1d9a473f30ecc2957f81c71edf0c6e989108d609",
+    "output_sha256": "485dca18229941e82c0427d02ee65559be9d14feb4c3c06a7cfc4ad28f00f66d",
     "dimensions": [
       720,
       1600
@@ -110,10 +112,13 @@
     "transformation": "Proportional resize and WebP encoding; complete UI preserved."
   },
   {
-    "file": "chapters-360.webp",
-    "source": "docs/google-play/source-screenshots/release-2026-10-08/06-chapters.png",
-    "source_sha256": "e0b639c3e00fe6d146e2d9c182ee3582011c0943aaffea8bc12083c13fcae99f",
-    "output_sha256": "4f3f9babfe31da4f2d8a95105c779702b365f1e61959548a7d8436b016767262",
+    "file": "en/light/library-360.webp",
+    "source": "docs/marketing/captures/android-phone/en/light/05-library.png",
+    "platform": "android-phone",
+    "locale": "en",
+    "theme": "light",
+    "source_sha256": "e2dc1f1c2e57f7b464f88df3271a733f5c31ef991d04681095465de88cf05d66",
+    "output_sha256": "dba5135391745f7d783a35e672edc10ab0963f20ab7f2a26ea308bc074fc62e8",
     "dimensions": [
       360,
       800
@@ -121,10 +126,13 @@
     "transformation": "Proportional resize and WebP encoding; complete UI preserved."
   },
   {
-    "file": "chapters-720.webp",
-    "source": "docs/google-play/source-screenshots/release-2026-10-08/06-chapters.png",
-    "source_sha256": "e0b639c3e00fe6d146e2d9c182ee3582011c0943aaffea8bc12083c13fcae99f",
-    "output_sha256": "cc7ad1df2f329793a59fce1764eb43786878da01c0a8d41c62d155a1cbd85d2e",
+    "file": "en/light/library-720.webp",
+    "source": "docs/marketing/captures/android-phone/en/light/05-library.png",
+    "platform": "android-phone",
+    "locale": "en",
+    "theme": "light",
+    "source_sha256": "e2dc1f1c2e57f7b464f88df3271a733f5c31ef991d04681095465de88cf05d66",
+    "output_sha256": "6c651417380865d6b0581697396761b939646618eda1f656bcdc3cedfa039064",
     "dimensions": [
       720,
       1600
@@ -132,10 +140,13 @@
     "transformation": "Proportional resize and WebP encoding; complete UI preserved."
   },
   {
-    "file": "bookmarks-360.webp",
-    "source": "docs/google-play/source-screenshots/release-2026-10-08/07-bookmarks.png",
-    "source_sha256": "2a6c0e4acb206e267a885af237c63e106b29ff47ae37c87b52af5e4b116fa1a6",
-    "output_sha256": "e92c5d1af2c4765f761b53993679de62d39c1c4ba7d0489cde6e1a3e2dc4cb6f",
+    "file": "en/light/chapters-360.webp",
+    "source": "docs/marketing/captures/android-phone/en/light/06-chapters.png",
+    "platform": "android-phone",
+    "locale": "en",
+    "theme": "light",
+    "source_sha256": "3447f0f6abd6249c251793bb1d8cd7c7425716955d63a0213e208052dc5de25a",
+    "output_sha256": "b1e4c0ef7dbc2b469ab2c4a3c1d6bc74c896619b782902a83d5eca3876095615",
     "dimensions": [
       360,
       800
@@ -143,10 +154,13 @@
     "transformation": "Proportional resize and WebP encoding; complete UI preserved."
   },
   {
-    "file": "bookmarks-720.webp",
-    "source": "docs/google-play/source-screenshots/release-2026-10-08/07-bookmarks.png",
-    "source_sha256": "2a6c0e4acb206e267a885af237c63e106b29ff47ae37c87b52af5e4b116fa1a6",
-    "output_sha256": "2d81c64307d5b13ddfc34b0264219a6f0ff9d8d69f25f4341099af6a57eb8ac5",
+    "file": "en/light/chapters-720.webp",
+    "source": "docs/marketing/captures/android-phone/en/light/06-chapters.png",
+    "platform": "android-phone",
+    "locale": "en",
+    "theme": "light",
+    "source_sha256": "3447f0f6abd6249c251793bb1d8cd7c7425716955d63a0213e208052dc5de25a",
+    "output_sha256": "c07b991e25065aaf9276bc92234561b749a6c1b54a489afafa7bf554e159d76c",
     "dimensions": [
       720,
       1600
@@ -154,10 +168,13 @@
     "transformation": "Proportional resize and WebP encoding; complete UI preserved."
   },
   {
-    "file": "sleep-timer-360.webp",
-    "source": "docs/google-play/source-screenshots/release-2026-10-08/08-sleep-timer.png",
-    "source_sha256": "2dc98fdddc9545320aaf31ce75f7b8f6bec577606075fa0914c4eff6ef21331f",
-    "output_sha256": "446b89f7c452aa61e99afdc7c4190d7f427a929775ad93cac34f98ea8d4dac74",
+    "file": "en/light/bookmarks-360.webp",
+    "source": "docs/marketing/captures/android-phone/en/light/07-bookmarks.png",
+    "platform": "android-phone",
+    "locale": "en",
+    "theme": "light",
+    "source_sha256": "5f6b95928c9639426a53b9231bfd6d2886aacf8817c18cc105464502bb74ccd2",
+    "output_sha256": "d2492dd19f13e1a495e13fe0182bb721945fbe56dce0f76c39c897e3db4e5fe1",
     "dimensions": [
       360,
       800
@@ -165,10 +182,713 @@
     "transformation": "Proportional resize and WebP encoding; complete UI preserved."
   },
   {
-    "file": "sleep-timer-720.webp",
-    "source": "docs/google-play/source-screenshots/release-2026-10-08/08-sleep-timer.png",
-    "source_sha256": "2dc98fdddc9545320aaf31ce75f7b8f6bec577606075fa0914c4eff6ef21331f",
-    "output_sha256": "522f3ed317dee9151bf7c1d7e851764ebf4f65769940f49773a337825ebb10c1",
+    "file": "en/light/bookmarks-720.webp",
+    "source": "docs/marketing/captures/android-phone/en/light/07-bookmarks.png",
+    "platform": "android-phone",
+    "locale": "en",
+    "theme": "light",
+    "source_sha256": "5f6b95928c9639426a53b9231bfd6d2886aacf8817c18cc105464502bb74ccd2",
+    "output_sha256": "9d61c189bbe0adc10d33a5ade821215f40e3348226fb94484b754ca8ff51f581",
+    "dimensions": [
+      720,
+      1600
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "en/light/sleep-timer-360.webp",
+    "source": "docs/marketing/captures/android-phone/en/light/08-sleep-timer.png",
+    "platform": "android-phone",
+    "locale": "en",
+    "theme": "light",
+    "source_sha256": "5da781352835c0ea37516515e622ea14001f13c6fd2410a89d59a885f95526e2",
+    "output_sha256": "02e61051cdad7e2a7438a9c074db8cf054613e60f465c3530bfd079502bbe066",
+    "dimensions": [
+      360,
+      800
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "en/light/sleep-timer-720.webp",
+    "source": "docs/marketing/captures/android-phone/en/light/08-sleep-timer.png",
+    "platform": "android-phone",
+    "locale": "en",
+    "theme": "light",
+    "source_sha256": "5da781352835c0ea37516515e622ea14001f13c6fd2410a89d59a885f95526e2",
+    "output_sha256": "d1a2b80448dcb8db17e19455b27c215ae9a3d93634396f50cafb1f98533faefb",
+    "dimensions": [
+      720,
+      1600
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "en/dark/browse-360.webp",
+    "source": "docs/marketing/captures/android-phone/en/dark/01-browse.png",
+    "platform": "android-phone",
+    "locale": "en",
+    "theme": "dark",
+    "source_sha256": "3de74a517d69e1942997ae1aa8a4132e209164623df71fb5cec6de101c78ceb0",
+    "output_sha256": "05cd2787b40158423f264a4d551ef80af8d6678a5312e40b24faee258b1ecde8",
+    "dimensions": [
+      360,
+      800
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "en/dark/browse-720.webp",
+    "source": "docs/marketing/captures/android-phone/en/dark/01-browse.png",
+    "platform": "android-phone",
+    "locale": "en",
+    "theme": "dark",
+    "source_sha256": "3de74a517d69e1942997ae1aa8a4132e209164623df71fb5cec6de101c78ceb0",
+    "output_sha256": "ffc158dbf8c69e0c9941184a32bedc44d3a87a66afbe9b97154b2f6296309f01",
+    "dimensions": [
+      720,
+      1600
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "en/dark/casting-360.webp",
+    "source": "docs/marketing/captures/android-phone/en/dark/02-casting.png",
+    "platform": "android-phone",
+    "locale": "en",
+    "theme": "dark",
+    "source_sha256": "4c9d30dbe3c52dd529d502ba1f34b74ac3430ba5a3384be5e445e666b1cec74b",
+    "output_sha256": "aa7c538f505c15e878d6b272d8aba529d415a9a581a4f67eb50925a930953dd1",
+    "dimensions": [
+      360,
+      800
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "en/dark/casting-720.webp",
+    "source": "docs/marketing/captures/android-phone/en/dark/02-casting.png",
+    "platform": "android-phone",
+    "locale": "en",
+    "theme": "dark",
+    "source_sha256": "4c9d30dbe3c52dd529d502ba1f34b74ac3430ba5a3384be5e445e666b1cec74b",
+    "output_sha256": "6ca852d93c2d9cb38b172312e3d3c040a0ad92012e11fa3dc3b871c2c288ef96",
+    "dimensions": [
+      720,
+      1600
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "en/dark/player-360.webp",
+    "source": "docs/marketing/captures/android-phone/en/dark/03-player.png",
+    "platform": "android-phone",
+    "locale": "en",
+    "theme": "dark",
+    "source_sha256": "2d80c4a42f48357980b2ccfd32ef068b31c0c8e3e89ae691eafefa226d1e1f76",
+    "output_sha256": "9fc9f4d8e59d2977c3af8c781a0cd539d63a74424a769f0a3352816fe5065816",
+    "dimensions": [
+      360,
+      800
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "en/dark/player-720.webp",
+    "source": "docs/marketing/captures/android-phone/en/dark/03-player.png",
+    "platform": "android-phone",
+    "locale": "en",
+    "theme": "dark",
+    "source_sha256": "2d80c4a42f48357980b2ccfd32ef068b31c0c8e3e89ae691eafefa226d1e1f76",
+    "output_sha256": "53fc1ddf34b282092a9dda5d6b1ab317f0f525d1d1d0ce5f5d8e85f1cd40b4b4",
+    "dimensions": [
+      720,
+      1600
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "en/dark/downloads-360.webp",
+    "source": "docs/marketing/captures/android-phone/en/dark/04-downloads.png",
+    "platform": "android-phone",
+    "locale": "en",
+    "theme": "dark",
+    "source_sha256": "0d9fae877482f01ed64c9e4961c98da7a1459775c8010b4b5c1cadc642e736d0",
+    "output_sha256": "f08843c7608e82b9df938e1241122e857eec72c82a2361c29b44fa5b8b5ed49e",
+    "dimensions": [
+      360,
+      800
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "en/dark/downloads-720.webp",
+    "source": "docs/marketing/captures/android-phone/en/dark/04-downloads.png",
+    "platform": "android-phone",
+    "locale": "en",
+    "theme": "dark",
+    "source_sha256": "0d9fae877482f01ed64c9e4961c98da7a1459775c8010b4b5c1cadc642e736d0",
+    "output_sha256": "6c539292c5b727353340303cf618fd61f99d6a1989b63af3a37950876149b384",
+    "dimensions": [
+      720,
+      1600
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "en/dark/library-360.webp",
+    "source": "docs/marketing/captures/android-phone/en/dark/05-library.png",
+    "platform": "android-phone",
+    "locale": "en",
+    "theme": "dark",
+    "source_sha256": "88a8146fed321da919cae70f51b5183ac133a06f4a8ab731478002bae55287cc",
+    "output_sha256": "5df9a458d8c147f68007aa9ae036de61988fd1911d34f94f3a691aa01e319f67",
+    "dimensions": [
+      360,
+      800
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "en/dark/library-720.webp",
+    "source": "docs/marketing/captures/android-phone/en/dark/05-library.png",
+    "platform": "android-phone",
+    "locale": "en",
+    "theme": "dark",
+    "source_sha256": "88a8146fed321da919cae70f51b5183ac133a06f4a8ab731478002bae55287cc",
+    "output_sha256": "d32992b039ec8ed5566cd07d63d7002fd93b2fe38f06e3bced6eaa9dd8104105",
+    "dimensions": [
+      720,
+      1600
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "en/dark/chapters-360.webp",
+    "source": "docs/marketing/captures/android-phone/en/dark/06-chapters.png",
+    "platform": "android-phone",
+    "locale": "en",
+    "theme": "dark",
+    "source_sha256": "23fd2c6c7ffcf11536dc0fd16c9051b9034dd327caf9b65ce630c28da5cd9c6a",
+    "output_sha256": "469e5a4ce98a99bf8eb82735f3695ef908235e648be510a79cef94d8cbdc7ab9",
+    "dimensions": [
+      360,
+      800
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "en/dark/chapters-720.webp",
+    "source": "docs/marketing/captures/android-phone/en/dark/06-chapters.png",
+    "platform": "android-phone",
+    "locale": "en",
+    "theme": "dark",
+    "source_sha256": "23fd2c6c7ffcf11536dc0fd16c9051b9034dd327caf9b65ce630c28da5cd9c6a",
+    "output_sha256": "88d5b178c7fedead4985c4caeea77e7a8c06b5a931a6fa23f4f3e0fd03ec44ac",
+    "dimensions": [
+      720,
+      1600
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "en/dark/bookmarks-360.webp",
+    "source": "docs/marketing/captures/android-phone/en/dark/07-bookmarks.png",
+    "platform": "android-phone",
+    "locale": "en",
+    "theme": "dark",
+    "source_sha256": "dd33dcedbd2e5075b98788fc8556f1acf8d439e9c80fdce2ecfe7345871e89ac",
+    "output_sha256": "89d7c08c76857263e5b60d2ceee40fa526a42006221a97798c9bb4b9cb5f6d4f",
+    "dimensions": [
+      360,
+      800
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "en/dark/bookmarks-720.webp",
+    "source": "docs/marketing/captures/android-phone/en/dark/07-bookmarks.png",
+    "platform": "android-phone",
+    "locale": "en",
+    "theme": "dark",
+    "source_sha256": "dd33dcedbd2e5075b98788fc8556f1acf8d439e9c80fdce2ecfe7345871e89ac",
+    "output_sha256": "8f8e199cd5a19f8f20ab8f90b58f9231816e29136e2752e56080dfe3696c45ae",
+    "dimensions": [
+      720,
+      1600
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "en/dark/sleep-timer-360.webp",
+    "source": "docs/marketing/captures/android-phone/en/dark/08-sleep-timer.png",
+    "platform": "android-phone",
+    "locale": "en",
+    "theme": "dark",
+    "source_sha256": "2921d451f62162d50ead492e7bb54c1045fc77a513cf45bc9c394cb3c801bdf1",
+    "output_sha256": "dad1d77dbdd3ce31876cc235679c63487f2e598c5bf801150739039085fc0ab5",
+    "dimensions": [
+      360,
+      800
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "en/dark/sleep-timer-720.webp",
+    "source": "docs/marketing/captures/android-phone/en/dark/08-sleep-timer.png",
+    "platform": "android-phone",
+    "locale": "en",
+    "theme": "dark",
+    "source_sha256": "2921d451f62162d50ead492e7bb54c1045fc77a513cf45bc9c394cb3c801bdf1",
+    "output_sha256": "fa81555632df321b7fe10201fb6473bd3e00a46a48076266f5eee906cb722854",
+    "dimensions": [
+      720,
+      1600
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "pl/light/browse-360.webp",
+    "source": "docs/marketing/captures/android-phone/pl/light/01-browse.png",
+    "platform": "android-phone",
+    "locale": "pl",
+    "theme": "light",
+    "source_sha256": "29c31f97df7c6111d480eac046d2e65daa0d15fb4942c195b794c7a215307771",
+    "output_sha256": "c2d141be29a40d33c56a465c1c61ace12713c3d18d429ea49bfd7ed7277b40b0",
+    "dimensions": [
+      360,
+      800
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "pl/light/browse-720.webp",
+    "source": "docs/marketing/captures/android-phone/pl/light/01-browse.png",
+    "platform": "android-phone",
+    "locale": "pl",
+    "theme": "light",
+    "source_sha256": "29c31f97df7c6111d480eac046d2e65daa0d15fb4942c195b794c7a215307771",
+    "output_sha256": "875ff7957a14ce6deb6dbe6f61183e8dd67e9fc916cfe77130122dd037b2991d",
+    "dimensions": [
+      720,
+      1600
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "pl/light/casting-360.webp",
+    "source": "docs/marketing/captures/android-phone/pl/light/02-casting.png",
+    "platform": "android-phone",
+    "locale": "pl",
+    "theme": "light",
+    "source_sha256": "c54f9e8b29261a7f407c50717f9bd7356f36c49f59e9d79642e4f6f469af2fe8",
+    "output_sha256": "db050f7a1678b8caa0dc1a7b8f4f8e5df1323283ceb5908d3e0f20717ca3c275",
+    "dimensions": [
+      360,
+      800
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "pl/light/casting-720.webp",
+    "source": "docs/marketing/captures/android-phone/pl/light/02-casting.png",
+    "platform": "android-phone",
+    "locale": "pl",
+    "theme": "light",
+    "source_sha256": "c54f9e8b29261a7f407c50717f9bd7356f36c49f59e9d79642e4f6f469af2fe8",
+    "output_sha256": "477f2a60e0ce19a914fd395ad803a79bfefabe044224ab52743835b30a8a68ef",
+    "dimensions": [
+      720,
+      1600
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "pl/light/player-360.webp",
+    "source": "docs/marketing/captures/android-phone/pl/light/03-player.png",
+    "platform": "android-phone",
+    "locale": "pl",
+    "theme": "light",
+    "source_sha256": "f72d138f98eeda4c90ece47c70086577c9be0d00b1040a4a0746a36be7d54bff",
+    "output_sha256": "341485fbce82ad29489c331c4cf1910981d5ff8602878b8efd4b1661b880e181",
+    "dimensions": [
+      360,
+      800
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "pl/light/player-720.webp",
+    "source": "docs/marketing/captures/android-phone/pl/light/03-player.png",
+    "platform": "android-phone",
+    "locale": "pl",
+    "theme": "light",
+    "source_sha256": "f72d138f98eeda4c90ece47c70086577c9be0d00b1040a4a0746a36be7d54bff",
+    "output_sha256": "11cdddc74d7138ec4aa48a6d245176843a4d1fa0fc697b603278c7de6a829a35",
+    "dimensions": [
+      720,
+      1600
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "pl/light/downloads-360.webp",
+    "source": "docs/marketing/captures/android-phone/pl/light/04-downloads.png",
+    "platform": "android-phone",
+    "locale": "pl",
+    "theme": "light",
+    "source_sha256": "a292bef88c8acbca5154bbcad9ce909697b9cca772432614b6387dab73b6ba3e",
+    "output_sha256": "79749257b89581d82acb64e05fd9a239b0b34195016b3fa8c56ea9b3869a2360",
+    "dimensions": [
+      360,
+      800
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "pl/light/downloads-720.webp",
+    "source": "docs/marketing/captures/android-phone/pl/light/04-downloads.png",
+    "platform": "android-phone",
+    "locale": "pl",
+    "theme": "light",
+    "source_sha256": "a292bef88c8acbca5154bbcad9ce909697b9cca772432614b6387dab73b6ba3e",
+    "output_sha256": "fb07142aec7978e63d139759f86eecf88eaa331295af9eb3a50af68286b8df33",
+    "dimensions": [
+      720,
+      1600
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "pl/light/library-360.webp",
+    "source": "docs/marketing/captures/android-phone/pl/light/05-library.png",
+    "platform": "android-phone",
+    "locale": "pl",
+    "theme": "light",
+    "source_sha256": "e5aa1aa49407dd1fafe126fbd9da8535d5e82e223c7c17fb3a41cfd838af589e",
+    "output_sha256": "45c56f940d8264e727620c0eb339e24c6fb19ec5d9ada59acb270f2d94405b3c",
+    "dimensions": [
+      360,
+      800
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "pl/light/library-720.webp",
+    "source": "docs/marketing/captures/android-phone/pl/light/05-library.png",
+    "platform": "android-phone",
+    "locale": "pl",
+    "theme": "light",
+    "source_sha256": "e5aa1aa49407dd1fafe126fbd9da8535d5e82e223c7c17fb3a41cfd838af589e",
+    "output_sha256": "7b61935d6b783d0736d573008495c822fd964800ce156a4310ba9813893c4fac",
+    "dimensions": [
+      720,
+      1600
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "pl/light/chapters-360.webp",
+    "source": "docs/marketing/captures/android-phone/pl/light/06-chapters.png",
+    "platform": "android-phone",
+    "locale": "pl",
+    "theme": "light",
+    "source_sha256": "9a300af7f38e0d96da7945c023f485b56b2e447283abdba35a9c49d456b31d17",
+    "output_sha256": "1a2d385c55bc36555771278f5f3ee5331cb70e197ef3fa6fb2eeabcd229547f9",
+    "dimensions": [
+      360,
+      800
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "pl/light/chapters-720.webp",
+    "source": "docs/marketing/captures/android-phone/pl/light/06-chapters.png",
+    "platform": "android-phone",
+    "locale": "pl",
+    "theme": "light",
+    "source_sha256": "9a300af7f38e0d96da7945c023f485b56b2e447283abdba35a9c49d456b31d17",
+    "output_sha256": "f74c28cad223ee6d8ff53ec770dde55c417a54ba2101f764a36ac570f908a979",
+    "dimensions": [
+      720,
+      1600
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "pl/light/bookmarks-360.webp",
+    "source": "docs/marketing/captures/android-phone/pl/light/07-bookmarks.png",
+    "platform": "android-phone",
+    "locale": "pl",
+    "theme": "light",
+    "source_sha256": "eba4fd61616ef379f0765dc34d908fb2ef5b75e4a77e6d34a0a5db7146973969",
+    "output_sha256": "1818bbd35a4d98caf0bc8328e08db123f0a327b8681a5ce523965fb01f4f19a9",
+    "dimensions": [
+      360,
+      800
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "pl/light/bookmarks-720.webp",
+    "source": "docs/marketing/captures/android-phone/pl/light/07-bookmarks.png",
+    "platform": "android-phone",
+    "locale": "pl",
+    "theme": "light",
+    "source_sha256": "eba4fd61616ef379f0765dc34d908fb2ef5b75e4a77e6d34a0a5db7146973969",
+    "output_sha256": "30ed2d8a8fa6088b899e1cf31839f42773386549725eb03ee3ca746fef63ca2f",
+    "dimensions": [
+      720,
+      1600
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "pl/light/sleep-timer-360.webp",
+    "source": "docs/marketing/captures/android-phone/pl/light/08-sleep-timer.png",
+    "platform": "android-phone",
+    "locale": "pl",
+    "theme": "light",
+    "source_sha256": "ba6025506c2504e29076d747e63efa8cd16550900fa717daf3588d5351c82ea8",
+    "output_sha256": "5fa3c8498ec3364d26e1151d7aabdbd3cd4e41374a7925079b9916b94d362781",
+    "dimensions": [
+      360,
+      800
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "pl/light/sleep-timer-720.webp",
+    "source": "docs/marketing/captures/android-phone/pl/light/08-sleep-timer.png",
+    "platform": "android-phone",
+    "locale": "pl",
+    "theme": "light",
+    "source_sha256": "ba6025506c2504e29076d747e63efa8cd16550900fa717daf3588d5351c82ea8",
+    "output_sha256": "f43e94fd1f5029a2c00a6940fef36672d303dda3f0e22dd0ec00d717dd61fc21",
+    "dimensions": [
+      720,
+      1600
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "pl/dark/browse-360.webp",
+    "source": "docs/marketing/captures/android-phone/pl/dark/01-browse.png",
+    "platform": "android-phone",
+    "locale": "pl",
+    "theme": "dark",
+    "source_sha256": "438bc93cfd46a07019259fe1bc7f18c689c77686379a6a6c64d3978a217231a5",
+    "output_sha256": "ff6b27e7f520881215300fa49705f19e231d65f1d504632bda03deab80ac0e9d",
+    "dimensions": [
+      360,
+      800
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "pl/dark/browse-720.webp",
+    "source": "docs/marketing/captures/android-phone/pl/dark/01-browse.png",
+    "platform": "android-phone",
+    "locale": "pl",
+    "theme": "dark",
+    "source_sha256": "438bc93cfd46a07019259fe1bc7f18c689c77686379a6a6c64d3978a217231a5",
+    "output_sha256": "73d24c2cb0e1b383a5eb2c6b76ee6c67d532a0efd149be554956670a6df72d4e",
+    "dimensions": [
+      720,
+      1600
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "pl/dark/casting-360.webp",
+    "source": "docs/marketing/captures/android-phone/pl/dark/02-casting.png",
+    "platform": "android-phone",
+    "locale": "pl",
+    "theme": "dark",
+    "source_sha256": "f41b22d7c59033addf8ecab9f54b779653b36769cceadf455171ddf6797ae47c",
+    "output_sha256": "82651f29e02c9cdc81ecfcdda1d8a27be0e7e41cc0a4fcce26d62b99b6c45cc7",
+    "dimensions": [
+      360,
+      800
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "pl/dark/casting-720.webp",
+    "source": "docs/marketing/captures/android-phone/pl/dark/02-casting.png",
+    "platform": "android-phone",
+    "locale": "pl",
+    "theme": "dark",
+    "source_sha256": "f41b22d7c59033addf8ecab9f54b779653b36769cceadf455171ddf6797ae47c",
+    "output_sha256": "0e111dfc5951eb4c3bbfc9c29c2e24e444ea5edf3433fdbe61a428a2d155624d",
+    "dimensions": [
+      720,
+      1600
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "pl/dark/player-360.webp",
+    "source": "docs/marketing/captures/android-phone/pl/dark/03-player.png",
+    "platform": "android-phone",
+    "locale": "pl",
+    "theme": "dark",
+    "source_sha256": "831e59a70039835d1610e11abe9f1f2be2c64d93122b4f7d8563cb3773474d5c",
+    "output_sha256": "188c4cf0b3d24ce8b0d12872aae20dc58aa130fc99d6800f2c4e5f772595c3a5",
+    "dimensions": [
+      360,
+      800
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "pl/dark/player-720.webp",
+    "source": "docs/marketing/captures/android-phone/pl/dark/03-player.png",
+    "platform": "android-phone",
+    "locale": "pl",
+    "theme": "dark",
+    "source_sha256": "831e59a70039835d1610e11abe9f1f2be2c64d93122b4f7d8563cb3773474d5c",
+    "output_sha256": "7c5bb070512dc81886a5fb7d14f9d7ce0dd588db7ca07ccaff49bf81fac7ad2f",
+    "dimensions": [
+      720,
+      1600
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "pl/dark/downloads-360.webp",
+    "source": "docs/marketing/captures/android-phone/pl/dark/04-downloads.png",
+    "platform": "android-phone",
+    "locale": "pl",
+    "theme": "dark",
+    "source_sha256": "8ac018d920cc31d66b06f40ca1a623b3466daff29449f9cf125860e97c4ba6ef",
+    "output_sha256": "45d8b787e204ce102e7b87a7df580b61344b596a2c17e9d4de7c0e1288d4d07c",
+    "dimensions": [
+      360,
+      800
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "pl/dark/downloads-720.webp",
+    "source": "docs/marketing/captures/android-phone/pl/dark/04-downloads.png",
+    "platform": "android-phone",
+    "locale": "pl",
+    "theme": "dark",
+    "source_sha256": "8ac018d920cc31d66b06f40ca1a623b3466daff29449f9cf125860e97c4ba6ef",
+    "output_sha256": "3488896c7bca819423ace874836d9798376e249b656269cbc433be49cf9f9b78",
+    "dimensions": [
+      720,
+      1600
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "pl/dark/library-360.webp",
+    "source": "docs/marketing/captures/android-phone/pl/dark/05-library.png",
+    "platform": "android-phone",
+    "locale": "pl",
+    "theme": "dark",
+    "source_sha256": "dd7c940bcac8b61549a17c13ba36e9053915d1d9e8f1d129c08a92778cfeb936",
+    "output_sha256": "ca90090fc2e76a648d3274b56ae612418a5470593424952b555274c0c5215415",
+    "dimensions": [
+      360,
+      800
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "pl/dark/library-720.webp",
+    "source": "docs/marketing/captures/android-phone/pl/dark/05-library.png",
+    "platform": "android-phone",
+    "locale": "pl",
+    "theme": "dark",
+    "source_sha256": "dd7c940bcac8b61549a17c13ba36e9053915d1d9e8f1d129c08a92778cfeb936",
+    "output_sha256": "e4e5d4235996ac944b9d33ac9f087195e9ec7e6f72c22af486f5e26fe750f77a",
+    "dimensions": [
+      720,
+      1600
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "pl/dark/chapters-360.webp",
+    "source": "docs/marketing/captures/android-phone/pl/dark/06-chapters.png",
+    "platform": "android-phone",
+    "locale": "pl",
+    "theme": "dark",
+    "source_sha256": "4f11b15c6afa04a74e2f1d1a5099a1691f0ad5f8936a17a8d6616b1cb502e9d7",
+    "output_sha256": "755e7feb89b209a422f6293be7331e41eb6fd7cdc5cbd306527b4e73f88f4e6a",
+    "dimensions": [
+      360,
+      800
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "pl/dark/chapters-720.webp",
+    "source": "docs/marketing/captures/android-phone/pl/dark/06-chapters.png",
+    "platform": "android-phone",
+    "locale": "pl",
+    "theme": "dark",
+    "source_sha256": "4f11b15c6afa04a74e2f1d1a5099a1691f0ad5f8936a17a8d6616b1cb502e9d7",
+    "output_sha256": "cd4ca83fde240d28083ccb9878865260736a0b516df8276bf277b6e69ff76675",
+    "dimensions": [
+      720,
+      1600
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "pl/dark/bookmarks-360.webp",
+    "source": "docs/marketing/captures/android-phone/pl/dark/07-bookmarks.png",
+    "platform": "android-phone",
+    "locale": "pl",
+    "theme": "dark",
+    "source_sha256": "7bd731825fc5b6bb6e6d6d3db470ccc5128902a4990555c1796057f0a0ddd49b",
+    "output_sha256": "a115c0182c41e94f834a060abc46d11d2aa9466b56bcd9fec398ed2b1047644e",
+    "dimensions": [
+      360,
+      800
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "pl/dark/bookmarks-720.webp",
+    "source": "docs/marketing/captures/android-phone/pl/dark/07-bookmarks.png",
+    "platform": "android-phone",
+    "locale": "pl",
+    "theme": "dark",
+    "source_sha256": "7bd731825fc5b6bb6e6d6d3db470ccc5128902a4990555c1796057f0a0ddd49b",
+    "output_sha256": "66af8ced76b0c76fe9c63287a1d7fa988f64dee4762e45dfaeb72d53c28dd035",
+    "dimensions": [
+      720,
+      1600
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "pl/dark/sleep-timer-360.webp",
+    "source": "docs/marketing/captures/android-phone/pl/dark/08-sleep-timer.png",
+    "platform": "android-phone",
+    "locale": "pl",
+    "theme": "dark",
+    "source_sha256": "22558f6d9df5d2c242fd084a6b05e6a1cac99cd1eda3fd704b61b5a6de7071bd",
+    "output_sha256": "b040539ca24e91c1ab0012c391f7acba37d29388e364de20ed7133595e9ee4f5",
+    "dimensions": [
+      360,
+      800
+    ],
+    "transformation": "Proportional resize and WebP encoding; complete UI preserved."
+  },
+  {
+    "file": "pl/dark/sleep-timer-720.webp",
+    "source": "docs/marketing/captures/android-phone/pl/dark/08-sleep-timer.png",
+    "platform": "android-phone",
+    "locale": "pl",
+    "theme": "dark",
+    "source_sha256": "22558f6d9df5d2c242fd084a6b05e6a1cac99cd1eda3fd704b61b5a6de7071bd",
+    "output_sha256": "a52af01cbae9735e35521fac1693769604f7e2d95e2ad38b82ee6dde1a5b851b",
     "dimensions": [
       720,
       1600

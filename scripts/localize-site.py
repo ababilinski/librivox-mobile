@@ -52,12 +52,12 @@ def prepare_english(page):
     source = re.sub(r'\s*<div class="language-switch".*?</div>', "", source, flags=re.S)
     english = relative(route(page), page) + "?lang=en"
     polish = relative("pl/" + route(page), page) + "?lang=pl"
-    indent = re.search(r'^([ \t]*)<nav class="nav"', source, re.M).group(1) + "  "
+    indent = re.search(r'^([ \t]*)<p class="footer-bottom"', source, re.M).group(1)
     selector = f'''{indent}<div class="language-switch" role="group" aria-label="Website language" translate="no">
 {indent}  <a href="{english}" data-locale="en" lang="en" hreflang="en" aria-label="English" aria-current="true">EN</a>
 {indent}  <a href="{polish}" data-locale="pl" lang="pl" hreflang="pl" aria-label="Polski">PL</a>
 {indent}</div>'''
-    source = re.sub(r'^[ \t]*<button class="menu-toggle"', selector + '\n' + indent + '<button class="menu-toggle"', source, count=1, flags=re.M)
+    source = re.sub(r'^[ \t]*<p class="footer-bottom"', selector + '\n' + indent + '<p class="footer-bottom"', source, count=1, flags=re.M)
     return source
 
 
@@ -94,6 +94,8 @@ def polish_highlights(source, page):
 
 def localize(source, page, catalog, missing):
     source = polish_highlights(source, page)
+    # Capture locale belongs to the page, independently of appearance preference.
+    source = source.replace("assets/product/en/", "assets/product/pl/")
     destination = Path("pl") / page
     skip = False
     output = []
