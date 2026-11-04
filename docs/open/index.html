@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex">
+  <title>Open a book · LibriVox Mobile</title>
+  <link rel="icon" href="../favicon.svg">
+  <style>
+    :root { color-scheme: light dark; font-family: system-ui, sans-serif; background: light-dark(#faf7f0, #181714); color: light-dark(#28241d, #f4efe5); }
+    body { margin: 0; padding: 32px 24px; }
+    main { max-width: 500px; margin: 8vh auto; }
+    .brand { font-weight: 650; letter-spacing: .02em; }
+    h1 { font: 600 clamp(2.5rem, 8vw, 4rem)/1.12 Georgia, serif; margin: 44px 0 14px; overflow-wrap: anywhere; }
+    p { line-height: 1.65; }
+    .author { font-size: 1.25rem; }
+    nav { display: flex; flex-direction: column; gap: 14px; margin: 32px 0; }
+    a { color: inherit; text-underline-offset: .2em; }
+    .action { border-radius: 24px; padding: 16px 24px; text-align: center; font-weight: 650; text-decoration: none; background: light-dark(#285a51, #a5d7c9); color: light-dark(#fff, #092f28); }
+    .secondary { text-align: center; padding: 12px; }
+    [hidden] { display: none !important; }
+    a:focus-visible { outline: 3px solid #b47b2e; outline-offset: 5px; }
+  </style>
+  <script type="module" src="book-link.mjs"></script>
+</head>
+<body>
+<main>
+  <a class="brand" href="../">LibriVox Mobile</a>
+  <h1 id="title">Open this book</h1>
+  <p class="author" id="author" hidden></p>
+  <p id="message">Listen in LibriVox Mobile, or visit the publisher to read and listen online.</p>
+  <nav aria-label="Book actions">
+    <a class="action" id="open-app" href="https://play.google.com/apps/testing/com.librivox.mobile">Get LibriVox for Android</a>
+    <a class="secondary" id="source" href="https://wolnelektury.pl/" hidden>Read or listen on the source website</a>
+  </nav>
+  <p id="install-note">The Android app is currently available to invited testers. <a href="https://play.google.com/apps/testing/com.librivox.mobile">Join the private test</a> using your invited Google account.</p>
+  <noscript><p>Enable JavaScript to open this shared book, or find it in the app by title.</p></noscript>
+</main>
+</body>
+</html>

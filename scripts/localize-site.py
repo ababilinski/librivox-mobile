@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 CATALOG = DOCS / "i18n/pl.json"
 SITE = "https://ababilinski.github.io/librivox-mobile/"
-PAGES = [Path("index.html"), *sorted(p.relative_to(DOCS) for p in DOCS.glob("*/index.html") if p.parent.name != "pl"), Path("404.html")]
+PAGES = [Path("index.html"), *sorted(p.relative_to(DOCS) for p in DOCS.glob("*/index.html") if p.parent.name not in {"pl", "open"}), Path("404.html")]
 ATTR = re.compile(r'([:\w-]+)\s*=\s*([\"\'])(.*?)\2', re.S)
 
 

@@ -8,7 +8,8 @@
     "preview": "npm run serve",
     "check:site": "node scripts/check-site.mjs",
     "check:locales": "python3 scripts/localize-site.py --check && node --test scripts/test-site-locales.mjs",
-    "build": "npm run check:locales && npm run check:site"
+    "build": "npm run check:locales && npm run check:site && npm run check:book-links",
+    "check:book-links": "node --test scripts/test-book-links.mjs"
   },
   "engines": {
     "node": ">=18"
