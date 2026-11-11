@@ -32,6 +32,7 @@ import com.librivox.mobile.model.AudioBook
 import com.librivox.mobile.model.AudioBookLibrary
 import com.librivox.mobile.model.DownloadState
 import com.librivox.mobile.model.LibraryRepository
+import com.librivox.mobile.model.MEDIA_METADATA_CAST_DURATION_MS
 import com.librivox.mobile.model.PlaybackSpeed
 import com.librivox.mobile.model.ProgressStore
 import com.librivox.mobile.model.SleepTimerState
@@ -416,21 +417,10 @@ class AudiobookPlaybackService : MediaSessionService() {
                 newPosition: Player.PositionInfo,
                 reason: Int,
             ) {
-                val oldIds = parseMediaId(oldPosition.mediaItem?.mediaId)
-                val oldBookId = oldIds?.bookId ?: currentBookIdForProgress
-                val oldChapterId = oldIds?.chapterId ?: currentChapterIdForProgress
-                saveProgressSnapshot(
-                    bookId = oldBookId,
-                    chapterId = oldChapterId,
-                    chapterIndex = oldPosition.mediaItemIndex,
-                    positionMs = oldPosition.positionMs,
-                    reason = "old position on discontinuity=$reason",
-                )
+                progressStore.saveDepartingChapterProgress(oldPosition, newPosition, reason)
 
                 val newIds = parseMediaId(newPosition.mediaItem?.mediaId)
                 val previousBook = currentBookIdForProgress
-                val newBookId = newIds?.bookId ?: currentBookIdForProgress
-                val newChapterId = newIds?.chapterId ?: currentChapterIdForProgress
                 if (newIds != null) {
                     currentBookIdForProgress = newIds.bookId
                     currentChapterIdForProgress = newIds.chapterId
@@ -443,14 +433,15 @@ class AudiobookPlaybackService : MediaSessionService() {
                         applyPersistedSpeed(newIds.bookId)
                     }
                     autoDownloadCurrentChapter(newIds.bookId, newIds.chapterId)
+                    saveProgressSnapshot(
+                        bookId = newIds.bookId,
+                        chapterId = newIds.chapterId,
+                        chapterIndex = newPosition.mediaItemIndex,
+                        positionMs = newPosition.positionMs,
+                        durationMs = player.duration,
+                        reason = "new position on discontinuity=$reason",
+                    )
                 }
-                saveProgressSnapshot(
-                    bookId = newBookId,
-                    chapterId = newChapterId,
-                    chapterIndex = newPosition.mediaItemIndex,
-                    positionMs = newPosition.positionMs,
-                    reason = "new position on discontinuity=$reason",
-                )
                 requestNotificationUpdate()
             }
 
@@ -477,6 +468,13 @@ class AudiobookPlaybackService : MediaSessionService() {
 
             override fun onPlaybackStateChanged(playbackState: Int) {
                 Log.i(TAG, "Playback state changed. state=${player.playbackStateName()}")
+                if (playbackState == Player.STATE_ENDED) {
+                    progressStore.saveCompletedFinalChapter(
+                        mediaItem = player.currentMediaItem,
+                        positionMs = player.currentPosition,
+                        durationMs = player.duration,
+                    )
+                }
                 when (playbackState) {
                     Player.STATE_BUFFERING,
                     Player.STATE_READY,
@@ -945,6 +943,7 @@ private fun notificationCommandButtons(): List<CommandButton> =
             chapterId = ids.chapterId,
             chapterIndex = player.currentMediaItemIndex,
             positionMs = player.currentPosition,
+            durationMs = player.duration,
             reason = reason,
         )
     }
@@ -954,6 +953,7 @@ private fun notificationCommandButtons(): List<CommandButton> =
         chapterId: String,
         chapterIndex: Int,
         positionMs: Long,
+        durationMs: Long = 0L,
         reason: String,
     ) {
         if (bookId.isBlank() || chapterId.isBlank()) {
@@ -966,6 +966,7 @@ private fun notificationCommandButtons(): List<CommandButton> =
             chapterId = chapterId,
             chapterIndex = chapterIndex,
             positionMs = savedPositionMs,
+            durationMs = durationMs,
         )
         Log.d(
             TAG,
@@ -1236,6 +1237,60 @@ private fun CommandButton.withNotificationIconOverride(): CommandButton? {
     } else {
         builder.setPlayerCommand(playerCommand, parameter).build()
     }
+}
+
+/** Save the departing item before a transition changes the current chapter identity. */
+@androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
+internal fun ProgressStore.saveDepartingChapterProgress(
+    oldPosition: Player.PositionInfo,
+    newPosition: Player.PositionInfo,
+    reason: Int,
+) {
+    val ids = parseMediaId(oldPosition.mediaItem?.mediaId) ?: return
+    if (ids.bookId.isBlank() || ids.chapterId.isBlank()) return
+    val previous = savedChapterProgress(ids.bookId, ids.chapterId)
+    val durationMs = previous.durationMs.takeIf { it > 0L }
+        ?: oldPosition.mediaItem?.mediaMetadata?.extras
+            ?.getLong(MEDIA_METADATA_CAST_DURATION_MS)?.coerceAtLeast(0L)
+        ?: 0L
+    savePosition(
+        bookId = ids.bookId,
+        chapterId = ids.chapterId,
+        chapterIndex = oldPosition.mediaItemIndex,
+        positionMs = oldPosition.positionMs,
+        durationMs = durationMs,
+    )
+    // Seek/skip, queue replacement, and ad transitions must not mark a chapter finished.
+    // Repeating a chapter also finishes one listen before returning to the beginning.
+    val chapterChanged = oldPosition.mediaItem?.mediaId != newPosition.mediaItem?.mediaId ||
+        oldPosition.mediaItemIndex != newPosition.mediaItemIndex
+    val chapterRepeated = newPosition.positionMs < oldPosition.positionMs
+    if (reason == Player.DISCONTINUITY_REASON_AUTO_TRANSITION &&
+        oldPosition.adGroupIndex == C.INDEX_UNSET &&
+        newPosition.adGroupIndex == C.INDEX_UNSET &&
+        (chapterChanged || chapterRepeated)
+    ) {
+        markChapterCompleted(
+            ids.bookId,
+            ids.chapterId,
+            durationMs = durationMs.takeIf { it > 0L } ?: oldPosition.positionMs,
+        )
+    }
+}
+
+/** STATE_ENDED can also mean an empty queue, which contains no completed chapter. */
+internal fun ProgressStore.saveCompletedFinalChapter(
+    mediaItem: MediaItem?,
+    positionMs: Long,
+    durationMs: Long,
+) {
+    val ids = parseMediaId(mediaItem?.mediaId) ?: return
+    if (positionMs <= 0L) return
+    markChapterCompleted(
+        ids.bookId,
+        ids.chapterId,
+        durationMs = durationMs.takeIf { it > 0L } ?: positionMs,
+    )
 }
 
 private const val SPEED_EPSILON = 0.001f

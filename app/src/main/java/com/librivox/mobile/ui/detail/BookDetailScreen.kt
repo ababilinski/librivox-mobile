@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
@@ -59,12 +60,14 @@ import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Download
+import androidx.compose.material.icons.outlined.DownloadDone
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Restore
 import androidx.compose.material.icons.filled.RemoveCircle
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.ThumbDown
@@ -123,11 +126,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.geometry.Rect
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -147,7 +148,7 @@ import com.librivox.mobile.catalog.needsWolneChapterNames
 import com.librivox.mobile.model.AudioBook
 import com.librivox.mobile.model.AudioBookChapter
 import com.librivox.mobile.model.Bookmark
-import com.librivox.mobile.model.FallbackCover
+import com.librivox.mobile.model.ChapterProgressSnapshot
 import com.librivox.mobile.model.BookSource
 import com.librivox.mobile.model.CatalogTag
 import com.librivox.mobile.model.DownloadState
@@ -158,7 +159,6 @@ import com.librivox.mobile.model.authorSearchQuery
 import com.librivox.mobile.model.canReadSourceText
 import com.librivox.mobile.model.chapterIndexOrZero
 import com.librivox.mobile.model.coverResId
-import com.librivox.mobile.model.coverUri
 import com.librivox.mobile.model.donationLink
 import com.librivox.mobile.model.downloadProgressFraction
 import com.librivox.mobile.model.downloadableBookAssetCount
@@ -172,6 +172,10 @@ import com.librivox.mobile.model.localCoverFile
 import com.librivox.mobile.model.missingDownloadAssetCount
 import com.librivox.mobile.model.chapterPresentation
 import com.librivox.mobile.ui.components.ChapterSupportingInfo
+import com.librivox.mobile.ui.components.ChapterListeningProgress
+import com.librivox.mobile.ui.components.ChapterListeningStatus
+import com.librivox.mobile.ui.components.chapterListeningProgress
+import com.librivox.mobile.ui.components.rememberChapterProgress
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.ui.semantics.Role
@@ -182,7 +186,6 @@ import com.librivox.mobile.playback.FeedbackControlScope
 import com.librivox.mobile.playback.PlaybackFeedback
 import com.librivox.mobile.ui.components.BookCover
 import com.librivox.mobile.ui.components.BookSourceInfoRow
-import com.librivox.mobile.ui.components.BlurredCoverArtBackdrop
 import com.librivox.mobile.ui.components.castAudiobookAudio
 import com.librivox.mobile.ui.components.coverArtRowSize
 import com.librivox.mobile.ui.components.formatHmsFromMs
@@ -198,8 +201,6 @@ import com.librivox.mobile.ui.player.bookmarks.BookmarkChapterSection
 import com.librivox.mobile.ui.player.bookmarks.BookmarkPanelSections
 import com.librivox.mobile.ui.player.bookmarks.buildBookmarkPanelSections
 import com.librivox.mobile.ui.theme.LocalTonalSurfaces
-import com.librivox.mobile.ui.theme.PlayerSheetTheme
-import com.librivox.mobile.ui.theme.rememberPlayerSheetColorScheme
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -209,16 +210,6 @@ import kotlin.math.roundToInt
 private const val MissingDetailRefreshDelayMillis = 300L
 private const val DetailRepairAfterFirstPaintDelayMillis = 2_400L
 private const val DetailContentDeferralFrames = 2
-private val DetailHeroBackdropHeight = 480.dp
-
-private val GeneratedDetailSeedColors = listOf(
-    Color(0xFF7B3F5A),
-    Color(0xFF5969A6),
-    Color(0xFF3E6B63),
-    Color(0xFF765A36),
-    Color(0xFF5F5B7D),
-)
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BookDetailScreen(
@@ -252,27 +243,6 @@ fun BookDetailScreen(
     var coverPreviewDismissRequested by remember(bookId) { mutableStateOf(false) }
     var coverPreviewSourceBounds by remember(bookId) { mutableStateOf<Rect?>(null) }
     val snackbarHostState = remember { SnackbarHostState() }
-    var useArtworkColors by remember {
-        mutableStateOf(graph.app.playbackSettingsStore.bookDetailUseArtworkColorScheme)
-    }
-    var useCoverBackdrop by remember {
-        mutableStateOf(graph.app.playbackSettingsStore.bookDetailUseCoverBackdrop)
-    }
-
-    DisposableEffect(graph.app.playbackSettingsStore) {
-        val listener = graph.app.playbackSettingsStore.registerBookDetailColorSchemeListener {
-            useArtworkColors = it
-        }
-        onDispose { graph.app.playbackSettingsStore.unregisterListener(listener) }
-    }
-
-    DisposableEffect(graph.app.playbackSettingsStore) {
-        val listener = graph.app.playbackSettingsStore.registerBookDetailCoverBackdropListener {
-            useCoverBackdrop = it
-        }
-        onDispose { graph.app.playbackSettingsStore.unregisterListener(listener) }
-    }
-
     DisposableEffect(graph.app.playbackSettingsStore) {
         val listener = graph.app.playbackSettingsStore.registerPlaybackUiSettingsListener {
             feedbackControlScope = graph.app.playbackSettingsStore.feedbackControlScope
@@ -365,12 +335,11 @@ fun BookDetailScreen(
         animationSpec = tween(durationMillis = 120),
         label = "book-detail-content-alpha",
     )
-    val detailCoverColorSource = remember(useArtworkColors, book, context) {
-        if (useArtworkColors) book.coverUri(context).toString() else null
-    }
-    val detailColorScheme = rememberPlayerSheetColorScheme(detailCoverColorSource)
+    val savedChapterProgress = rememberChapterProgress(book, graph.app.progressStore)
+    val lastListenedChapterId = graph.app.progressStore.lastChapterId(book.id)
+    val hasCurrentChapter = playerState.bookId == book.id &&
+        book.chapters.any { it.id == playerState.chapterId }
 
-    PlayerSheetTheme(scheme = detailColorScheme) {
     val tonal = LocalTonalSurfaces.current
     BackHandler(enabled = coverPreviewOpen) { coverPreviewDismissRequested = true }
     BackHandler(enabled = !coverPreviewOpen) { onBack() }
@@ -395,19 +364,7 @@ fun BookDetailScreen(
     val showLiteraryMetadata = literaryTags.isNotEmpty() || showTranslatedPill
     val sourceLink = book.sourceLink()
     val donationLink = book.donationLink()
-    val fallbackDetailSeed = remember(book.id, book.fallbackCover) { book.detailSeedColor() }
-    val detailSeed = if (useArtworkColors) MaterialTheme.colorScheme.primary else fallbackDetailSeed
-    val detailBackground = lerp(tonal.screenBackground, detailSeed, 0.18f)
-    val detailScrolledBackground = lerp(detailBackground, detailSeed, 0.08f)
-    val detailBodyDarkenAmount = if (tonal.screenBackground.luminance() < 0.5f) 0.34f else 0.16f
-    val detailBodyBackground = lerp(
-        detailBackground,
-        MaterialTheme.colorScheme.scrim,
-        detailBodyDarkenAmount,
-    )
-    val screenBackground = if (useCoverBackdrop) detailBodyBackground else detailBackground
-    val topBarContainerColor = if (useCoverBackdrop) Color.Transparent else detailBackground
-    val topBarScrolledContainerColor = if (useCoverBackdrop) Color.Transparent else detailScrolledBackground
+    val screenBackground = tonal.screenBackground
     val listState = rememberLazyListState()
     val chapterStartIndex = 2 +
         (if (plainDescription.isNotBlank()) 1 else 0) +
@@ -479,27 +436,16 @@ fun BookDetailScreen(
                 .fillMaxSize()
                 .graphicsLayer { alpha = detailContentAlpha },
         ) {
-            if (useCoverBackdrop) {
-                DetailHeroArtworkBackdrop(
-                    book = book,
-                    backgroundColor = detailBackground,
-                    fadeToColor = detailBodyBackground,
-                    modifier = Modifier
-                        .align(Alignment.TopCenter)
-                        .fillMaxWidth()
-                        .height(DetailHeroBackdropHeight),
-                )
-            }
             Scaffold(
                 modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-                containerColor = if (useCoverBackdrop) Color.Transparent else detailBackground,
+                containerColor = screenBackground,
                 snackbarHost = { SnackbarHost(snackbarHostState) },
                 topBar = {
                     LargeFlexibleTopAppBar(
                         title = { Text(book.title, maxLines = 2, overflow = TextOverflow.Ellipsis) },
                         colors = TopAppBarDefaults.topAppBarColors(
-                            containerColor = topBarContainerColor,
-                            scrolledContainerColor = topBarScrolledContainerColor,
+                            containerColor = screenBackground,
+                            scrolledContainerColor = screenBackground,
                             titleContentColor = MaterialTheme.colorScheme.onSurface,
                             navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
                             actionIconContentColor = MaterialTheme.colorScheme.onSurface,
@@ -530,8 +476,12 @@ fun BookDetailScreen(
                     state = listState,
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(padding),
-                    contentPadding = PaddingValues(bottom = 232.dp),
+                        .consumeWindowInsets(padding),
+                    contentPadding = PaddingValues(
+                        top = padding.calculateTopPadding(),
+                        bottom = padding.calculateBottomPadding() +
+                            if (playerState.bookId != null) 136.dp else 32.dp,
+                    ),
                     verticalArrangement = Arrangement.Top,
                 ) {
                 item {
@@ -576,7 +526,8 @@ fun BookDetailScreen(
                                     val chapterId = graph.app.progressStore.lastChapterId(book.id)
                                     val startIndex = book.chapterIndexOrZero(chapterId)
                                     val startPositionMs = chapterId?.let {
-                                        graph.app.progressStore.savedPositionMs(book.id, it)
+                                        graph.app.progressStore.savedChapterProgress(book.id, it)
+                                            .takeUnless { progress -> progress.isCompleted }?.positionMs
                                     } ?: 0L
                                     val targetChapterId = book.chapters.getOrNull(startIndex)?.id
                                     if (playerState.bookId == book.id && playerState.chapterId == targetChapterId) {
@@ -591,7 +542,9 @@ fun BookDetailScreen(
                                 modifier = Modifier.widthIn(min = 164.dp),
                             ) {
                                 Icon(Icons.Filled.PlayArrow, contentDescription = null)
-                                Text("  Play")
+                                Text(if (savedChapterProgress[lastListenedChapterId]?.let {
+                                    it.positionMs > 0L && !it.isCompleted
+                                } == true) "  Resume" else "  Play")
                             }
                             if (!inLibrary) {
                                 FilledTonalButton(
@@ -687,6 +640,15 @@ fun BookDetailScreen(
                 val isCurrentChapter = playerState.bookId == book.id &&
                     playerState.chapterId == chapter.id
                 val isThisPlaying = isCurrentChapter && playerState.isPlaying
+                val listeningProgress = chapterListeningProgress(
+                    savedProgress = savedChapterProgress[chapter.id] ?: ChapterProgressSnapshot(),
+                    chapterDurationMs = chapter.durationSeconds * 1000L,
+                    isCurrent = isCurrentChapter,
+                    isPlaying = isThisPlaying,
+                    isLastListened = !hasCurrentChapter && chapter.id == lastListenedChapterId,
+                    currentPositionMs = playerState.positionMs,
+                    currentDurationMs = playerState.durationMs,
+                )
                 val canRemoveDownload = chapter.localFileName != null
                 val canDownloadChapter = chapter.canDownloadManually()
                 val feedback = remember(book.id, chapter.id, feedbackControlScope, feedbackRevision) {
@@ -705,6 +667,16 @@ fun BookDetailScreen(
                         chapter = chapter,
                         isPlaying = isThisPlaying,
                         isCurrent = isCurrentChapter,
+                        listeningProgress = listeningProgress,
+                        onToggleFinished = {
+                            if (listeningProgress.isFinished) {
+                                graph.playerStateRepository.markChapterUnfinished(book.id, chapter.id)
+                            } else {
+                                graph.app.progressStore.markChapterCompleted(
+                                    book.id, chapter.id, listeningProgress.durationMs,
+                                )
+                            }
+                        },
                         feedback = feedback,
                         onOpenReader = if (book.canReadSourceText()) {
                             { onOpenReader(book.id, chapter.id) }
@@ -721,7 +693,8 @@ fun BookDetailScreen(
                             if (mediaItems.isEmpty()) return@ChapterRow
                             val chapterIndex = book.chapters.indexOfFirst { it.id == chapter.id }
                                 .coerceAtLeast(0)
-                            val savedMs = graph.app.progressStore.savedPositionMs(book.id, chapter.id)
+                            val savedMs = graph.app.progressStore.savedChapterProgress(book.id, chapter.id)
+                                .takeUnless { it.isCompleted }?.positionMs ?: 0L
                             graph.playerStateRepository.playMediaItems(mediaItems, chapterIndex, savedMs)
                             scope.launch { graph.app.downloadManager.downloadCover(book) }
                             // Intentionally do NOT navigate to NowPlaying — MiniPlayer appears
@@ -777,7 +750,6 @@ fun BookDetailScreen(
                             shareAudiobookChapter(context, book, chapter)
                         },
                         onShowActions = { chapterActionSheet = chapter },
-                        isDeepLinked = chapter.id == initialChapterId,
                     )
                     if (index < book.chapters.lastIndex) {
                         HorizontalDivider(
@@ -984,6 +956,15 @@ fun BookDetailScreen(
             chapter = currentChapter,
             coverArtDisplayMode = coverArtDisplayMode,
             feedback = feedback,
+            isFinished = savedChapterProgress[chapter.id]?.isCompleted == true,
+            onToggleFinished = {
+                if (graph.app.progressStore.savedChapterProgress(book.id, chapter.id).isCompleted) {
+                    graph.playerStateRepository.markChapterUnfinished(book.id, chapter.id)
+                } else {
+                    graph.app.progressStore.markChapterCompleted(book.id, chapter.id)
+                }
+                chapterActionSheet = null
+            },
             canDownload = canDownloadChapter,
             canRemoveDownload = canRemoveDownload,
             showFeedbackActions = feedbackControlScope == FeedbackControlScope.Chapter,
@@ -1051,7 +1032,6 @@ fun BookDetailScreen(
         )
     }
     }
-}
 }
 
 private fun LazyListScope.bookmarkSectionItems(
@@ -1511,40 +1491,6 @@ private fun DetailHeroSection(
         ) {
             content()
         }
-    }
-}
-
-@Composable
-private fun DetailHeroArtworkBackdrop(
-    book: AudioBook,
-    backgroundColor: Color,
-    modifier: Modifier = Modifier,
-    fadeToColor: Color = backgroundColor,
-) {
-    Box(
-        modifier = modifier
-            .background(fadeToColor)
-            .clipToBounds(),
-    ) {
-        BlurredCoverArtBackdrop(
-            book = book,
-            backgroundColor = fadeToColor,
-            modifier = Modifier.matchParentSize(),
-        )
-        Box(
-            modifier = Modifier
-                .matchParentSize()
-                .background(
-                    Brush.verticalGradient(
-                        colorStops = arrayOf(
-                            0f to backgroundColor.copy(alpha = 0.18f),
-                            0.48f to backgroundColor.copy(alpha = 0.42f),
-                            0.78f to fadeToColor.copy(alpha = 0.82f),
-                            1f to fadeToColor,
-                        ),
-                    ),
-                ),
-        )
     }
 }
 
@@ -2538,6 +2484,8 @@ private fun ChapterRow(
     chapter: AudioBookChapter,
     isPlaying: Boolean,
     isCurrent: Boolean,
+    listeningProgress: ChapterListeningProgress,
+    onToggleFinished: () -> Unit,
     feedback: PlaybackFeedback,
     onOpenReader: (() -> Unit)?,
     onPlay: () -> Unit,
@@ -2553,7 +2501,6 @@ private fun ChapterRow(
     onCastAudio: () -> Unit,
     onShare: () -> Unit,
     onShowActions: () -> Unit,
-    isDeepLinked: Boolean,
 ) {
     val durationLabel = chapter.durationSeconds
         .takeIf { it > 0L }
@@ -2561,9 +2508,6 @@ private fun ChapterRow(
     val presentation = book.chapterPresentation(chapter)
     val supporting = buildString {
         append("Chapter ${chapter.number}")
-        durationLabel?.let { append(" • $it total") }
-        if (isCurrent && !isPlaying) append(" • Paused")
-        if (isPlaying) append(" • Now playing")
     }
     ListItem(
         modifier = Modifier
@@ -2576,12 +2520,12 @@ private fun ChapterRow(
             FilledIconButton(
                 onClick = onPlay,
                 colors = IconButtonDefaults.filledIconButtonColors(
-                    containerColor = if (isCurrent) MaterialTheme.colorScheme.primary
+                    containerColor = if (listeningProgress.isHighlighted) MaterialTheme.colorScheme.primary
                     else MaterialTheme.colorScheme.primaryContainer,
-                    contentColor = if (isCurrent) MaterialTheme.colorScheme.onPrimary
+                    contentColor = if (listeningProgress.isHighlighted) MaterialTheme.colorScheme.onPrimary
                     else MaterialTheme.colorScheme.onPrimaryContainer,
                 ),
-                modifier = Modifier.size(40.dp),
+                modifier = Modifier.size(48.dp),
             ) {
                 Icon(
                     imageVector = if (isPlaying) Icons.Filled.Pause else Icons.Filled.PlayArrow,
@@ -2595,12 +2539,15 @@ private fun ChapterRow(
         headlineContent = {
             Text(
                 text = book.chapterPresentation(chapter).title,
-                color = if (isCurrent) MaterialTheme.colorScheme.primary
+                color = if (listeningProgress.isHighlighted) MaterialTheme.colorScheme.primary
                 else MaterialTheme.colorScheme.onSurface,
             )
         },
         supportingContent = {
-            ChapterSupportingInfo(presentation = presentation, metadata = supporting)
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                ChapterSupportingInfo(presentation = presentation, metadata = supporting)
+                ChapterListeningStatus(listeningProgress)
+            }
         },
         trailingContent = {
             Row(
@@ -2614,6 +2561,8 @@ private fun ChapterRow(
                 ChapterOverflowMenu(
                     chapterNumber = chapter.number,
                     durationLabel = durationLabel,
+                    isFinished = listeningProgress.isFinished,
+                    onToggleFinished = onToggleFinished,
                     onOpenReader = onOpenReader,
                     onPlayNext = onPlayNext,
                     onAddToQueue = onAddToQueue,
@@ -2632,7 +2581,7 @@ private fun ChapterRow(
             }
         },
         colors = ListItemDefaults.colors(
-            containerColor = if (isDeepLinked) {
+            containerColor = if (listeningProgress.isHighlighted) {
                 MaterialTheme.colorScheme.secondaryContainer
             } else {
                 Color.Transparent
@@ -2653,7 +2602,7 @@ private fun DownloadAffordance(
         when {
             chapter.isDownloaded() -> {
                 Icon(
-                    imageVector = Icons.Filled.CheckCircle,
+                    imageVector = Icons.Outlined.DownloadDone,
                     contentDescription = "Downloaded",
                     tint = MaterialTheme.colorScheme.primary,
                 )
@@ -2700,6 +2649,8 @@ private fun ChapterFeedbackIndicator(feedback: PlaybackFeedback) {
 private fun ChapterOverflowMenu(
     chapterNumber: Int,
     durationLabel: String?,
+    isFinished: Boolean,
+    onToggleFinished: () -> Unit,
     onOpenReader: (() -> Unit)?,
     onPlayNext: () -> Unit,
     onAddToQueue: () -> Unit,
@@ -2718,7 +2669,7 @@ private fun ChapterOverflowMenu(
     var expanded by remember { mutableStateOf(false) }
     Box {
         IconButton(onClick = { expanded = true }) {
-            Icon(Icons.Filled.MoreHoriz, contentDescription = "More")
+            Icon(Icons.Filled.MoreHoriz, contentDescription = "More options for chapter $chapterNumber")
         }
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             if (durationLabel != null) {
@@ -2729,6 +2680,16 @@ private fun ChapterOverflowMenu(
                 )
                 HorizontalDivider()
             }
+            DropdownMenuItem(
+                text = { Text(if (isFinished) "Mark as unfinished" else "Mark as finished") },
+                onClick = { onToggleFinished(); expanded = false },
+                leadingIcon = {
+                    Icon(
+                        if (isFinished) Icons.Filled.Restore else Icons.Filled.CheckCircle,
+                        contentDescription = null,
+                    )
+                },
+            )
             onOpenReader?.let {
                 DropdownMenuItem(
                     text = { Text("Read from here") },
@@ -2807,6 +2768,8 @@ private fun ChapterActionSheet(
     chapter: AudioBookChapter,
     coverArtDisplayMode: CoverArtDisplayMode,
     feedback: PlaybackFeedback,
+    isFinished: Boolean,
+    onToggleFinished: () -> Unit,
     canDownload: Boolean,
     canRemoveDownload: Boolean,
     showFeedbackActions: Boolean,
@@ -2863,6 +2826,16 @@ private fun ChapterActionSheet(
                 },
             )
             HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
+            ChapterActionRow(
+                icon = {
+                    Icon(
+                        if (isFinished) Icons.Filled.Restore else Icons.Filled.CheckCircle,
+                        contentDescription = null,
+                    )
+                },
+                label = if (isFinished) "Mark as unfinished" else "Mark as finished",
+                onClick = onToggleFinished,
+            )
             onOpenReader?.let {
                 ChapterActionRow(
                     icon = { Icon(Icons.AutoMirrored.Filled.MenuBook, contentDescription = null) },
@@ -2934,17 +2907,6 @@ private fun ChapterActionSheet(
         }
     }
 }
-
-private fun AudioBook.detailSeedColor(): Color =
-    when (fallbackCover) {
-        FallbackCover.Cathedral -> Color(0xFF4E626D)
-        FallbackCover.Jungle -> Color(0xFF3E6B63)
-        FallbackCover.Pride -> Color(0xFF7B5360)
-        FallbackCover.Generated -> {
-            val index = (id.hashCode() and Int.MAX_VALUE) % GeneratedDetailSeedColors.size
-            GeneratedDetailSeedColors[index]
-        }
-    }
 
 @Composable
 private fun ChapterActionRow(

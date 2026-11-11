@@ -5,6 +5,11 @@ import com.librivox.mobile.model.AudioBookChapter
 import java.text.Normalizer
 import java.util.Locale
 
+internal fun String.isSupplementalWolneAudioTitle(): Boolean {
+    val compact = replace(Regex("""\s+"""), " ").trim().lowercase()
+    return compact == "stopka" || compact == "strona redakcyjna" || compact == "nota redakcyjna"
+}
+
 data class ReadAlongBook(
     val bookId: String,
     val title: String,
@@ -14,7 +19,8 @@ data class ReadAlongBook(
     val isPartial: Boolean = false,
 ) {
     fun chapter(chapterId: String?): ReadAlongChapter? =
-        chapters.firstOrNull { it.chapterId == chapterId } ?: chapters.firstOrNull()
+        if (chapterId == null) chapters.firstOrNull()
+        else chapters.firstOrNull { it.chapterId == chapterId }
 
     fun search(query: String): List<ReadAlongSearchHit> {
         val normalizedQuery = query.normalizedForReaderSearch()

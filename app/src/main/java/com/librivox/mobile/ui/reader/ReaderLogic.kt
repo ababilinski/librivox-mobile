@@ -2,8 +2,12 @@ package com.librivox.mobile.ui.reader
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.BringIntoViewSpec
+import com.librivox.mobile.model.AudioBook
+import com.librivox.mobile.model.AudioBookReadAlongSource
+import com.librivox.mobile.model.BookSource
 import com.librivox.mobile.playback.ReaderHighlightMode
 import com.librivox.mobile.playback.ReaderSettings
+import com.librivox.mobile.readalong.ReadAlongBook
 import com.librivox.mobile.readalong.ReadAlongSegment
 import java.text.BreakIterator
 import java.util.Locale
@@ -54,6 +58,65 @@ internal data class ReaderListScrollTarget(
     val index: Int,
     val scrollOffset: Int,
 )
+
+/** Only inputs that change source loading or the parser's chapter mapping belong here. */
+internal data class ReaderSourceIdentity(
+    val bookId: String,
+    val title: String,
+    val source: BookSource,
+    val sourceUrl: String?,
+    val epubUrl: String?,
+    val audioEpubUrl: String?,
+    val daisyUrl: String?,
+    val volumeSources: List<AudioBookReadAlongSource>,
+    val localTextAssetFileName: String?,
+    val localTextAssetSourceUrl: String?,
+    val chapters: List<ReaderChapterSourceIdentity>,
+)
+
+internal data class ReaderChapterSourceIdentity(
+    val id: String,
+    val title: String,
+    val number: Int,
+    val listenUrl: String?,
+)
+
+internal fun AudioBook.readerSourceIdentity(): ReaderSourceIdentity = ReaderSourceIdentity(
+    bookId = id,
+    title = title,
+    source = source,
+    sourceUrl = wolneLekturyUrl,
+    epubUrl = epubUrl,
+    audioEpubUrl = audioEpubUrl,
+    daisyUrl = daisyUrl,
+    volumeSources = readAlongSources,
+    localTextAssetFileName = localAudioEpubFileName,
+    localTextAssetSourceUrl = localAudioEpubSourceUrl,
+    chapters = chapters.map { chapter ->
+        ReaderChapterSourceIdentity(chapter.id, chapter.title, chapter.number, chapter.listenUrl)
+    },
+)
+
+/** A background load may add chapters, but must preserve readable chapters and their audio timing. */
+internal fun resolveReaderLoadResult(
+    currentResult: Result<ReadAlongBook>?,
+    fullResult: Result<ReadAlongBook>,
+): Result<ReadAlongBook> {
+    val current = currentResult ?: return fullResult
+    val available = current.getOrNull() ?: return fullResult
+    val full = fullResult.getOrNull() ?: return current
+    val fullChapterIds = full.chapters.mapTo(mutableSetOf()) { it.chapterId }
+    if (available.chapters.any { it.chapterId !in fullChapterIds }) return current
+    if (available.hasTimedSync && !full.hasTimedSync) return current
+    val availableTimedChapterIds = available.chapters
+        .filter { chapter -> chapter.segments.any { it.clipBeginMs != null } }
+        .map { it.chapterId }
+    val fullTimedChapterIds = full.chapters
+        .filter { chapter -> chapter.segments.any { it.clipBeginMs != null } }
+        .mapTo(mutableSetOf()) { it.chapterId }
+    if (!fullTimedChapterIds.containsAll(availableTimedChapterIds)) return current
+    return fullResult
+}
 
 internal fun resolveReaderOpenScrollIndex(
     activeSegmentIndex: Int?,

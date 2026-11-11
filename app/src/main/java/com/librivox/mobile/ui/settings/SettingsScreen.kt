@@ -106,6 +106,7 @@ import com.librivox.mobile.playback.DownloadNetworkPolicy
 import com.librivox.mobile.playback.FeedbackControlScope
 import com.librivox.mobile.playback.MiniPlayerSkipMode
 import com.librivox.mobile.playback.NotificationControlsMode
+import com.librivox.mobile.playback.PlayerColorMode
 import com.librivox.mobile.playback.ReaderHighlightMode
 import com.librivox.mobile.playback.ReaderSettings
 import com.librivox.mobile.playback.isAllCatalogLanguagesSelected
@@ -139,8 +140,7 @@ fun SettingsScreen(
     var showCastDiagnostics by rememberSaveable { mutableStateOf(false) }
     var themeMode by remember { mutableStateOf(store.themeMode) }
     var colorPalette by remember { mutableStateOf(store.colorPalette) }
-    var bookDetailUseArtworkColors by remember { mutableStateOf(store.bookDetailUseArtworkColorScheme) }
-    var bookDetailUseCoverBackdrop by remember { mutableStateOf(store.bookDetailUseCoverBackdrop) }
+    var playerColorMode by remember { mutableStateOf(store.playerColorMode) }
     var coverArtDisplayMode by remember { mutableStateOf(store.coverArtDisplayMode) }
     var animationSpeed by remember { mutableStateOf(store.animationSpeed) }
     var preferredLanguages by remember { mutableStateOf(store.preferredLanguages) }
@@ -162,8 +162,7 @@ fun SettingsScreen(
         AppearanceSettingsScreen(
             selectedThemeMode = themeMode,
             selectedColorPalette = colorPalette,
-            selectedBookDetailUseArtworkColors = bookDetailUseArtworkColors,
-            selectedBookDetailUseCoverBackdrop = bookDetailUseCoverBackdrop,
+            selectedPlayerColorMode = playerColorMode,
             selectedCoverArtDisplayMode = coverArtDisplayMode,
             selectedAnimationSpeed = animationSpeed,
             onThemeModeSelected = {
@@ -174,13 +173,9 @@ fun SettingsScreen(
                 colorPalette = it
                 store.saveColorPalette(it)
             },
-            onBookDetailUseArtworkColorsChange = {
-                bookDetailUseArtworkColors = it
-                store.saveBookDetailUseArtworkColorScheme(it)
-            },
-            onBookDetailUseCoverBackdropChange = {
-                bookDetailUseCoverBackdrop = it
-                store.saveBookDetailUseCoverBackdrop(it)
+            onPlayerColorModeSelected = {
+                playerColorMode = it
+                store.savePlayerColorMode(it)
             },
             onCoverArtDisplayModeSelected = {
                 coverArtDisplayMode = it
@@ -294,8 +289,7 @@ fun SettingsScreen(
             listState = mainListState,
             themeMode = themeMode,
             colorPalette = colorPalette,
-            bookDetailUseArtworkColors = bookDetailUseArtworkColors,
-            bookDetailUseCoverBackdrop = bookDetailUseCoverBackdrop,
+            playerColorMode = playerColorMode,
             coverArtDisplayMode = coverArtDisplayMode,
             animationSpeed = animationSpeed,
             preferredLanguages = preferredLanguages,
@@ -332,8 +326,7 @@ private fun SettingsMainScreen(
     listState: LazyListState,
     themeMode: AppThemeMode,
     colorPalette: AppColorPalette,
-    bookDetailUseArtworkColors: Boolean,
-    bookDetailUseCoverBackdrop: Boolean,
+    playerColorMode: PlayerColorMode,
     coverArtDisplayMode: CoverArtDisplayMode,
     animationSpeed: AnimationSpeed,
     preferredLanguages: Set<BookLanguagePreference>,
@@ -391,8 +384,7 @@ private fun SettingsMainScreen(
                         supporting = appearanceSummary(
                             themeMode = themeMode,
                             colorPalette = colorPalette,
-                            bookDetailUseArtworkColors = bookDetailUseArtworkColors,
-                            bookDetailUseCoverBackdrop = bookDetailUseCoverBackdrop,
+                            playerColorMode = playerColorMode,
                             coverArtDisplayMode = coverArtDisplayMode,
                             animationSpeed = animationSpeed,
                         ),
@@ -860,14 +852,12 @@ private fun ReadBookSettingsScreen(
 private fun AppearanceSettingsScreen(
     selectedThemeMode: AppThemeMode,
     selectedColorPalette: AppColorPalette,
-    selectedBookDetailUseArtworkColors: Boolean,
-    selectedBookDetailUseCoverBackdrop: Boolean,
+    selectedPlayerColorMode: PlayerColorMode,
     selectedCoverArtDisplayMode: CoverArtDisplayMode,
     selectedAnimationSpeed: AnimationSpeed,
     onThemeModeSelected: (AppThemeMode) -> Unit,
     onColorPaletteSelected: (AppColorPalette) -> Unit,
-    onBookDetailUseArtworkColorsChange: (Boolean) -> Unit,
-    onBookDetailUseCoverBackdropChange: (Boolean) -> Unit,
+    onPlayerColorModeSelected: (PlayerColorMode) -> Unit,
     onCoverArtDisplayModeSelected: (CoverArtDisplayMode) -> Unit,
     onAnimationSpeedSelected: (AnimationSpeed) -> Unit,
     onBack: () -> Unit,
@@ -928,30 +918,17 @@ private fun AppearanceSettingsScreen(
                 }
             }
             item {
-                SettingsSection(title = "Artwork colors") {
-                    SettingsSwitchRow(
-                        headline = "Book detail cover colors",
-                        supporting = if (selectedBookDetailUseArtworkColors) {
-                            "Book detail pages use colors from their cover art. Player surfaces always use cover colors."
-                        } else {
-                            "Only the mini player, Now Playing, and playback panels use cover colors."
-                        },
-                        icon = Icons.Filled.Palette,
-                        checked = selectedBookDetailUseArtworkColors,
-                        onCheckedChange = onBookDetailUseArtworkColorsChange,
-                    )
-                    SectionDivider()
-                    SettingsSwitchRow(
-                        headline = "Cover backdrop fade",
-                        supporting = if (selectedBookDetailUseCoverBackdrop) {
-                            "Stretch and blur the cover behind book details, then fade into the page."
-                        } else {
-                            "Use the simpler tinted book detail background."
-                        },
-                        icon = Icons.Filled.Palette,
-                        checked = selectedBookDetailUseCoverBackdrop,
-                        onCheckedChange = onBookDetailUseCoverBackdropChange,
-                    )
+                SettingsSection(title = "Player colors") {
+                    PlayerColorMode.entries.forEachIndexed { index, option ->
+                        ChoiceRow(
+                            selected = selectedPlayerColorMode == option,
+                            headline = option.label,
+                            supporting = option.description,
+                            icon = Icons.Filled.Palette,
+                            onClick = { onPlayerColorModeSelected(option) },
+                        )
+                        if (index != PlayerColorMode.entries.lastIndex) SectionDivider()
+                    }
                 }
             }
             item {
@@ -2370,17 +2347,15 @@ private fun SectionDivider() {
 private fun appearanceSummary(
     themeMode: AppThemeMode,
     colorPalette: AppColorPalette,
-    bookDetailUseArtworkColors: Boolean,
-    bookDetailUseCoverBackdrop: Boolean,
+    playerColorMode: PlayerColorMode,
     coverArtDisplayMode: CoverArtDisplayMode,
     animationSpeed: AnimationSpeed,
 ): String =
     listOf(
         "${themeMode.label} theme",
         colorPalette.label,
+        "Player: ${playerColorMode.label}",
         coverArtDisplayMode.label,
-        if (bookDetailUseCoverBackdrop) "cover backdrop fade" else "simple detail background",
-        if (bookDetailUseArtworkColors) "book details use cover colors" else "player cover colors only",
         "${animationSpeed.label} motion",
     ).joinToString(" • ")
 

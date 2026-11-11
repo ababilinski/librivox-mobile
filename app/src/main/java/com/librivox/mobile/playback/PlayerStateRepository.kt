@@ -4,7 +4,6 @@ import android.content.ComponentName
 import android.content.Context
 import android.os.Bundle
 import android.media.session.MediaSession as PlatformMediaSession
-import androidx.media3.common.C
 import androidx.media3.common.DeviceInfo
 import androidx.media3.common.MediaItem
 import androidx.media3.common.PlaybackException
@@ -161,9 +160,23 @@ class PlayerStateRepository(
         if (c.isPlaying) {
             c.pause()
         } else {
-            parseMediaId(c.currentMediaItem?.mediaId)?.bookId?.let(progressStore::restoreToContinueListening)
+            val ids = parseMediaId(c.currentMediaItem?.mediaId)
+            ids?.bookId?.let(progressStore::restoreToContinueListening)
+            val isCompleted = ids?.let {
+                progressStore.savedChapterProgress(it.bookId, it.chapterId).isCompleted
+            } == true
+            // A manual completion can leave the controller paused midway through the file.
+            // Only an explicit Play begins the next listen; marking it does not seek or stop.
+            if (c.playbackState == Player.STATE_ENDED || isCompleted) {
+                startChapterReplayIfNeeded(c.currentMediaItem, 0L)
+                c.seekTo(0L)
+            }
             c.play()
         }
+    }
+
+    fun markChapterUnfinished(bookId: String, chapterId: String) {
+        markChapterUnfinishedWithoutStartingPlayback(progressStore, controller, bookId, chapterId)
     }
 
     fun dismissPlayback() {
@@ -177,7 +190,10 @@ class PlayerStateRepository(
     }
 
     fun seekTo(positionMs: Long) {
-        controller?.seekTo(positionMs.coerceAtLeast(0L))
+        val c = controller ?: return
+        val targetMs = positionMs.coerceAtLeast(0L)
+        startChapterReplayIfNeeded(c.currentMediaItem, targetMs, c.duration)
+        c.seekTo(targetMs)
     }
 
     fun previewSeekTo(positionMs: Long?) {
@@ -193,14 +209,14 @@ class PlayerStateRepository(
 
     fun seekBack() {
         val c = controller ?: return
-        c.seekTo((c.currentPosition - SEEK_BACK_MS).coerceAtLeast(0L))
+        seekTo((c.currentPosition - SEEK_BACK_MS).coerceAtLeast(0L))
     }
 
     fun seekForward() {
         val c = controller ?: return
         val targetMs = c.currentPosition + SEEK_FORWARD_MS
         val durationMs = c.duration.takeIf { it > 0L }
-        c.seekTo(durationMs?.let { targetMs.coerceAtMost(it) } ?: targetMs)
+        seekTo(durationMs?.let { targetMs.coerceAtMost(it) } ?: targetMs)
     }
 
     fun seekToNextChapter() {
@@ -223,7 +239,7 @@ class PlayerStateRepository(
         seekToQueueChapter(source, target)
     }
 
-    fun seekToBookChapter(bookId: String, chapterId: String): Boolean {
+    fun seekToBookChapter(bookId: String, chapterId: String, positionMs: Long = 0L): Boolean {
         val c = controller ?: return false
         val current = c.currentMediaItemIndex
         val index = (listOf(current) + (0 until c.mediaItemCount)).firstOrNull { candidate ->
@@ -234,19 +250,21 @@ class PlayerStateRepository(
         refreshQueueStructure(c)
         val source = c.queuePosition(current) ?: return false
         val target = c.queuePosition(index) ?: return false
-        return seekToQueueChapter(source, target)
+        return seekToQueueChapter(source, target, positionMs)
     }
 
     /** Validate immediately before seeking; a stale gesture must never select a different queue slot. */
-    fun seekToQueueChapter(source: QueuePosition, target: QueuePosition): Boolean {
+    fun seekToQueueChapter(source: QueuePosition, target: QueuePosition, positionMs: Long = 0L): Boolean {
         val c = controller ?: return false
         refreshQueueStructure(c)
         if (!queueSeekIsValid(c.queuePosition(c.currentMediaItemIndex), source, c.queuePosition(target.index), target)) {
             return false
         }
-        showChapterSwitchPreview(target.index, source, target)
+        val safePositionMs = positionMs.coerceAtLeast(0L)
+        showChapterSwitchPreview(target.index, source, target, safePositionMs)
         return try {
-            c.seekTo(target.index, 0L)
+            startChapterReplayIfNeeded(c.getMediaItemAt(target.index), safePositionMs)
+            c.seekTo(target.index, safePositionMs)
             refreshFromController()
             true
         } catch (_: IllegalStateException) {
@@ -263,7 +281,12 @@ class PlayerStateRepository(
         _chapterSwitchPreview.value = null
     }
 
-    private fun showChapterSwitchPreview(index: Int, source: QueuePosition, target: QueuePosition) {
+    private fun showChapterSwitchPreview(
+        index: Int,
+        source: QueuePosition,
+        target: QueuePosition,
+        positionMs: Long,
+    ) {
         val c = controller ?: return
         if (index !in 0 until c.mediaItemCount) return
         val item = c.getMediaItemAt(index)
@@ -297,7 +320,8 @@ class PlayerStateRepository(
                 ?.times(1000L)
                 ?: item.mediaMetadata.extras?.getLong(MEDIA_METADATA_CAST_DURATION_MS, 0L)
                     ?.takeIf { it > 0L }
-                ?: _state.value.durationMs,
+                ?: progressStore.savedChapterProgress(ids.bookId, ids.chapterId).durationMs,
+            positionMs = positionMs,
             mediaItemIndex = index,
             mediaItemCount = c.mediaItemCount,
             hasPrevious = index > 0,
@@ -318,9 +342,20 @@ class PlayerStateRepository(
             ?.let(progressStore::restoreToContinueListening)
         rememberQueueDisplayMetadata(items)
         retainMediaForUi(items.getOrNull(startIndex.coerceIn(0, (items.size - 1).coerceAtLeast(0))))
+        startChapterReplayIfNeeded(items.getOrNull(startIndex), startPositionMs)
         c.setMediaItems(items, startIndex, startPositionMs)
         c.prepare()
         c.play()
+    }
+
+    private fun startChapterReplayIfNeeded(item: MediaItem?, positionMs: Long, durationMs: Long = 0L) {
+        val ids = parseMediaId(item?.mediaId) ?: return
+        val snapshot = progressStore.savedChapterProgress(ids.bookId, ids.chapterId)
+        val knownDurationMs = durationMs.takeIf { it > 0L } ?: snapshot.durationMs
+        val startsReplay = positionMs == 0L || (knownDurationMs > 0L && positionMs in 0L until knownDurationMs)
+        if (snapshot.isCompleted && startsReplay) {
+            progressStore.startChapterReplay(ids.bookId, ids.chapterId)
+        }
     }
 
     fun addAfterCurrent(items: List<MediaItem>) {
@@ -544,6 +579,10 @@ class PlayerStateRepository(
         }
         val displayMediaItem = mediaItem ?: retainedMediaItem
         val displayIds = ids ?: retainedIds
+        val displayChapter = displayIds?.let { chapterIds ->
+            libraryState.bookById(chapterIds.bookId)?.chapters
+                ?.firstOrNull { it.id == chapterIds.chapterId }
+        }
         val deviceInfo = c.deviceInfo
         val minDeviceVolume = deviceInfo.minVolume
         val maxDeviceVolume = deviceInfo.maxVolume.coerceAtLeast(minDeviceVolume)
@@ -556,17 +595,21 @@ class PlayerStateRepository(
             connected = true,
             mediaItem = displayMediaItem,
             queuePosition = committed.position,
-            chapterTitle = displayIds?.let { chapterIds ->
-                libraryState.bookById(chapterIds.bookId)?.chapters
-                    ?.firstOrNull { it.id == chapterIds.chapterId }?.cleanTitle()
-            },
+            chapterTitle = displayChapter?.cleanTitle(),
             ids = displayIds,
             artworkUri = displayArtworkUri,
             isPlaying = c.isPlaying,
             isBuffering = c.playbackState == Player.STATE_BUFFERING,
-            durationMs = c.duration.takeUnless { it == C.TIME_UNSET }
-                ?.coerceAtLeast(0L)
-                ?: _controllerState.value.durationMs,
+            durationMs = c.duration.takeIf { it > 0L }
+                ?: _controllerState.value
+                    .takeIf { displayIds != null && it.ids == displayIds }
+                    ?.durationMs?.takeIf { it > 0L }
+                ?: displayIds?.let { progressStore.savedChapterProgress(it.bookId, it.chapterId).durationMs }
+                    ?.takeIf { it > 0L }
+                ?: displayChapter?.durationSeconds?.takeIf { it > 0L }?.times(1000L)
+                ?: displayMediaItem?.mediaMetadata?.extras
+                    ?.getLong(MEDIA_METADATA_CAST_DURATION_MS, 0L)?.takeIf { it > 0L }
+                ?: 0L,
             positionMs = c.currentPosition.coerceAtLeast(0L),
             mediaItemIndex = c.currentMediaItemIndex,
             mediaItemCount = c.mediaItemCount,
@@ -855,6 +898,7 @@ private data class ChapterSwitchPreview(
     val albumTitle: String?,
     val artworkUri: String?,
     val durationMs: Long,
+    val positionMs: Long,
     val mediaItemIndex: Int,
     val mediaItemCount: Int,
     val hasPrevious: Boolean,
@@ -872,8 +916,8 @@ private data class ChapterSwitchPreview(
             albumTitle = albumTitle ?: state.albumTitle,
             artworkUri = artworkUri ?: state.artworkUri,
             isBuffering = true,
-            durationMs = durationMs.takeIf { it > 0L } ?: state.durationMs,
-            positionMs = 0L,
+            durationMs = durationMs,
+            positionMs = positionMs,
             mediaItemIndex = mediaItemIndex,
             mediaItemCount = mediaItemCount,
             hasPrevious = hasPrevious,
@@ -933,6 +977,28 @@ data class PlayerState(
     val scrubPreviewPositionMs: Long? = null,
 ) {
     val hasMedia: Boolean get() = !bookId.isNullOrBlank() && !title.isNullOrBlank()
+}
+
+internal fun markChapterUnfinishedWithoutStartingPlayback(
+    progressStore: ProgressStore,
+    player: Player?,
+    bookId: String,
+    chapterId: String,
+) {
+    progressStore.markChapterUnfinished(bookId, chapterId)
+    if (player == null || player.isPlaying) return
+    val ids = parseMediaId(player.currentMediaItem?.mediaId) ?: return
+    if (ids.bookId != bookId || ids.chapterId != chapterId) return
+    val durationMs = player.duration.takeIf { it > 0L }
+        ?: progressStore.savedChapterProgress(bookId, chapterId).durationMs
+    val isAtEnd = player.playbackState == Player.STATE_ENDED ||
+        (durationMs > 0L && player.currentPosition >= durationMs - 1L)
+    if (isAtEnd) {
+        // An ended player can retain playWhenReady=true. Pause before seeking so the
+        // menu changes progress only, and later controller saves cannot restore EOF.
+        player.pause()
+        player.seekTo(0L)
+    }
 }
 
 private data class CastAvailability(

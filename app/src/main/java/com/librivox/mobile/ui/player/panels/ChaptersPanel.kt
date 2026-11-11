@@ -6,18 +6,22 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.MoreHoriz
+import androidx.compose.material.icons.filled.Restore
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
@@ -27,7 +31,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,9 +50,11 @@ import com.librivox.mobile.model.chapterPresentation
 import com.librivox.mobile.model.toMediaItems
 import com.librivox.mobile.model.mediaId
 import com.librivox.mobile.ui.components.ChapterSupportingInfo
+import com.librivox.mobile.ui.components.ChapterListeningProgress
+import com.librivox.mobile.ui.components.ChapterListeningStatus
 import com.librivox.mobile.ui.components.BookCover
-import com.librivox.mobile.ui.components.formatHmsFromMs
-import com.librivox.mobile.ui.components.formatHmsFromSeconds
+import com.librivox.mobile.ui.components.chapterListeningProgress
+import com.librivox.mobile.ui.components.rememberChapterProgress
 import com.librivox.mobile.ui.components.rememberHaptics
 import com.librivox.mobile.ui.navigation.LocalAppGraph
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -93,6 +102,10 @@ fun ChaptersPanel(
         }
         return
     }
+
+    val savedProgress = rememberChapterProgress(book, graph.app.progressStore)
+    val lastListenedChapterId = graph.app.progressStore.lastChapterId(book.id)
+    val hasCurrentChapter = book.id == state.bookId && book.chapters.any { it.id == state.chapterId }
 
     LazyColumn(
         state = listState,
@@ -142,20 +155,48 @@ fun ChaptersPanel(
             }
         }
 
-        itemsIndexed(book.chapters, key = { _, chapter -> chapter.id }) { index, chapter ->
-            val isCurrent = chapter.id == state.chapterId
+        items(book.chapters, key = { chapter -> chapter.id }) { chapter ->
+            val isCurrent = book.id == state.bookId && chapter.id == state.chapterId
+            val snapshot = savedProgress.getValue(chapter.id)
+            val listeningProgress = chapterListeningProgress(
+                savedProgress = snapshot,
+                chapterDurationMs = chapter.durationSeconds * 1000L,
+                isCurrent = isCurrent,
+                isPlaying = isCurrent && state.isPlaying,
+                isLastListened = !hasCurrentChapter && chapter.id == lastListenedChapterId,
+                currentPositionMs = state.positionMs,
+                currentDurationMs = state.durationMs,
+            )
             ChapterRow(
                 book = book,
                 chapter = chapter,
-                isCurrent = isCurrent,
-                currentPositionMs = if (isCurrent) state.positionMs else 0L,
-                currentDurationMs = if (isCurrent) state.durationMs else 0L,
+                progress = listeningProgress,
+                onToggleFinished = {
+                    haptics.key()
+                    if (snapshot.isCompleted) {
+                        graph.playerStateRepository.markChapterUnfinished(book.id, chapter.id)
+                    } else {
+                        graph.app.progressStore.markChapterCompleted(
+                            book.id, chapter.id, listeningProgress.durationMs,
+                        )
+                    }
+                },
                 onClick = {
                     haptics.key()
-                    if (!graph.playerStateRepository.seekToBookChapter(book.id, chapter.id)) {
+                    if (isCurrent) {
+                        if (listeningProgress.isFinished && !state.isPlaying) {
+                            graph.playerStateRepository.playPause()
+                        }
+                        onClose()
+                        return@ChapterRow
+                    }
+                    val resumePositionMs = if (snapshot.isCompleted) 0L else snapshot.positionMs
+                    if (!graph.playerStateRepository.seekToBookChapter(book.id, chapter.id, resumePositionMs)) {
                         val items = book.toMediaItems(context)
                         val queueIndex = items.indexOfFirst { it.mediaId == mediaId(book.id, chapter.id) }
-                        if (queueIndex >= 0) graph.playerStateRepository.playMediaItems(items, queueIndex, 0L)
+                        if (queueIndex >= 0) {
+                            graph.playerStateRepository.playMediaItems(items, queueIndex, resumePositionMs)
+                        }
                     }
                     onClose()
                 },
@@ -168,11 +209,12 @@ fun ChaptersPanel(
 private fun ChapterRow(
     book: AudioBook,
     chapter: AudioBookChapter,
-    isCurrent: Boolean,
-    currentPositionMs: Long,
-    currentDurationMs: Long,
+    progress: ChapterListeningProgress,
+    onToggleFinished: () -> Unit,
     onClick: () -> Unit,
 ) {
+    val isCurrent = progress.isHighlighted
+    var menuExpanded by remember(chapter.id) { mutableStateOf(false) }
     Surface(
         color = if (isCurrent) {
             MaterialTheme.colorScheme.secondaryContainer
@@ -222,50 +264,48 @@ private fun ChapterRow(
             headlineContent = {
                 Text(
                     text = book.chapterPresentation(chapter).title,
+                    fontWeight = if (isCurrent) FontWeight.SemiBold else FontWeight.Normal,
                 )
             },
             supportingContent = {
-                ChapterSupportingInfo(
-                    presentation = book.chapterPresentation(chapter),
-                    metadata = chapterMetadata(chapter, isCurrent, currentPositionMs, currentDurationMs),
-                )
+                Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                    ChapterSupportingInfo(
+                        presentation = book.chapterPresentation(chapter),
+                        metadata = null,
+                    )
+                    ChapterListeningStatus(progress = progress)
+                }
             },
             trailingContent = {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(4.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    if (isCurrent) {
+                Box {
+                    IconButton(onClick = { menuExpanded = true }) {
                         Icon(
-                            imageVector = Icons.Filled.PlayArrow,
-                            contentDescription = null,
-                            modifier = Modifier.size(18.dp),
-                            tint = MaterialTheme.colorScheme.primary,
+                            Icons.Filled.MoreHoriz,
+                            contentDescription = "More options for chapter ${chapter.number}",
                         )
-                        Text(
-                            text = "Now",
-                            style = MaterialTheme.typography.labelMedium,
-                            color = MaterialTheme.colorScheme.primary,
+                    }
+                    DropdownMenu(
+                        expanded = menuExpanded,
+                        onDismissRequest = { menuExpanded = false },
+                    ) {
+                        DropdownMenuItem(
+                            text = {
+                                Text(if (progress.isFinished) "Mark as unfinished" else "Mark as finished")
+                            },
+                            leadingIcon = {
+                                Icon(
+                                    if (progress.isFinished) Icons.Filled.Restore else Icons.Filled.CheckCircle,
+                                    contentDescription = null,
+                                )
+                            },
+                            onClick = {
+                                onToggleFinished()
+                                menuExpanded = false
+                            },
                         )
                     }
                 }
             },
         )
     }
-}
-
-private fun chapterMetadata(
-    chapter: AudioBookChapter,
-    isCurrent: Boolean,
-    currentPositionMs: Long,
-    currentDurationMs: Long,
-): String {
-    val parts = mutableListOf<String>()
-    if (isCurrent && currentDurationMs > 0L) {
-        val remainingMs = (currentDurationMs - currentPositionMs).coerceAtLeast(0L)
-        parts.add("${formatHmsFromMs(remainingMs)} left")
-    } else if (chapter.durationSeconds > 0L) {
-        parts.add("${formatHmsFromSeconds(chapter.durationSeconds)} total")
-    }
-    return parts.joinToString(" • ")
 }

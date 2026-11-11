@@ -5,14 +5,122 @@ import com.librivox.mobile.model.AudioBookChapter
 import com.librivox.mobile.model.BookSource
 import java.io.File
 import java.util.zip.ZipEntry
+import java.util.zip.ZipFile
 import java.util.zip.ZipOutputStream
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class WolneAudioEpubParserTest {
     private val parser = WolneAudioEpubParser()
+
+    @Test
+    fun parse_preferredGenericDaisyOnlyOpensItsValidatedOrdinalChapter() {
+        val entries = (0..19).associate { index ->
+            "content$index.smil" to """
+                <smil><body><par><text src="book$index.html#sec1"/>
+                <audio src="book$index.mp3" clipBegin="10.360s" clipEnd="31.880s"/>
+                </par></body></smil>
+            """.trimIndent()
+        } + mapOf(
+            "master.smil" to "<smil><body><ref src='content5.smil'/></body></smil>",
+            "book5.html" to "<html><body><p id='sec1'>Correct chapter six.</p></body></html>",
+        )
+        val archive = testEpub(entries)
+        val book = genericDaisyBook()
+
+        val result = parser.parse(book, archive, preferredChapterId = "chapter-6", onlyPreferredChapter = true)
+
+        assertTrue(result.hasTimedSync)
+        assertEquals("chapter-6", result.chapters.single().chapterId)
+        assertEquals("Correct chapter six.", result.chapters.single().fullText)
+        assertEquals(10_360L, result.chapters.single().segments.single().clipBeginMs)
+        // The other HTML files intentionally do not exist: a full text parse would fail.
+    }
+
+    @Test
+    fun parse_preferredRealLalkaDaisySkipsMasterAndDoesNotOpenOtherChaptersText() {
+        val source = File.createTempFile("lalka-daisy-source-", ".zip")
+        try {
+            checkNotNull(javaClass.getResourceAsStream("/wolnelektury/lalka-valid-daisy.zip"))
+                .use { input -> source.outputStream().use { output -> input.copyTo(output) } }
+            val entries = ZipFile(source).use { zip ->
+                zip.entries().asSequence()
+                    .filter { it.name.endsWith(".smil") || it.name.endsWith("/book5.html") }
+                    .associate { entry -> entry.name to zip.getInputStream(entry).bufferedReader().use { it.readText() } }
+            }
+            assertEquals(21, entries.keys.count { it.endsWith(".smil") })
+            assertTrue(entries.keys.any { it.endsWith("/master.smil") })
+            val result = parser.parse(genericDaisyBook(), testEpub(entries), "chapter-6", onlyPreferredChapter = true)
+
+            val chapter = result.chapters.single()
+            assertTrue(result.hasTimedSync)
+            assertEquals("chapter-6", chapter.chapterId)
+            // The source has 228 anchors; sec118 is an empty decorative <hr>.
+            assertEquals(227, chapter.segments.size)
+            assertTrue(chapter.activeSegment(15_000L)!!.text.startsWith("Początek kwietnia"))
+            assertEquals(10_360L, chapter.activeSegment(15_000L)!!.clipBeginMs)
+        } finally {
+            source.delete()
+        }
+    }
+
+    @Test
+    fun parse_preferredGenericDaisyDoesNotGuessWhenAudioOrdinalsAreDuplicated() {
+        val entries = (0..19).associate { index ->
+            val audioIndex = if (index == 5) 4 else index
+            "content$index.smil" to """
+                <smil><body><par><text src="book$index.html#sec1"/>
+                <audio src="book$audioIndex.mp3" clipBegin="0s" clipEnd="1s"/>
+                </par></body></smil>
+            """.trimIndent()
+        } + ("book5.html" to "<html><body><p id='sec1'>Must not assume chapter six.</p></body></html>")
+
+        assertThrows(IllegalStateException::class.java) {
+            parser.parse(genericDaisyBook(), testEpub(entries), preferredChapterId = "chapter-6", onlyPreferredChapter = true)
+        }
+    }
+
+    private fun genericDaisyBook() = AudioBook(
+        id = "generic-daisy",
+        title = "Generic DAISY",
+        author = "Author",
+        chapters = (1..20).map { index ->
+            AudioBookChapter("chapter-$index", "Chapter $index", index, listenUrl = "https://example.com/chapter$index.mp3")
+        },
+    )
+
+    @Test
+    fun parse_preservesStaticLalkaTextWhenItsOverlayReusesFirstChapterForLaterRecordings() {
+        // Publisher audio EPUB captured 2026-10-30, retaining its original SMIL
+        // and readable XHTML. Later audio tracks incorrectly
+        // repeat part3.xhtml anchors, most of which do not exist in that chapter.
+        val archive = File.createTempFile("lalka-malformed-", ".epub")
+        try {
+            checkNotNull(javaClass.getResourceAsStream("/wolnelektury/lalka-malformed-audio.epub"))
+                .use { input -> archive.outputStream().use { output -> input.copyTo(output) } }
+            val book = AudioBook(
+                id = "wolnelektury-lalka-tom-pierwszy",
+                title = "Lalka, tom pierwszy",
+                author = "Bolesław Prus",
+                source = BookSource.WolneLektury,
+                chapters = (1..20).map { chapter ->
+                    AudioBookChapter("lalka-tom-pierwszy-$chapter", "Chapter $chapter", chapter)
+                },
+            )
+            val readAlong = parser.parse(book, archive, preferredChapterId = "lalka-tom-pierwszy-6", onlyPreferredChapter = true)
+            assertFalse(readAlong.hasTimedSync)
+            val chapter = readAlong.chapters.single()
+            assertEquals("lalka-tom-pierwszy-6", chapter.chapterId)
+            assertTrue(chapter.fullText.replace('\u00a0', ' ').startsWith("VI. W jaki sposób nowi ludzie"))
+            assertTrue(chapter.fullText.contains("Początek kwietnia"))
+            assertTrue(chapter.segments.all { it.clipBeginMs == null && it.clipEndMs == null })
+        } finally {
+            archive.delete()
+        }
+    }
 
     @Test
     fun parseClipTimeMillis_supportsSmilUnits() {

@@ -54,6 +54,30 @@ enum class AppThemeMode(
     }
 }
 
+enum class PlayerColorMode(
+    val preferenceValue: String,
+    val label: String,
+    val description: String,
+) {
+    App(
+        preferenceValue = "app",
+        label = "App colors",
+        description = "Use your app palette for the player and bottom navigation.",
+    ),
+    Cover(
+        preferenceValue = "cover",
+        label = "Cover colors",
+        description = "Match the player and bottom navigation to the current book’s cover.",
+    );
+
+    companion object {
+        val Default: PlayerColorMode = App
+
+        fun fromPreference(value: String?): PlayerColorMode =
+            entries.firstOrNull { it.preferenceValue == value } ?: Default
+    }
+}
+
 enum class BookLanguagePreference(
     val preferenceValue: String,
     val label: String,
@@ -718,16 +742,13 @@ class PlaybackSettingsStore(context: Context) {
     val colorPalette: AppColorPalette
         get() = AppColorPalette.fromPreference(preferences.getString(KEY_COLOR_PALETTE, null))
 
+    val playerColorMode: PlayerColorMode
+        get() = PlayerColorMode.fromPreference(preferences.getString(KEY_PLAYER_COLOR_MODE, null))
+
     val animationSpeed: AnimationSpeed
         get() = AnimationSpeed.fromPreference(
             preferences.getString(KEY_ANIMATION_SPEED, AnimationSpeed.Default.preferenceValue),
         )
-
-    val bookDetailUseArtworkColorScheme: Boolean
-        get() = preferences.getBoolean(KEY_BOOK_DETAIL_USE_ARTWORK_COLOR_SCHEME, false)
-
-    val bookDetailUseCoverBackdrop: Boolean
-        get() = preferences.getBoolean(KEY_BOOK_DETAIL_USE_COVER_BACKDROP, false)
 
     val coverArtDisplayMode: CoverArtDisplayMode
         get() = CoverArtDisplayMode.fromPreference(
@@ -905,21 +926,13 @@ class PlaybackSettingsStore(context: Context) {
         preferences.edit().putString(KEY_COLOR_PALETTE, palette.preferenceValue).apply()
     }
 
+    fun savePlayerColorMode(mode: PlayerColorMode) {
+        preferences.edit().putString(KEY_PLAYER_COLOR_MODE, mode.preferenceValue).apply()
+    }
+
     fun saveAnimationSpeed(speed: AnimationSpeed) {
         preferences.edit()
             .putString(KEY_ANIMATION_SPEED, speed.preferenceValue)
-            .apply()
-    }
-
-    fun saveBookDetailUseArtworkColorScheme(enabled: Boolean) {
-        preferences.edit()
-            .putBoolean(KEY_BOOK_DETAIL_USE_ARTWORK_COLOR_SCHEME, enabled)
-            .apply()
-    }
-
-    fun saveBookDetailUseCoverBackdrop(enabled: Boolean) {
-        preferences.edit()
-            .putBoolean(KEY_BOOK_DETAIL_USE_COVER_BACKDROP, enabled)
             .apply()
     }
 
@@ -1181,6 +1194,16 @@ class PlaybackSettingsStore(context: Context) {
         return listener
     }
 
+    fun registerPlayerColorModeListener(
+        onChanged: (PlayerColorMode) -> Unit,
+    ): SharedPreferences.OnSharedPreferenceChangeListener {
+        val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+            if (key == KEY_PLAYER_COLOR_MODE) onChanged(playerColorMode)
+        }
+        preferences.registerOnSharedPreferenceChangeListener(listener)
+        return listener
+    }
+
     fun registerAnimationSpeedListener(
         onChanged: (AnimationSpeed) -> Unit,
     ): SharedPreferences.OnSharedPreferenceChangeListener {
@@ -1188,32 +1211,6 @@ class PlaybackSettingsStore(context: Context) {
             SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
                 if (key == KEY_ANIMATION_SPEED) {
                     onChanged(animationSpeed)
-                }
-            }
-        preferences.registerOnSharedPreferenceChangeListener(listener)
-        return listener
-    }
-
-    fun registerBookDetailColorSchemeListener(
-        onChanged: (Boolean) -> Unit,
-    ): SharedPreferences.OnSharedPreferenceChangeListener {
-        val listener =
-            SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-                if (key == KEY_BOOK_DETAIL_USE_ARTWORK_COLOR_SCHEME) {
-                    onChanged(bookDetailUseArtworkColorScheme)
-                }
-            }
-        preferences.registerOnSharedPreferenceChangeListener(listener)
-        return listener
-    }
-
-    fun registerBookDetailCoverBackdropListener(
-        onChanged: (Boolean) -> Unit,
-    ): SharedPreferences.OnSharedPreferenceChangeListener {
-        val listener =
-            SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-                if (key == KEY_BOOK_DETAIL_USE_COVER_BACKDROP) {
-                    onChanged(bookDetailUseCoverBackdrop)
                 }
             }
         preferences.registerOnSharedPreferenceChangeListener(listener)
@@ -1359,9 +1356,8 @@ class PlaybackSettingsStore(context: Context) {
         internal const val KEY_DEFAULT_SPEED = "default_speed"
         internal const val KEY_THEME_MODE = "theme_mode"
         internal const val KEY_COLOR_PALETTE = "color_palette"
+        internal const val KEY_PLAYER_COLOR_MODE = "player_color_mode"
         internal const val KEY_ANIMATION_SPEED = "animation_speed"
-        internal const val KEY_BOOK_DETAIL_USE_ARTWORK_COLOR_SCHEME = "book_detail_use_artwork_color_scheme"
-        internal const val KEY_BOOK_DETAIL_USE_COVER_BACKDROP = "book_detail_use_cover_backdrop"
         internal const val KEY_COVER_ART_DISPLAY_MODE = "cover_art_display_mode"
         internal const val KEY_BOOK_LANGUAGE = "book_language"
         internal const val KEY_BOOK_LANGUAGES = "book_languages"

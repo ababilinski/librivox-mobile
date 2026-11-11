@@ -219,10 +219,11 @@ fun BookReaderScreen(
     val stagedBookDetails by graph.app.stagedBookDetails.collectAsState()
     val playerState by graph.playerStateRepository.state.collectAsState()
     val book = libraryState?.bookById(bookId) ?: stagedBookDetails[bookId]
-    var readAlongResult by remember(book?.id, book?.localAudioEpubFileName, book?.epubUrl, book?.audioEpubUrl, book?.daisyUrl) {
+    val readerSourceIdentity = remember(book) { book?.readerSourceIdentity() }
+    var readAlongResult by remember(readerSourceIdentity) {
         mutableStateOf<Result<ReadAlongBook>?>(null)
     }
-    var loadingFullReadAlong by remember(book?.id, book?.localAudioEpubFileName, book?.epubUrl, book?.audioEpubUrl, book?.daisyUrl) {
+    var loadingFullReadAlong by remember(readerSourceIdentity) {
         mutableStateOf(false)
     }
     var searchActive by remember { mutableStateOf(false) }
@@ -270,7 +271,7 @@ fun BookReaderScreen(
         settingsStore.saveReaderSettings(next)
     }
 
-    LaunchedEffect(book, initialChapterId) {
+    LaunchedEffect(readerSourceIdentity, initialChapterId) {
         val current = book ?: return@LaunchedEffect
         if (!current.canReadSourceText()) {
             loadingFullReadAlong = false
@@ -283,12 +284,20 @@ fun BookReaderScreen(
             current.source == BookSource.WolneLektury &&
             current.downloadableSourceSyncAssetUrl() == null
         ) {
-            withContext(Dispatchers.IO) {
+            val hydrated = withContext(Dispatchers.IO) {
                 graph.app.catalogClient.fetchByIds(current.id).firstOrNull()
-            }?.also { hydrated ->
+            }
+            if (hydrated != null) {
                 graph.app.stageBookDetail(hydrated)
                 graph.app.libraryRepository.upsertCatalogBooks(listOf(hydrated))
-            } ?: current
+                val published = graph.app.libraryRepository.snapshot().bookById(current.id)
+                if (published != null && published.readerSourceIdentity() != readerSourceIdentity) {
+                    // The library stream will restart this effect with the published source.
+                    // Do not also parse it in the effect that is about to be cancelled.
+                    return@LaunchedEffect
+                }
+            }
+            hydrated ?: current
         } else {
             current
         }
@@ -313,16 +322,17 @@ fun BookReaderScreen(
             loadingFullReadAlong = preferredResult.getOrNull()?.isPartial == true
         }
         val fullResult = graph.app.readAlongRepository.load(readableBook)
-        val hadPartialResult = readAlongResult?.getOrNull()?.isPartial == true
+        val previousReadAlong = readAlongResult?.getOrNull()
+        val resolvedResult = resolveReaderLoadResult(readAlongResult, fullResult)
+        val resolvedReadAlong = resolvedResult.getOrNull()
         loadingFullReadAlong = false
-        if (fullResult.isSuccess && hadPartialResult && !didUseManualReaderJump) {
+        if (
+            resolvedReadAlong != null && resolvedReadAlong != previousReadAlong &&
+            previousReadAlong?.isPartial == true && !didUseManualReaderJump
+        ) {
             didResolveInitialScroll = false
         }
-        readAlongResult = if (fullResult.isSuccess || readAlongResult == null) {
-            fullResult
-        } else {
-            readAlongResult
-        }
+        readAlongResult = resolvedResult
     }
 
     val readAlong = readAlongResult?.getOrNull()
@@ -555,6 +565,9 @@ fun BookReaderScreen(
         val targetMs = positionMs ?: return
         val mediaItems = currentBook.toMediaItems(context)
         if (mediaItems.isEmpty()) return
+        selectedTextSelection = null
+        deferFollowUntilActiveSegmentChangesFrom = null
+        focusManager.clearFocus(force = true)
         if (playerState.bookId == currentBook.id && playerState.chapterId == chapterId) {
             graph.playerStateRepository.seekTo(targetMs)
             if (!playerState.isPlaying) {
@@ -1116,6 +1129,18 @@ private fun ReaderSyncAndPlaybackControls(
                     )
                 },
             )
+        } else if (readAlong.isPartial) {
+            Text(
+                text = "Showing available chapters. Reopen the reader to try loading the rest.",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        } else if (!readAlong.hasTimedSync) {
+            Text(
+                text = "Audio sync is unavailable for this text.",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
         }
         if (readAlong.hasTimedSync) {
             Row(
@@ -1503,7 +1528,7 @@ private fun ChapterHeader(chapter: ReadAlongChapter, textScale: Float) {
 }
 
 @Composable
-private fun SelectableTextBlock(
+internal fun SelectableTextBlock(
     textBlock: ReaderItem.TextBlock,
     highlightRole: ReaderSegmentHighlightRole,
     activeTextRange: ReaderTextRange?,
@@ -1532,6 +1557,7 @@ private fun SelectableTextBlock(
     val scope = rememberCoroutineScope()
     val density = LocalDensity.current
     val clipboard = LocalClipboard.current
+    val focusManager = LocalFocusManager.current
     val footnoteTouchSize = 44.dp
     val container = when (highlightRole) {
         ReaderSegmentHighlightRole.Current -> colorScheme.secondaryContainer
@@ -1589,7 +1615,9 @@ private fun SelectableTextBlock(
             modifier = Modifier
                 .fillMaxWidth()
                 .filterTextContextMenuComponents { component ->
-                    component.key != TextContextMenuKeys.CopyKey
+                    // Heading SelectionContainer owns its own selection, so it needs
+                    // the platform Copy action instead of our source-text replacement.
+                    rendersAsSourceHeading || component.key != TextContextMenuKeys.CopyKey
                 }
                 .appendTextContextMenuComponents {
                     if (!selection.collapsed) {
@@ -1616,6 +1644,10 @@ private fun SelectableTextBlock(
                             leadingIcon = 0,
                         ) {
                             onRead()
+                            // Read consumes the selection. Its callback already clears the
+                            // reader's follow deferral; a selection-change event would add it back.
+                            selection = TextRange.Zero
+                            focusManager.clearFocus(force = true)
                             close()
                         }
                         item(
@@ -1991,8 +2023,13 @@ private fun ReaderSettingsSheet(
                 Column {
                     ReaderSwitchRow(
                         title = "Source sync",
-                        summary = "Keep the current spoken text in view.",
-                        checked = settings.followPlayback,
+                        summary = if (readAlong?.hasTimedSync == true) {
+                            "Keep the current spoken text in view."
+                        } else {
+                            "Requires audio timing for this text."
+                        },
+                        checked = settings.followPlayback && readAlong?.hasTimedSync == true,
+                        enabled = readAlong?.hasTimedSync == true,
                         onCheckedChange = { checked -> onSettingsChange(settings.copy(followPlayback = checked)) },
                     )
                     ReaderSwitchRow(
@@ -2000,7 +2037,7 @@ private fun ReaderSettingsSheet(
                         summary = if (readAlong?.hasTimedSync == true) {
                             "Show the source text currently being read."
                         } else {
-                            "Timed highlight needs source sync."
+                            "Requires audio timing for this text."
                         },
                         checked = settings.highlightCurrentText && readAlong?.hasTimedSync == true,
                         enabled = readAlong?.hasTimedSync == true,

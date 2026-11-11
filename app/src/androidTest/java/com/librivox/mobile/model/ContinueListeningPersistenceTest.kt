@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import androidx.test.core.app.ApplicationProvider
 import com.librivox.mobile.playback.AppColorPalette
 import com.librivox.mobile.playback.AppThemeMode
+import com.librivox.mobile.playback.CoverArtDisplayMode
 import com.librivox.mobile.playback.PlaybackSettingsStore
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -51,17 +52,17 @@ class ContinueListeningPersistenceTest {
     }
 
     @Test
-    fun palettePersistsAndDoesNotChangeThemeOrArtworkPreference() {
+    fun palettePersistsAndDoesNotChangeThemeOrCoverArtDisplayPreference() {
         val settings = PlaybackSettingsStore(context)
         assertEquals(AppColorPalette.DeviceAndApp, settings.colorPalette)
         settings.saveThemeMode(AppThemeMode.Dark)
-        settings.saveBookDetailUseArtworkColorScheme(true)
+        settings.saveCoverArtDisplayMode(CoverArtDisplayMode.Uncropped)
         AppColorPalette.entries.forEach { palette ->
             settings.saveColorPalette(palette)
             val recreated = PlaybackSettingsStore(context)
             assertEquals(palette, recreated.colorPalette)
             assertEquals(AppThemeMode.Dark, recreated.themeMode)
-            assertTrue(recreated.bookDetailUseArtworkColorScheme)
+            assertEquals(CoverArtDisplayMode.Uncropped, recreated.coverArtDisplayMode)
         }
     }
 }

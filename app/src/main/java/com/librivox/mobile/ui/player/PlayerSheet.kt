@@ -90,6 +90,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
@@ -199,7 +200,6 @@ import com.librivox.mobile.ui.player.panels.ChaptersPanel
 import com.librivox.mobile.ui.player.panels.DetailsPanel
 import com.librivox.mobile.ui.player.panels.UpNextPanel
 import com.librivox.mobile.ui.theme.PlayerSheetTheme
-import com.librivox.mobile.ui.theme.rememberPlayerSheetColorScheme
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.delay
@@ -260,6 +260,8 @@ private data class PlaybackUiSettings(
 @Composable
 fun PlayerSheet(
     sheetState: PlayerSheetState,
+    colorScheme: ColorScheme,
+    containerColor: Color,
     navController: NavHostController? = null,
     bottomNavigationVisible: Boolean = true,
     onOpenCastPicker: () -> Unit = {},
@@ -271,7 +273,7 @@ fun PlayerSheet(
     // Hold the last non-blank PlayerState while the local↔remote player swap is
     // mid-flight so the sheet doesn't blink out during a cast handoff.
     var latchedState by remember { mutableStateOf(rawState) }
-    LaunchedEffect(rawState.hasMedia) {
+    LaunchedEffect(rawState) {
         if (rawState.hasMedia) latchedState = rawState
     }
     val isCastHandoff = castConnectionState != CastRouteRepository.ConnectionState.Idle
@@ -281,7 +283,6 @@ fun PlayerSheet(
         isCastHandoff && latchedState.hasMedia -> latchedState
         else -> rawState
     }
-    val sheetColors = rememberPlayerSheetColorScheme(state.artworkUri)
     val sheetHaptics = rememberHaptics()
 
     if (!state.hasMedia) return
@@ -416,9 +417,10 @@ fun PlayerSheet(
                 dragSheetBy(dyPx)
             }
 
-            PlayerSheetTheme(scheme = sheetColors) {
+            PlayerSheetTheme(scheme = colorScheme) {
                 Surface(
-                    color = MaterialTheme.colorScheme.surfaceContainerHighest,
+                    color = containerColor,
+                    contentColor = colorScheme.onSurface,
                     shape = RoundedCornerShape(
                         topStart = sheetTopCornerDp.dp,
                         topEnd = sheetTopCornerDp.dp,
@@ -3889,17 +3891,13 @@ private fun SpeedSheetModal(state: PlayerState, onDismiss: () -> Unit) {
                 },
                 valueRange = PlaybackSpeed.MIN..PlaybackSpeed.MAX,
             )
-            val rows = PlaybackSpeed.Presets.chunked(5)
-            rows.forEach { rowSpeeds ->
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    rowSpeeds.forEach { preset ->
-                        TextButton(onClick = {
-                            current = preset.value
-                            graph.playerStateRepository.setSpeed(preset)
-                        }) { Text(preset.label()) }
-                    }
-                }
-            }
+            PlaybackSpeedPresets(
+                selectedSpeed = PlaybackSpeed.clamp(current),
+                onSpeedSelected = { preset ->
+                    current = preset.value
+                    graph.playerStateRepository.setSpeed(preset)
+                },
+            )
             TextButton(onClick = { scope.launch { sheetState.hide(); onDismiss() } }) { Text("Done") }
         }
     }

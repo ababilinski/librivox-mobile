@@ -15,11 +15,16 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.NavigationRailItemDefaults
+import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteItemColors
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteDefaults
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
 import androidx.compose.runtime.Composable
@@ -31,6 +36,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
@@ -50,6 +56,7 @@ import com.librivox.mobile.model.authorSearchQuery
 import com.librivox.mobile.model.chapterIdForSourceSlug
 import com.librivox.mobile.model.externalAudiobookLinkTarget
 import com.librivox.mobile.model.matchesPublicWebUrl
+import com.librivox.mobile.playback.PlayerColorMode
 import com.librivox.mobile.playback.AnimationSpeed
 import com.librivox.mobile.ui.detail.BookDetailScreen
 import com.librivox.mobile.ui.discover.DiscoverScreen
@@ -60,13 +67,47 @@ import com.librivox.mobile.ui.player.PlayerSheet
 import com.librivox.mobile.ui.player.PlayerSheetState
 import com.librivox.mobile.ui.player.rememberPlayerSheetState
 import com.librivox.mobile.ui.reader.BookReaderScreen
+import com.librivox.mobile.ui.cast.CastRouteRepository
 import com.librivox.mobile.ui.cast.CastSheetHost
 import com.librivox.mobile.ui.cast.CastSheetTarget
 import com.librivox.mobile.ui.settings.SettingsScreen
 import com.librivox.mobile.ui.theme.LocalTonalSurfaces
+import com.librivox.mobile.ui.theme.rememberPlayerSheetColorScheme
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
+
+@Composable
+private fun rememberPlayerNavigationItemColors(colors: ColorScheme): NavigationSuiteItemColors =
+    NavigationSuiteDefaults.itemColors(
+        navigationBarItemColors = NavigationBarItemDefaults.colors(
+            selectedIconColor = colors.onSecondaryContainer,
+            selectedTextColor = colors.onSurface,
+            indicatorColor = colors.secondaryContainer,
+            unselectedIconColor = colors.onSurfaceVariant,
+            unselectedTextColor = colors.onSurfaceVariant,
+            disabledIconColor = colors.onSurfaceVariant.copy(alpha = 0.38f),
+            disabledTextColor = colors.onSurfaceVariant.copy(alpha = 0.38f),
+        ),
+        navigationRailItemColors = NavigationRailItemDefaults.colors(
+            selectedIconColor = colors.onSecondaryContainer,
+            selectedTextColor = colors.onSurface,
+            indicatorColor = colors.secondaryContainer,
+            unselectedIconColor = colors.onSurfaceVariant,
+            unselectedTextColor = colors.onSurfaceVariant,
+            disabledIconColor = colors.onSurfaceVariant.copy(alpha = 0.38f),
+            disabledTextColor = colors.onSurfaceVariant.copy(alpha = 0.38f),
+        ),
+        navigationDrawerItemColors = NavigationDrawerItemDefaults.colors(
+            selectedContainerColor = colors.secondaryContainer,
+            unselectedContainerColor = Color.Transparent,
+            selectedIconColor = colors.onSecondaryContainer,
+            unselectedIconColor = colors.onSurfaceVariant,
+            selectedTextColor = colors.onSecondaryContainer,
+            unselectedTextColor = colors.onSurfaceVariant,
+        ),
+    )
 
 private val TOP_DESTINATION_ROUTES = TopDestination.entries.map { it.route }
 
@@ -225,6 +266,35 @@ fun AudiobookHost(
     val currentRoute = currentEntry?.destination?.route
     val playbackState by graph.playerStateRepository.state.collectAsState()
     val tonal = LocalTonalSurfaces.current
+    var playerColorMode by remember { mutableStateOf(graph.app.playbackSettingsStore.playerColorMode) }
+    DisposableEffect(graph.app.playbackSettingsStore) {
+        val listener = graph.app.playbackSettingsStore.registerPlayerColorModeListener { playerColorMode = it }
+        onDispose { graph.app.playbackSettingsStore.unregisterListener(listener) }
+    }
+
+    // Match the sheet's retained media during a local/cast handoff so both surfaces
+    // keep the same palette while the controller is temporarily empty.
+    val castConnectionState by graph.app.castRouteRepository.connectionState.collectAsState()
+    var retainedChromeState by remember { mutableStateOf(playbackState) }
+    LaunchedEffect(playbackState) {
+        if (playbackState.hasMedia) retainedChromeState = playbackState
+    }
+    val chromeState = if (playbackState.hasMedia || castConnectionState == CastRouteRepository.ConnectionState.Idle) {
+        playbackState
+    } else {
+        retainedChromeState
+    }
+    val playerColors = when (playerColorMode) {
+        PlayerColorMode.App -> MaterialTheme.colorScheme
+        PlayerColorMode.Cover -> rememberPlayerSheetColorScheme(chromeState.artworkUri)
+    }
+    val playerContainer = when (playerColorMode) {
+        PlayerColorMode.App -> tonal.bottomChrome
+        PlayerColorMode.Cover -> playerColors.surfaceContainerHighest
+    }
+    val navigationColors = if (chromeState.hasMedia) playerColors else MaterialTheme.colorScheme
+    val navigationContainer = if (chromeState.hasMedia) playerContainer else tonal.bottomChrome
+    val navigationItemColors = rememberPlayerNavigationItemColors(navigationColors)
     var selectedTopRoute by remember { mutableStateOf(Routes.HOME) }
     var animationSpeed by remember {
         mutableStateOf(graph.app.playbackSettingsStore.animationSpeed)
@@ -335,17 +405,18 @@ fun AudiobookHost(
                 containerColor = tonal.screenBackground,
                 contentColor = MaterialTheme.colorScheme.onSurface,
                 navigationSuiteColors = NavigationSuiteDefaults.colors(
-                    navigationBarContainerColor = tonal.bottomChrome,
-                    navigationBarContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                    navigationRailContainerColor = tonal.bottomChrome,
-                    navigationRailContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                    navigationDrawerContainerColor = tonal.bottomChrome,
-                    navigationDrawerContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    navigationBarContainerColor = navigationContainer,
+                    navigationBarContentColor = navigationColors.onSurfaceVariant,
+                    navigationRailContainerColor = navigationContainer,
+                    navigationRailContentColor = navigationColors.onSurfaceVariant,
+                    navigationDrawerContainerColor = navigationContainer,
+                    navigationDrawerContentColor = navigationColors.onSurfaceVariant,
                 ),
                 navigationSuiteItems = {
                     TopDestination.entries.forEach { dest ->
                         item(
                             selected = selectedTopRoute == dest.route,
+                            colors = navigationItemColors,
                             onClick = {
                                 if (currentRoute != dest.route) {
                                     navigateTopLevel(dest.route)
@@ -396,6 +467,8 @@ fun AudiobookHost(
         // Player sheet at the root, overlays the nav bar at full expansion.
         PlayerSheet(
             sheetState = playerSheetState,
+            colorScheme = playerColors,
+            containerColor = playerContainer,
             navController = navController,
             bottomNavigationVisible = showSuiteScaffold,
             onOpenCastPicker = castAwareGraph.openCastPicker,
@@ -528,12 +601,23 @@ private fun NavHostContent(
 
     LaunchedEffect(incomingLinkUrl) {
         val url = incomingLinkUrl?.takeIf { it.isNotBlank() } ?: return@LaunchedEffect
-        resolveIncomingBookLink(url)?.let { (bookId, chapterId) ->
+        val target = try {
+            withTimeoutOrNull(90_000) { resolveIncomingBookLink(url) }
+        } catch (cancelled: CancellationException) {
+            throw cancelled
+        } catch (error: Exception) {
+            Log.w("BookOpenIntent", "Could not resolve shared book", error)
+            null
+        }
+        target?.let { (bookId, chapterId) ->
             playerSheetState.collapse()
             onClearBookSharedTransition()
             navController.navigate(Routes.bookDetail(bookId, chapterId)) {
                 launchSingleTop = true
             }
+        }
+        if (target == null) {
+            Toast.makeText(context, "Could not open this book. Check your connection and try again.", Toast.LENGTH_LONG).show()
         }
         onIncomingLinkHandled(url)
     }

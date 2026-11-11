@@ -27,6 +27,7 @@ data class AudioBook(
     val epubUrl: String? = null,
     val audioEpubUrl: String? = null,
     val daisyUrl: String? = null,
+    val readAlongSources: List<AudioBookReadAlongSource> = emptyList(),
     val localAudioEpubFileName: String? = null,
     val localAudioEpubSourceUrl: String? = null,
     val audioEpubDownloadState: DownloadState = DownloadState.NotDownloaded,
@@ -52,6 +53,17 @@ data class AudioBook(
     val literaryGenres: List<CatalogTag> = emptyList(),
     val sourcePopularityRank: Int? = null,
     val addedAtMillis: Long = 0L,
+)
+
+/** A source volume's text/sync archives and the parent audiobook chapters they describe. */
+@Serializable
+data class AudioBookReadAlongSource(
+    val id: String,
+    val title: String,
+    val chapterIds: List<String>,
+    val epubUrl: String? = null,
+    val audioEpubUrl: String? = null,
+    val daisyUrl: String? = null,
 )
 
 @Serializable
@@ -485,6 +497,7 @@ fun AudioBook.downloadableDaisyUrl(): String? =
 
 fun AudioBook.downloadableSourceSyncAssetUrl(): String? =
     downloadableAudioEpubUrl() ?: downloadableDaisyUrl()
+        ?: readAlongSources.firstNotNullOfOrNull { it.audioEpubUrl ?: it.daisyUrl }
 
 fun AudioBook.downloadableReadAlongAssetUrl(): String? =
     downloadableReadAlongAssets().firstOrNull { it.primary }?.url
@@ -915,6 +928,7 @@ private fun AudioBook.mergeIncomingBook(next: AudioBook): AudioBook {
         epubUrl = next.epubUrl ?: epubUrl,
         audioEpubUrl = next.audioEpubUrl ?: audioEpubUrl,
         daisyUrl = next.daisyUrl ?: daisyUrl,
+        readAlongSources = next.readAlongSources.ifEmpty { readAlongSources },
         localAudioEpubFileName = localAudioEpubFileName ?: next.localAudioEpubFileName,
         localAudioEpubSourceUrl = localAudioEpubSourceUrl ?: next.localAudioEpubSourceUrl,
         audioEpubDownloadState = when {
@@ -966,6 +980,7 @@ private fun AudioBook.mergeDuplicateBook(next: AudioBook): AudioBook {
         epubUrl = next.epubUrl ?: epubUrl,
         audioEpubUrl = next.audioEpubUrl ?: audioEpubUrl,
         daisyUrl = next.daisyUrl ?: daisyUrl,
+        readAlongSources = next.readAlongSources.ifEmpty { readAlongSources },
         localAudioEpubFileName = localAudioEpubFileName ?: next.localAudioEpubFileName,
         localAudioEpubSourceUrl = localAudioEpubSourceUrl ?: next.localAudioEpubSourceUrl,
         audioEpubDownloadState = when {

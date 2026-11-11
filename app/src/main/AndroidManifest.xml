@@ -47,6 +47,9 @@
                 <action android:name="com.librivox.mobile.action.OPEN_BOOK" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+            <!-- Only claim web domains that publish our signing certificates.
+                 Publisher URLs are parsed inside the app, but their websites
+                 cannot grant us Android App Links without owner cooperation. -->
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -54,9 +57,10 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="audiobook.example.com"
-                    android:pathPrefix="/open"
+                    android:host="ababilinski.github.io"
+                    android:path="/librivox-mobile/open/"
                     android:scheme="https" />
+                <data android:scheme="http" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -67,48 +71,6 @@
                 <data
                     android:host="open"
                     android:scheme="audiobook" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="wolnelektury.pl"
-                    android:pathPrefix="/katalog/lektura/"
-                    android:scheme="https" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="etc.usf.edu"
-                    android:pathPrefix="/lit2go/"
-                    android:scheme="https" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="librivox.org"
-                    android:scheme="https" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="www.librivox.org"
-                    android:scheme="https" />
             </intent-filter>
         </activity>
 

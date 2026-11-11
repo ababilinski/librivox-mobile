@@ -3,6 +3,7 @@ package com.librivox.mobile.catalog
 import android.content.Context
 import com.librivox.mobile.model.AudioBook
 import com.librivox.mobile.model.AudioBookChapter
+import com.librivox.mobile.model.AudioBookReadAlongSource
 import com.librivox.mobile.model.BookSource
 import com.librivox.mobile.model.CatalogTag
 import com.librivox.mobile.model.FallbackCover
@@ -270,6 +271,11 @@ class WolneLekturyCatalogSource internal constructor(
             epubUrl = epubUrl,
             audioEpubUrl = audioEpubUrl,
             daisyUrl = daisyUrl,
+            readAlongSources = if (directChapters.isEmpty()) {
+                childDetails.toReadAlongSources(chapters)
+            } else {
+                emptyList()
+            },
             fallbackCover = FallbackCover.Generated,
             chapters = chapters,
             totalDurationSeconds = effectiveTotalDurationSeconds,
@@ -594,6 +600,30 @@ class WolneLekturyCatalogSource internal constructor(
 
     private fun JsonObject.parentSlug(): String? =
         (this["parent"] as? JsonObject)?.string("slug")
+
+    private fun List<JsonObject>.toReadAlongSources(
+        chapters: List<AudioBookChapter>,
+    ): List<AudioBookReadAlongSource> =
+        mapNotNull { child ->
+            val media = child.arrayObjects("media")
+            val chapterUrls = media.filter { it.string("type").equals("mp3", ignoreCase = true) }
+                .mapNotNull { it.string("url")?.let(::absoluteUrl) }
+                .toSet()
+            val matchingChapters = chapters.filter { it.listenUrl in chapterUrls }
+            if (matchingChapters.isEmpty()) return@mapNotNull null
+            val epub = child.string("epub")?.let(::absoluteUrl)
+            val audioEpub = media.firstMediaUrl("audio.epub")
+            val daisy = media.firstMediaUrl("daisy")
+            if (epub == null && audioEpub == null && daisy == null) return@mapNotNull null
+            AudioBookReadAlongSource(
+                id = child.slugFromUrl()?.let(::encodeId) ?: encodeId("${matchingChapters.first().id}-readalong"),
+                title = child.string("title") ?: matchingChapters.first().title,
+                chapterIds = matchingChapters.map { it.id },
+                epubUrl = epub,
+                audioEpubUrl = audioEpub,
+                daisyUrl = daisy,
+            )
+        }.sortedBy { source -> chapters.indexOfFirst { it.id in source.chapterIds } }
 
     private fun List<JsonObject>.toCollectionChapters(
         parentTitle: String,

@@ -85,10 +85,63 @@ class AudiobookLinksTest {
         val text = book.shareText(ShareLinkMode.AppLink)
 
         assertTrue(text.contains("Pride and Prejudice by Jane Austen"))
-        assertTrue(text.contains("intent://open?"))
+        assertTrue(text.contains("https://ababilinski.github.io/librivox-mobile/open/?"))
         assertTrue(text.contains("bookId=lit2go-100__pride-and-prejudice"))
         assertTrue(text.contains("source=https%3A%2F%2Fetc.usf.edu%2Flit2go%2F100%2Fpride-and-prejudice%2F"))
-        assertTrue(text.contains("S.browser_fallback_url=https%3A%2F%2Fetc.usf.edu%2Flit2go%2F100%2Fpride-and-prejudice%2F"))
+        assertTrue(!text.contains("intent://"))
+    }
+
+    @Test
+    fun verifiedLinks_openBothRequestedBooks() {
+        for (slug in listOf("antek", "katarynka")) {
+            val target = externalAudiobookLinkTarget(
+                "https://ababilinski.github.io/librivox-mobile/open/?bookId=wolnelektury-$slug",
+            )
+            assertEquals("wolnelektury-$slug", target?.bookId)
+        }
+    }
+
+    @Test
+    fun shareDefaultsToAppLinkAndPreservesExplicitSourcePreference() {
+        val book = AudioBook(
+            id = "wolnelektury-antek", title = "Antek", author = "Bolesław Prus",
+            source = BookSource.WolneLektury,
+            wolneLekturyUrl = "https://wolnelektury.pl/katalog/lektura/antek/",
+        )
+        assertEquals(book.appLinkUrl(), book.shareUrl())
+        assertEquals(ShareLinkMode.AppLink, ShareLinkMode.fromPreference(null))
+        assertEquals(book.publicWebUrl(), book.shareUrl(ShareLinkMode.fromPreference("source_website")))
+    }
+
+    @Test
+    fun publisherReaderHtmlLink_resolvesSameBook() {
+        assertEquals("wolnelektury-katarynka", externalAudiobookLinkTarget(
+            "https://wolnelektury.pl/katalog/lektura/katarynka.html",
+        )?.bookId)
+    }
+
+    @Test
+    fun links_rejectWrongHostPathSchemeAndRecursiveFallbacks() {
+        for (url in listOf(
+            "https://ababilinski.github.io.evil.test/librivox-mobile/open/?bookId=x",
+            "https://ababilinski.github.io/unrelated/open/?bookId=x",
+            "https://audiobook.example.com/open?bookId=x",
+            "javascript://wolnelektury.pl/katalog/lektura/antek/",
+            "https://ababilinski.github.io/librivox-mobile/open/?source=https%3A%2F%2Fababilinski.github.io%2Flibrivox-mobile%2Fopen%2F%3FbookId%3Dx",
+            "https://wolnelektury.pl/katalog/lektura/..%2F..%2Fetc/",
+        )) assertEquals(url, null, externalAudiobookLinkTarget(url))
+    }
+
+    @Test
+    fun legacyAppLinks_stillResolve() {
+        for (url in listOf(
+            "audiobook://open?bookId=wolnelektury-antek&chapterId=antek-1",
+            "intent://open?bookId=wolnelektury-antek&chapterId=antek-1#Intent;scheme=audiobook;package=com.librivox.mobile;end",
+        )) {
+            val target = externalAudiobookLinkTarget(url)
+            assertEquals("wolnelektury-antek", target?.bookId)
+            assertEquals("antek-1", target?.chapterId)
+        }
     }
 
     @Test

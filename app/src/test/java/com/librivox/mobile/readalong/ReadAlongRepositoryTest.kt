@@ -4,8 +4,13 @@ import com.librivox.mobile.model.AudioBook
 import com.librivox.mobile.model.AudioBookChapter
 import com.librivox.mobile.model.BookSource
 import java.io.File
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicInteger
+import java.util.concurrent.atomic.AtomicReference
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
+import kotlin.concurrent.thread
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -17,6 +22,55 @@ import org.junit.rules.TemporaryFolder
 class ReadAlongRepositoryTest {
     @get:Rule
     val temporaryFolder = TemporaryFolder()
+
+    @Test
+    fun resolver_concurrentHydrationLoadsShareOneCompleteDownload() {
+        val cacheDir = temporaryFolder.newFolder("cache")
+        val filesDir = temporaryFolder.newFolder("files")
+        val downloadStarted = CountDownLatch(1)
+        val finishDownload = CountDownLatch(1)
+        val downloads = AtomicInteger()
+        val downloader: (String, File) -> Unit = { _, target ->
+            downloads.incrementAndGet()
+            target.writeText("first half;")
+            downloadStarted.countDown()
+            check(finishDownload.await(5, TimeUnit.SECONDS))
+            target.appendText("second half")
+        }
+        // Separate resolvers still publish to the same cache entry.
+        val firstResolver = ReadAlongAssetResolver(cacheDir, filesDir, downloader)
+        val secondResolver = ReadAlongAssetResolver(cacheDir, filesDir, downloader)
+        val candidate = ReadAlongAssetCandidate(AntekDaisyUrl, "book.daisy.zip")
+        val firstResult = AtomicReference<Result<File>>()
+        val secondResult = AtomicReference<Result<File>>()
+        val first = thread {
+            firstResult.set(runCatching { firstResolver.resolve(antekBook(), candidate) })
+        }
+        var second: Thread? = null
+        try {
+            assertTrue(downloadStarted.await(5, TimeUnit.SECONDS))
+            second = thread {
+                secondResult.set(runCatching { secondResolver.resolve(antekBook(), candidate) })
+            }
+            val deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(5)
+            while (second.state != Thread.State.BLOCKED && downloads.get() == 1 &&
+                secondResult.get() == null && System.nanoTime() < deadline
+            ) {
+                Thread.yield()
+            }
+            assertEquals(Thread.State.BLOCKED, second.state)
+            assertEquals(1, downloads.get())
+        } finally {
+            finishDownload.countDown()
+            first.join(5_000)
+            second?.join(5_000)
+        }
+        val resolved = firstResult.get().getOrThrow()
+        assertEquals(resolved, secondResult.get().getOrThrow())
+        assertEquals("first half;second half", resolved.readText())
+        assertEquals(1, downloads.get())
+        assertFalse(File(resolved.parentFile, "${resolved.name}.part").exists())
+    }
 
     @Test
     fun resolver_reportsMissingPartWithoutCopyToSourceFileMessage() {
@@ -64,6 +118,39 @@ class ReadAlongRepositoryTest {
         assertFalse(readAlong.hasTimedSync)
         assertTrue(readAlong.chapters.single().fullText.contains("Antek urodził się"))
         assertTrue(File(cacheDir, "readalong/wolnelektury-antek/book.epub").isFile)
+    }
+
+    @Test
+    fun loadReadAlongBook_preferredTimedChapterDefersStaticEnrichment() {
+        val downloads = mutableListOf<String>()
+        val resolver = ReadAlongAssetResolver(
+            cacheDir = temporaryFolder.newFolder("cache"),
+            filesDir = temporaryFolder.newFolder("files"),
+            downloader = { url, target ->
+                downloads += url
+                check(url == AntekDaisyUrl)
+                writeTimedDaisy(target)
+            },
+        )
+        val result = loadReadAlongBook(antekBook(), WolneAudioEpubParser(), resolver, "antek-1", true)
+
+        assertTrue(result.hasTimedSync)
+        assertEquals(listOf(AntekDaisyUrl), downloads)
+    }
+
+    @Test
+    fun loadReadAlongBook_preferredTimedProbeStillReturnsStaticArchiveWhenNoTimingWorks() {
+        val resolver = ReadAlongAssetResolver(
+            cacheDir = temporaryFolder.newFolder("cache"),
+            filesDir = temporaryFolder.newFolder("files"),
+            downloader = { _, target -> writeStaticEpub(target) },
+        )
+        val book = antekBook().copy(epubUrl = null)
+        val result = loadReadAlongBook(book, WolneAudioEpubParser(), resolver, "antek-1", true)
+
+        assertFalse(result.hasTimedSync)
+        assertEquals("antek-1", result.chapters.single().chapterId)
+        assertTrue(result.chapters.single().fullText.contains("Antek urodził się"))
     }
 
     @Test
@@ -467,6 +554,25 @@ class ReadAlongRepositoryTest {
         assertEquals(listOf("chapter-1", "chapter-2"), readAlong.chapters.map { it.chapterId })
         assertEquals("Better first chapter.", readAlong.chapters[0].fullText)
         assertEquals("Better second chapter.", readAlong.chapters[1].fullText)
+    }
+
+    @Test
+    fun loadReadAlongBook_doesNotDownloadSecondTimedArchiveAfterCompleteTimedSource() {
+        val downloads = mutableListOf<String>()
+        val resolver = ReadAlongAssetResolver(
+            cacheDir = temporaryFolder.newFolder("cache"),
+            filesDir = temporaryFolder.newFolder("files"),
+            downloader = { url, target ->
+                downloads += url
+                check(url == TwoChapterAudioEpubUrl)
+                writeBetterCoverageTimedZip(target)
+            },
+        )
+        val readAlong = loadReadAlongBook(twoChapterBook(), WolneAudioEpubParser(), resolver)
+
+        assertEquals(listOf(TwoChapterAudioEpubUrl), downloads)
+        assertTrue(readAlong.hasTimedSync)
+        assertEquals(listOf("chapter-1", "chapter-2"), readAlong.chapters.map { it.chapterId })
     }
 
     private fun antekBook(): AudioBook =

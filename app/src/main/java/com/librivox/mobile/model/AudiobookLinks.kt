@@ -26,22 +26,22 @@ enum class ShareLinkMode(
     ),
     AppLink(
         preferenceValue = "app_link",
-        label = "App opener",
-        description = "Share an Android app-opening link with the source page as its fallback.",
+        label = "Open in LibriVox",
+        description = "Open the book in LibriVox, with a web page for people without the app.",
     );
 
     companion object {
-        val Default: ShareLinkMode = SourceWebsite
+        val Default: ShareLinkMode = AppLink
 
         fun fromPreference(value: String?): ShareLinkMode =
             entries.firstOrNull { it.preferenceValue == value } ?: Default
     }
 }
 
-const val AUDIOBOOK_APP_LINK_HOST = "audiobook.example.com"
-const val AUDIOBOOK_APP_LINK_BASE_URL = "https://audiobook.example.com"
+const val AUDIOBOOK_APP_LINK_HOST = "ababilinski.github.io"
+const val AUDIOBOOK_APP_LINK_PATH = "/librivox-mobile/open/"
+const val AUDIOBOOK_APP_LINK_BASE_URL = "https://ababilinski.github.io/librivox-mobile"
 private const val AUDIOBOOK_APP_SCHEME = "audiobook"
-private const val AUDIOBOOK_APP_PACKAGE = "com.librivox.mobile"
 private const val INTENT_SCHEME = "intent"
 private const val APP_LINK_PATH = "open"
 private const val QUERY_BOOK_ID = "bookId"
@@ -145,6 +145,7 @@ fun AudioBook.chapterIdForSourceSlug(slug: String?): String? {
 }
 
 fun externalAudiobookLinkTarget(url: String): ExternalAudiobookLinkTarget? {
+    if (url.length > 8_192) return null
     val uri = runCatching { URI(url.trim()) }.getOrNull() ?: return null
     val scheme = uri.scheme?.lowercase(Locale.ROOT)
     val host = uri.host?.lowercase(Locale.ROOT)?.removePrefix("www.") ?: return null
@@ -160,23 +161,27 @@ fun externalAudiobookLinkTarget(url: String): ExternalAudiobookLinkTarget? {
         scheme == INTENT_SCHEME && host == APP_LINK_PATH -> {
             appLinkTarget(uri, url)
         }
-        host == AUDIOBOOK_APP_LINK_HOST && segments.firstOrNull() == APP_LINK_PATH -> {
+        scheme in setOf("https", "http") && host == AUDIOBOOK_APP_LINK_HOST &&
+            uri.userInfo == null && uri.port == -1 &&
+            uri.path.trimEnd('/') == AUDIOBOOK_APP_LINK_PATH.trimEnd('/') -> {
             appLinkTarget(uri, url)
         }
-        host == "wolnelektury.pl" && segments.size >= 3 &&
+        scheme in setOf("https", "http") && host == "wolnelektury.pl" && segments.size == 3 &&
             segments[0] == "katalog" && segments[1] == "lektura" -> {
-            val slug = segments[2]
+            val slug = segments[2].removeSuffix(".html")
+            if (!slug.matches(Regex("[a-z0-9]+(?:-[a-z0-9]+)*"))) return null
             ExternalAudiobookLinkTarget(
                 bookId = "wolnelektury-$slug",
                 chapterSlug = slug,
             )
         }
-        host == "etc.usf.edu" && segments.size >= 3 && segments[0] == "lit2go" -> {
+        scheme in setOf("https", "http") && host == "etc.usf.edu" &&
+            segments.size >= 3 && segments[0] == "lit2go" -> {
             val numericId = segments[1]
             val slug = segments[2]
             ExternalAudiobookLinkTarget(bookId = "lit2go-${numericId}__$slug")
         }
-        host == "librivox.org" && segments.isNotEmpty() -> {
+        scheme in setOf("https", "http") && host == "librivox.org" && segments.isNotEmpty() -> {
             val slug = segments.first()
             ExternalAudiobookLinkTarget(
                 lookupUrl = normalizedWebUrl(url),
@@ -205,8 +210,8 @@ private fun audiobookAppLinkUrl(
     sourceUrl: String,
 ): String =
     buildString {
-        append("intent://")
-        append(APP_LINK_PATH)
+        append(AUDIOBOOK_APP_LINK_BASE_URL)
+        append("/open/")
         append('?')
         append(QUERY_BOOK_ID)
         append('=')
@@ -221,13 +226,6 @@ private fun audiobookAppLinkUrl(
         append(QUERY_SOURCE_URL)
         append('=')
         append(sourceUrl.urlEncoded())
-        append("#Intent;scheme=")
-        append(AUDIOBOOK_APP_SCHEME)
-        append(";package=")
-        append(AUDIOBOOK_APP_PACKAGE)
-        append(";S.browser_fallback_url=")
-        append(sourceUrl.urlEncoded())
-        append(";end")
     }
 
 private fun appLinkTarget(uri: URI, originalUrl: String): ExternalAudiobookLinkTarget? {
@@ -236,6 +234,13 @@ private fun appLinkTarget(uri: URI, originalUrl: String): ExternalAudiobookLinkT
     val sourceUrl = uri.queryParameter(QUERY_SOURCE_URL)
     val sourceTarget = sourceUrl
         ?.takeIf { it.isNotBlank() && it != originalUrl }
+        // Only publisher pages can be a fallback. Never recursively unwrap app links.
+        ?.takeIf {
+            val source = runCatching { URI(it) }.getOrNull()
+            source?.scheme?.lowercase(Locale.ROOT) in setOf("http", "https") &&
+                source?.host?.lowercase(Locale.ROOT)?.removePrefix("www.") in
+                setOf("wolnelektury.pl", "librivox.org", "etc.usf.edu")
+        }
         ?.let { externalAudiobookLinkTarget(it) }
 
     return ExternalAudiobookLinkTarget(

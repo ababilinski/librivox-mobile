@@ -6,7 +6,9 @@ import com.librivox.mobile.model.LibraryState
 import com.librivox.mobile.model.chapterIndexOrZero
 import com.librivox.mobile.model.mergedWithIncoming
 import com.librivox.mobile.model.sanitized
+import com.librivox.mobile.model.downloadableSourceSyncAssetUrl
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class WolneVolumeOrderTest {
@@ -32,6 +34,21 @@ class WolneVolumeOrderTest {
         assertEquals("Tom I, Rozdział XX", book.chapters[19].title)
         assertEquals("Tom II, Rozdział I", book.chapters[20].title)
         assertEquals("Tom II, Uzupełnienie", book.chapters.last().title)
+    }
+
+    @Test fun collectionRetainsEachVolumesSyncAssetsAndExactParentChapterIds() {
+        val book = lalka()
+        assertEquals(
+            listOf("wolnelektury-lalka-tom-pierwszy", "wolnelektury-lalka-tom-drugi"),
+            book.readAlongSources.map { it.id },
+        )
+        assertEquals(book.chapters.take(20).map { it.id }, book.readAlongSources[0].chapterIds)
+        assertEquals(book.chapters.drop(20).map { it.id }, book.readAlongSources[1].chapterIds)
+        assertTrue(book.readAlongSources[0].audioEpubUrl!!.endsWith("lalka-tom-pierwszy.audio.epub"))
+        assertTrue(book.readAlongSources[1].daisyUrl!!.endsWith("lalka-tom-drugi.daisy.zip"))
+        assertEquals(book.readAlongSources.first().audioEpubUrl, book.downloadableSourceSyncAssetUrl())
+        val refreshedStub = book.copy(chapters = emptyList(), readAlongSources = emptyList())
+        assertEquals(book.readAlongSources, listOf(book).mergedWithIncoming(listOf(refreshedStub)).single().readAlongSources)
     }
 
     @Test fun savedLalkaRepairsOfflineWithoutChangingChapterIdentityOrDownloadState() {

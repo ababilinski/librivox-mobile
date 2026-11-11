@@ -28,8 +28,8 @@ android {
         applicationId = "com.librivox.mobile"
         minSdk = 36
         targetSdk = 37
-        versionCode = 4
-        versionName = "1.0.1"
+        versionCode = 6
+        versionName = "1.0.2"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

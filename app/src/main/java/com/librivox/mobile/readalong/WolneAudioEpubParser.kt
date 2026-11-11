@@ -12,19 +12,22 @@ import java.io.File
 import java.util.zip.ZipFile
 import kotlin.math.roundToLong
 
+private class InvalidReadAlongTimingException(message: String) : IllegalStateException(message)
+
 class WolneAudioEpubParser {
     fun parse(
         book: AudioBook,
         readAlongFile: File,
         preferredChapterId: String? = null,
         onlyPreferredChapter: Boolean = false,
+        allowStaticFallback: Boolean = true,
     ): ReadAlongBook =
         ZipFile(readAlongFile).use { zip ->
             val opfPath = zip.opfPathOrNull()
             if (opfPath != null) {
-                zip.parseAudioEpub(book, opfPath, preferredChapterId, onlyPreferredChapter)
+                zip.parseAudioEpub(book, opfPath, preferredChapterId, onlyPreferredChapter, allowStaticFallback)
             } else {
-                zip.parseDaisy(book, preferredChapterId, onlyPreferredChapter)
+                zip.parseDaisy(book, preferredChapterId, onlyPreferredChapter, allowStaticFallback)
             }
         }
 
@@ -33,6 +36,7 @@ class WolneAudioEpubParser {
         opfPath: String,
         preferredChapterId: String?,
         onlyPreferredChapter: Boolean,
+        allowStaticFallback: Boolean,
     ): ReadAlongBook {
         val opf = xmlDocument(opfPath)
         val manifest = opf.select("manifest item").associateBy { item -> item.attr("id") }
@@ -54,7 +58,7 @@ class WolneAudioEpubParser {
         )
         return timedOrStaticBook(
             book = book,
-            timedSegments = preferredSmilPaths.flatMap { smilPath -> parseSmilSegments(book, smilPath, cssRules) },
+            timedSegments = parseValidTimedSegments(book, preferredSmilPaths, cssRules),
             staticBook = { parseStaticBook(book, opfPath, opf, manifest, cssRules, preferredChapterId, onlyPreferredChapter) },
             tableOfContents = { chapters ->
                 rawTableOfContents.resolveAgainst(
@@ -66,6 +70,7 @@ class WolneAudioEpubParser {
             },
             preferredChapterId = preferredChapterId,
             onlyPreferredChapter = onlyPreferredChapter,
+            allowStaticFallback = allowStaticFallback,
         )
     }
 
@@ -73,6 +78,7 @@ class WolneAudioEpubParser {
         book: AudioBook,
         preferredChapterId: String?,
         onlyPreferredChapter: Boolean,
+        allowStaticFallback: Boolean,
     ): ReadAlongBook {
         val smilPaths = entries().asSequence()
             .map { it.name }
@@ -87,11 +93,12 @@ class WolneAudioEpubParser {
         )
         return timedOrStaticBook(
             book = book,
-            timedSegments = preferredSmilPaths.flatMap { smilPath -> parseSmilSegments(book, smilPath, emptyList()) },
+            timedSegments = parseValidTimedSegments(book, preferredSmilPaths, emptyList()),
             staticBook = { buildStaticReadAlongBook(book, parseDaisyStaticText()) },
             tableOfContents = { chapters -> chapters.readerChapterTableOfContents() },
             preferredChapterId = preferredChapterId,
             onlyPreferredChapter = onlyPreferredChapter,
+            allowStaticFallback = allowStaticFallback,
         )
     }
 
@@ -116,7 +123,42 @@ class WolneAudioEpubParser {
                 rawEntryText(smilPath).contains(preferredAudioFileName, ignoreCase = true)
             }.getOrDefault(false)
         }
-        return matching.takeIf { it.isNotEmpty() } ?: smilPaths
+        if (matching.isNotEmpty()) return matching
+
+        // Wolne DAISY may rename the chapter recordings book0.mp3, book1.mp3, ... .
+        // Narrow only when the full source proves the same one-to-one ordinal map
+        // that mapToAppChapters would use; arbitrary filenames/order stay unfiltered.
+        val readableChapters = book.chapters.filterNot { it.title.isSupplementalWolneAudioTitle() }
+        val preferredIndex = readableChapters.indexOfFirst { it.id == preferredChapterId }
+        if (preferredIndex < 0) return smilPaths
+        val audioSmilPaths = mutableListOf<Pair<String, String>>()
+        for (smilPath in smilPaths) {
+            val document = runCatching { xmlDocument(smilPath) }.getOrNull() ?: return smilPaths
+            val audio = document.select("audio")
+            if (audio.isEmpty()) {
+                // DAISY master.smil only links to chapter SMILs; it is not another
+                // recording. Unknown/empty documents must not validate this shortcut.
+                if (document.selectFirst("smil") == null || document.select("ref[src]").isEmpty()) return smilPaths
+                continue
+            }
+            if (audio.any { it.attr("src").isBlank() }) return smilPaths
+            val audioRefs = audio.map { resolveZipPath(smilPath, it.attr("src")) }.distinct()
+            if (audioRefs.size != 1) return smilPaths
+            audioSmilPaths += smilPath to audioRefs.single()
+        }
+        val uniqueAudioRefs = audioSmilPaths.map { it.second }
+        if (uniqueAudioRefs.size != readableChapters.size || uniqueAudioRefs.distinct().size != readableChapters.size) {
+            return smilPaths
+        }
+        val genericOrdinals = uniqueAudioRefs.map { ref ->
+            Regex("""book([0-9]+)\.[^.]+""", RegexOption.IGNORE_CASE)
+                .matchEntire(ref.substringAfterLast('/'))?.groupValues?.get(1)?.toIntOrNull()
+        }
+        return if (genericOrdinals == readableChapters.indices.toList()) {
+            listOf(audioSmilPaths[preferredIndex].first)
+        } else {
+            smilPaths
+        }
     }
 
     private fun timedOrStaticBook(
@@ -126,6 +168,7 @@ class WolneAudioEpubParser {
         tableOfContents: (List<ReadAlongChapter>) -> List<ReadAlongTocItem>,
         preferredChapterId: String?,
         onlyPreferredChapter: Boolean,
+        allowStaticFallback: Boolean,
     ): ReadAlongBook {
         if (timedSegments.isNotEmpty()) {
             val mapped = timedSegments.mapToAppChapters(
@@ -147,6 +190,7 @@ class WolneAudioEpubParser {
                 )
             }
         }
+        check(allowStaticFallback) { "This archive does not include usable chapter timings." }
         return staticBook()
     }
 
@@ -173,6 +217,19 @@ class WolneAudioEpubParser {
         }
     }
 
+    private fun ZipFile.parseValidTimedSegments(
+        book: AudioBook,
+        smilPaths: List<String>,
+        cssRules: List<EpubCssRule>,
+    ): List<ReadAlongSegment> =
+        try {
+            smilPaths.flatMap { parseSmilSegments(book, it, cssRules) }
+        } catch (_: InvalidReadAlongTimingException) {
+            // Keep the source's readable XHTML available even if its overlay is
+            // broken. A static result still lets the repository try another timed source.
+            emptyList()
+        }
+
     private fun ZipFile.parseSmilSegments(
         book: AudioBook,
         smilPath: String,
@@ -189,6 +246,11 @@ class WolneAudioEpubParser {
             val textAnchor = textSrc.substringAfter('#', missingDelimiterValue = "")
             val document = xhtmlCache.getOrPut(textPath) { xmlDocument(textPath) }
             val anchorElement = document.elementForAnchor(textAnchor)
+            // A broken overlay can reuse another chapter's existing anchors while
+            // dropping its missing ones, producing convincing but incorrect sync.
+            if (textAnchor.isNotBlank() && anchorElement == null) {
+                throw InvalidReadAlongTimingException("Read-along timing references missing text: $textPath#$textAnchor.")
+            }
             val readerElement = anchorElement?.closestReaderTextElement() ?: anchorElement
             val textBlockRef = readerElement?.readerTextBlockRef(textPath)
             val text = (
@@ -1116,13 +1178,6 @@ class WolneAudioEpubParser {
             }
         if (childTitles.isEmpty()) return parent
         return "$parent. ${childTitles.joinToString("; ")}"
-    }
-
-    private fun String.isSupplementalWolneAudioTitle(): Boolean {
-        val compact = replace(Regex("""\s+"""), " ").trim().lowercase()
-        return compact == "stopka" ||
-            compact == "strona redakcyjna" ||
-            compact == "nota redakcyjna"
     }
 
     private fun String?.matchesReaderTitle(title: String): Boolean =

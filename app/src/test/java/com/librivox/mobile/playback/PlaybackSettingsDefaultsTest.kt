@@ -7,6 +7,15 @@ import org.junit.Test
 
 class PlaybackSettingsDefaultsTest {
     @Test
+    fun playerColorsDefaultToAppAndReadBothSavedChoices() {
+        assertEquals(PlayerColorMode.App, PlayerColorMode.fromPreference(null))
+        assertEquals(PlayerColorMode.App, PlayerColorMode.fromPreference("unknown"))
+        PlayerColorMode.entries.forEach { option ->
+            assertEquals(option, PlayerColorMode.fromPreference(option.preferenceValue))
+        }
+    }
+
+    @Test
     fun colorPaletteDefaultsToDeviceAndAppAndReadsEverySavedChoice() {
         assertEquals(AppColorPalette.DeviceAndApp, AppColorPalette.fromPreference(null))
         assertEquals(AppColorPalette.DeviceAndApp, AppColorPalette.fromPreference("unknown"))
