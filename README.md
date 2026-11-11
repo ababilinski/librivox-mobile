@@ -8,7 +8,7 @@ LibriVox Mobile is a free, open-source audiobook app for Android and iOS. Listen
 
 There are no ads, subscriptions, in-app purchases, or paid upgrades. All features are free, and no account is required.
 
-[Website](https://ababilinski.github.io/librivox-mobile/) · [Privacy policy](https://ababilinski.github.io/librivox-mobile/privacy-policy/) · [Support](https://ababilinski.github.io/librivox-mobile/support/)
+[Get it on Google Play](https://play.google.com/store/apps/details?id=com.librivox.mobile) · [Website](https://ababilinski.github.io/librivox-mobile/) · [Privacy policy](https://ababilinski.github.io/librivox-mobile/privacy-policy/) · [Support](https://ababilinski.github.io/librivox-mobile/support/)
 
 ## Audiobook sources
 
